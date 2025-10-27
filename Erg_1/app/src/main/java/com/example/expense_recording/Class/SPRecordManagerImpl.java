@@ -3,16 +3,17 @@ package com.example.expense_recording.Class;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.expense_recording.Interfaces.SharedPreferences.SPRecordManager;
 
 // use Shared Preferences for store data
-public class SPRecordManager implements com.example.expense_recording.Interfaces.RecordManager {
+public class SPRecordManagerImpl implements SPRecordManager {
     private static final String PREF_NAME = "RecordManager";
 
     private Context context;
 
-    public SPRecordManager(Context context){ this.context = context; }
+    public SPRecordManagerImpl(Context context){ this.context = context; }
     public void setContext(Context context){ this.context = context; }
-    public Context getContext(){ return this.context;}
+    public Context getContext(){ return this.context; }
 
     public void update(int day, int month, int year, int record){
         SharedPreferences prf = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

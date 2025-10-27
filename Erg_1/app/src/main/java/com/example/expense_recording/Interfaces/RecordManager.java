@@ -1,8 +1,10 @@
 package com.example.expense_recording.Interfaces;
 
-public interface RecordDao {
+import android.content.Context;
 
-    void insert(int day, int record);
-    void update(int day, int record);
-    int read(int day);
+public interface RecordManager {
+
+    // method update do insert too
+    void update(int day, int month, int year, int record);
+    int read(int day, int month, int year);
 }

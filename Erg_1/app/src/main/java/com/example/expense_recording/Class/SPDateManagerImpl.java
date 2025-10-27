@@ -5,17 +5,18 @@ import android.content.SharedPreferences;
 
 import com.example.expense_recording.Enum.Date;
 
+import com.example.expense_recording.Interfaces.SharedPreferences.SPDateManager;
 
 // use Shared Preferences for store data
-public class SPDateManager implements com.example.expense_recording.Interfaces.DateManager{
+public class SPDateManagerImpl implements SPDateManager{
 
     private static final String PREF_NAME = "DateManager";
 
     private Context context;
 
-    public SPDateManager(Context context){ this.context = context; }
+    public SPDateManagerImpl(Context context){ this.context = context; }
     public void setContext(Context context){ this.context = context;}
-    public Context getContext(Context context) { return context; }
+    public Context getContext() { return context; }
 
     public void update(int day, int month, int year){
         SharedPreferences prf = this.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

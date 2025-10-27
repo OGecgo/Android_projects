@@ -1,9 +1,9 @@
 package com.example.expense_recording.Record;
 
 // record
-public class UserData {
+public class UserStatisticsData {
     private int average, max, min, total;
-    public UserData(int average, int max, int min, int total){
+    public UserStatisticsData(int average, int max, int min, int total){
         this.average = average;
         this.max = max;
         this.min = min;

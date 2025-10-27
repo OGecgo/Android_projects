@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Expense_recording</string>
+    <string name="expense_recording">Expense Recording</string>
+    <string name="Statistics_button">General Statistics</string>
 </resources>
