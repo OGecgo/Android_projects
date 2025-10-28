@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Expense_recording</string>
-    <string name="expense_recording">Expense Recording</string>
-    <string name="Statistics_button">General Statistics</string>
+
+    <string name="record_title">Expense Recording</string>
+    <string name="date_info">Today is d / m / y</string>
+    <string name="backslash">/</string>
+    <string name="day_input">day</string>
+    <string name="month_input">month</string>
+    <string name="year_input">year</string>
+    <string name="date_button">Set Date</string>
+    <string name="error_day">Date input error</string>
+
+    <string name="record_input_title">Record your money</string>
+    <string name="error_rec">Record error</string>
+    <string name="record_input">number</string>
+    <string name="save_button">save</string>
+
+    <string name="statistics_title">Your Statistics</string>
+    <string name="week_info_button">week</string>
+    <string name="month_info_button">month</string>
+    <string name="statistics_average_info">Average week</string>
+    <string name="statistics_max_info">Max week</string>
+    <string name="statistics_min_info">Min week</string>
+    <string name="statistics_total_info">Total week</string>
+
 </resources>
