@@ -3,6 +3,8 @@ package com.example.expense_recording.Class;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import com.example.expense_recording.Interfaces.SharedPreferences.SPRecordManager;
 
 // use Shared Preferences for store data
@@ -15,16 +17,17 @@ public class SPRecordManagerImpl implements SPRecordManager {
     public void setContext(Context context){ this.context = context; }
     public Context getContext(){ return this.context; }
 
-    public void update(int day, int month, int year, int record){
+    public void update(int day, int month, int year, float record){
         SharedPreferences prf = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        int sum = record;
-        sum += prf.getInt(day + "/" + month + "/" + year, 0);
+        float sum = record;
+        sum += prf.getFloat(day + "/" + month + "/" + year, 0);
         SharedPreferences.Editor edit = prf.edit();
-        edit.putInt(day + "/" + month + "/" + year, sum);
+        edit.putFloat(day + "/" + month + "/" + year, sum);
         edit.apply();
     }
-    public int read(int day, int month, int year){
+    public float read(int day, int month, int year){
         SharedPreferences prf = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return prf.getInt(day + "/" + month + "/" + year, 0);
+        return prf.getFloat(day + "/" + month + "/" + year, 0);
     }
+
 }

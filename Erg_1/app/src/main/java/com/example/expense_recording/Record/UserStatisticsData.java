@@ -2,21 +2,21 @@ package com.example.expense_recording.Record;
 
 // record
 public class UserStatisticsData {
-    private int average, max, min, total;
-    public UserStatisticsData(int average, int max, int min, int total){
+    private float average, max, min, total;
+    public UserStatisticsData(float average, float max, float min, float total){
         this.average = average;
         this.max = max;
         this.min = min;
         this.total = total;
     }
 
-    public void setAverage(int average) { this.average = average; }
-    public void setMax(int max){ this.max = max; }
-    public void setMin(int min){ this.min = min; }
-    public void setTotal(int total){ this.total = total; }
+    public void setAverage(float average) { this.average = average; }
+    public void setMax(float max){ this.max = max; }
+    public void setMin(float min){ this.min = min; }
+    public void setTotal(float total){ this.total = total; }
 
-    public int getAverage() { return this.average; }
-    public int getMax() { return this.max; }
-    public int getMin() { return this.min;}
-    public int getTotal() { return this.total; }
+    public float getAverage() { return this.average; }
+    public float getMax() { return this.max; }
+    public float getMin() { return this.min;}
+    public float getTotal() { return this.total; }
 }

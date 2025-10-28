@@ -5,6 +5,6 @@ import android.content.Context;
 public interface RecordManager {
 
     // method update do insert too
-    void update(int day, int month, int year, int record);
-    int read(int day, int month, int year);
+    void update(int day, int month, int year, float record);
+    float read(int day, int month, int year);
 }

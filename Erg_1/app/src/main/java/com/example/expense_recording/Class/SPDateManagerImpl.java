@@ -3,6 +3,8 @@ package com.example.expense_recording.Class;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import com.example.expense_recording.Enum.Date;
 
 import com.example.expense_recording.Interfaces.SharedPreferences.SPDateManager;
@@ -27,7 +29,7 @@ public class SPDateManagerImpl implements SPDateManager{
         edit.apply();
     }
 
-    public int read(Date d){
+    public int read(@NonNull Date d){
         SharedPreferences prf = this.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         switch (d){
             case DAY:
@@ -40,4 +42,34 @@ public class SPDateManagerImpl implements SPDateManager{
                 return -1;
         }
     }
+
+    // override object class
+
+    @NonNull
+    @Override
+    public String toString(){
+        int day = read(Date.DAY);
+        int month = read(Date.MONTH);
+        int year = read(Date.YEAR);
+        return day + " / " + month + " / " + year;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof SPDateManager) {
+            int day_o = ((SPDateManager) o).read(Date.DAY);
+            int month_o = ((SPDateManager) o).read(Date.MONTH);
+            int year_o = ((SPDateManager) o).read(Date.YEAR);
+
+            int day = ((SPDateManager) o).read(Date.DAY);
+            int month = ((SPDateManager) o).read(Date.MONTH);
+            int year = ((SPDateManager) o).read(Date.YEAR);
+
+
+            return day_o == day && month_o == month && year_o == year;
+        }
+        return false;
+    }
+
+
 }

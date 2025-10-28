@@ -1,6 +1,5 @@
 package com.example.expense_recording;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -21,36 +20,106 @@ import com.example.expense_recording.Enum.Date;
 public class MainActivity extends AppCompatActivity {
 
     private SPUserManager user_m;
+    private Date now_stat_type;
 
     // UI Items
     private TextView tv_date;
     private TextView tv_average;
     private TextView tv_max;
     private TextView tv_min;
+    private TextView tv_error_day;
+    private TextView tv_error_rec;
+    private TextView tv_h_stat;
     private TextView tv_total;
     private EditText et_day ;
     private EditText et_month;
     private EditText et_year;
     private EditText et_record;
-    private Button btn_save_record;
-    private Button btn_set_date;  
-    private Button btn_week_info;
-    private Button btn_month_info; 
 
+    private int test_date(int day, int month, int year){
+        if (month > 12 || month < 1) return 1;
+        if (year > 2026 || year < 2000) return 1;
+        if (day < 0) return 1;
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+            if (day > 31) return 1;
+        } else {
+            if (day > 30) return 1;
+            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+                if (day > 29) return 1;
+            } else {
+                if (day > 28) return 1;
+            }
+        }
 
+        return 0;
+    }
+    private void set_date(){
+        int day   = user_m.getDay();
+        int month = user_m.getMonth();
+        int year  = user_m.getYear();
 
+        if (test_date(day, month, year) == 1) {
+            throw new RuntimeException("error var day/month/year");
+        }
+
+        String text = "Today is " + day + " / " + month + " / " + year;
+        this.tv_date.setText(text);
+    }
+    private void set_stat(){
+        String temp = "error";
+        Date temp_d =  this.now_stat_type;
+
+        if      (temp_d == Date.WEEK ) temp = "week";
+        else if (temp_d == Date.MONTH) temp = "month";
+
+        String average = "Average " + temp + " " + String.format("%.2f", user_m.get_average(temp_d)) + "$";
+        String max     = "Max "     + temp + " " + String.format("%.2f", user_m.get_max(temp_d))     + "$";
+        String min     = "Min "     + temp + " " + String.format("%.2f", user_m.get_min(temp_d))     + "$";
+        String total   = "Total "   + temp + " " + String.format("%.2f", user_m.total(temp_d))       + "$";
+
+        String h_stat = "Your Statistics " + temp + " Mode";
+
+        this.tv_average.setText(average);
+        this.tv_max.    setText(max    );
+        this.tv_min.    setText(min    );
+        this.tv_total.  setText(total  );
+
+        this.tv_h_stat. setText(h_stat);
+    }
+
+    // buttons methods
     private void onClick_record(){
-        int record = Integer.parseInt(this.et_record.getText().toString());
-        this.user_m.add_record(record);
+        // not save record
+        if (this.user_m.getDay() == -1 || this.user_m.getMonth() == -1 || this.user_m.getYear() == -1) return;
+
+        try {
+            float record = Float.parseFloat(this.et_record.getText().toString());
+            this.user_m.add_record(record);
+            set_stat();
+            if (this.tv_error_rec.getVisibility() == TextView.VISIBLE) this.tv_error_rec.setVisibility(TextView.INVISIBLE);
+        } catch (Exception e) {
+            this.tv_error_rec.setVisibility(TextView.VISIBLE);
+            String text = "Record input error";
+            this.tv_error_rec.setText(text);
+        }
     }
     private void onClick_date(){
-        int day   = Integer.parseInt(this.et_day.getText().toString()  );
-        int month = Integer.parseInt(this.et_month.getText().toString());
-        int year  = Integer.parseInt(this.et_year.getText().toString() );
+        try {
+            int day   = Integer.parseInt(this.et_day.getText().toString()  );
+            int month = Integer.parseInt(this.et_month.getText().toString());
+            int year  = Integer.parseInt(this.et_year.getText().toString() );
 
-        this.user_m.change_date(day, month, year);
+            this.user_m.change_date(day, month, year);
+            set_date();
+            set_stat();
+            if (this.tv_error_day.getVisibility() == TextView.VISIBLE) this.tv_error_day.setVisibility(TextView.INVISIBLE);
+        } catch (Exception e) {
+            this.tv_error_day.setVisibility(TextView.VISIBLE);
+        }
     }
     private void onClick_set_type_statistics(Date d){
+        this.now_stat_type = d;
+        set_stat();
     }
 
     @Override
@@ -69,11 +138,14 @@ public class MainActivity extends AppCompatActivity {
         this.user_m = new SPUserManagerImpl(this);
 
         // set TextView
-        this.tv_date    = (TextView) findViewById(R.id.textView_data   );
-        this.tv_average = (TextView) findViewById(R.id.textView_average);
-        this.tv_max     = (TextView) findViewById(R.id.textView_max    );
-        this.tv_min     = (TextView) findViewById(R.id.textView_min    );
-        this.tv_total   = (TextView) findViewById(R.id.textView_total  );
+        this.tv_date      = (TextView) findViewById(R.id.textView_data             );
+        this.tv_average   = (TextView) findViewById(R.id.textView_average          );
+        this.tv_max       = (TextView) findViewById(R.id.textView_max              );
+        this.tv_min       = (TextView) findViewById(R.id.textView_min              );
+        this.tv_total     = (TextView) findViewById(R.id.textView_total            );
+        this.tv_error_day = (TextView) findViewById(R.id.textView_error_day        );
+        this.tv_h_stat    = (TextView) findViewById(R.id.textView_header_statistics);
+        this.tv_error_rec = (TextView) findViewById(R.id.textView_error_rec        );
 
         // set EditText
         this.et_day    = (EditText) findViewById(R.id.editText_day   );
@@ -82,18 +154,29 @@ public class MainActivity extends AppCompatActivity {
         this.et_record = (EditText) findViewById(R.id.editText_record);
 
         // set Buttons
-        this.btn_save_record = (Button) findViewById(R.id.button_save_record);
-        this.btn_save_record.setOnClickListener(v -> onClick_record());
+        Button btn_save_record = (Button) findViewById(R.id.button_save_record);
+        btn_save_record.setOnClickListener(v -> onClick_record());
 
-        this.btn_set_date = (Button) findViewById(R.id.button_set_date);
-        this.btn_set_date.setOnClickListener(v -> onClick_date());
+        Button btn_set_date = (Button) findViewById(R.id.button_set_date);
+        btn_set_date.setOnClickListener(v -> onClick_date());
 
-        this.btn_week_info  = (Button) findViewById(R.id.button_week_info );
-        this.btn_month_info = (Button) findViewById(R.id.button_month_info);
-        this.btn_week_info.setOnClickListener (v -> onClick_set_type_statistics(Date.WEEK ));
-        this.btn_month_info.setOnClickListener(v -> onClick_set_type_statistics(Date.MONTH));
+        Button btn_week_info = (Button) findViewById(R.id.button_week_info);
+        Button btn_month_info = (Button) findViewById(R.id.button_month_info);
+        btn_week_info.setOnClickListener (v -> onClick_set_type_statistics(Date.WEEK ));
+        btn_month_info.setOnClickListener(v -> onClick_set_type_statistics(Date.MONTH));
 
+        // set today day
+        this.now_stat_type = Date.WEEK;
 
+        // if day not exist
+        try {
+            set_date();
+        } catch (Exception e){
+            String text = "Today is none";
+            this.tv_date.setText(text);
+        }
+
+        set_stat();
     }
 
 }

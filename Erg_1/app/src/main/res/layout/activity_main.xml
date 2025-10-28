@@ -127,19 +127,21 @@
 
     <!--middle layer-->
 
+
+    <!--bottom layer-->
+
     <TextView
-        android:id="@+id/textView_error"
+        android:id="@+id/textView_error_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="date you given is wrong"
         android:textColor="#A80000"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/view_line_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932"
-        tools:layout_editor_absoluteX="128dp" />
-
-
-    <!--bottom layer-->
+        app:layout_constraintVertical_bias="0.921" />
 
     <TextView
         android:id="@+id/textView_header_record"
@@ -168,7 +170,7 @@
         app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_line_up"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <Button
         android:id="@+id/button_save_record"
@@ -180,10 +182,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_line_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toEndOf="@+id/editText_record"
         app:layout_constraintTop_toBottomOf="@+id/view_line_up"
-        app:layout_constraintVertical_bias="0.704" />
+        app:layout_constraintVertical_bias="0.573" />
 
     <View
         android:id="@+id/view_line_bottom"
@@ -195,7 +197,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.537" />
 
     <View
         android:id="@+id/view_line_up"
@@ -207,12 +209,12 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.672" />
+        app:layout_constraintVertical_bias="0.569" />
 
     <TextView
         android:id="@+id/textView_header_statistics"
-        android:layout_width="216dp"
-        android:layout_height="42dp"
+        android:layout_width="214dp"
+        android:layout_height="57dp"
         android:gravity="center"
         android:text="Your Statistics"
         android:textSize="20sp"
@@ -263,10 +265,9 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_line_bottom"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintTop_toBottomOf="@+id/view_line_bottom" />
 
     <TextView
         android:id="@+id/textView_total"
@@ -276,10 +277,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_min"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.089" />
 
     <TextView
         android:id="@+id/textView_min"
@@ -289,10 +290,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_max"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <TextView
         android:id="@+id/textView_max"
@@ -302,10 +303,24 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_average"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.043" />
+
+    <TextView
+        android:id="@+id/textView_error_rec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Record Error"
+        android:textColor="#A80000"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/view_line_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line_up"
+        app:layout_constraintVertical_bias="0.884" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

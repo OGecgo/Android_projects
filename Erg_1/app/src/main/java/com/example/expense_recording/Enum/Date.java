@@ -5,6 +5,4 @@ public enum Date {
     WEEK,
     MONTH,
     YEAR;
-
-
 }
