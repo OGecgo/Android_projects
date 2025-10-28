@@ -16,6 +16,7 @@ public class SPDateManagerImpl implements SPDateManager{
 
     private Context context;
 
+    // constructor
     public SPDateManagerImpl(Context context){ this.context = context; }
     public void setContext(Context context){ this.context = context;}
     public Context getContext() { return context; }

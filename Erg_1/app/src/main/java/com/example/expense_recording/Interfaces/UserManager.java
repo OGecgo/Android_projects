@@ -5,7 +5,9 @@ public interface UserManager {
 
     // download data from store
     void set_date_from_store();
+    // write date to store
     void change_date(int day, int month, int year);
+    // write record to store
     void add_record(float record);
 
     // methods for statistics

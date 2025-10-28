@@ -42,7 +42,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_top"
             android:layout_width="411dp"
-            android:layout_height="174dp">
+            android:layout_height="155dp">
 
             <TextView
                 android:id="@+id/textView_data"
@@ -97,13 +97,13 @@
                     android:id="@+id/editText_month"
                     android:layout_width="73dp"
                     android:layout_height="50dp"
+                    android:autofillHints="month"
                     android:ems="10"
                     android:hint="@string/month"
-                    android:autofillHints="month"
-                    android:textColorHint="@color/hint_text"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textColor="@color/text"
+                    android:textColorHint="@color/hint_text"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView_dm"
@@ -132,9 +132,9 @@
                     android:autofillHints="year"
                     android:ems="10"
                     android:hint="@string/year"
-                    android:textColorHint="@color/hint_text"
                     android:inputType="number"
                     android:textColor="@color/text"
+                    android:textColorHint="@color/hint_text"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/button_set_date"
@@ -150,10 +150,10 @@
                     android:autofillHints="day"
                     android:ems="10"
                     android:hint="@string/day"
-                    android:textColorHint="@color/hint_text"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textColor="@color/text"
+                    android:textColorHint="@color/hint_text"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView_my"
@@ -194,7 +194,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_middle"
             android:layout_width="411dp"
-            android:layout_height="wrap_content">
+            android:layout_height="161dp">
 
             <TextView
                 android:id="@+id/textView_error_rec"
@@ -223,13 +223,13 @@
                     android:id="@+id/editText_record"
                     android:layout_width="112dp"
                     android:layout_height="50dp"
+                    android:autofillHints="number"
                     android:ems="10"
                     android:hint="@string/record_input"
-                    android:textColorHint="@color/hint_text"
-                    android:autofillHints="number"
                     android:inputType="number"
-                    android:textSize="20sp"
                     android:textColor="@color/text"
+                    android:textColorHint="@color/hint_text"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/button_save_record"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -243,8 +243,8 @@
                     android:backgroundTint="@color/accent"
                     android:gravity="center"
                     android:text="@string/save_button"
-                    android:textSize="15sp"
                     android:textColor="@color/white_text"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -259,8 +259,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/record_input_title"
-                android:textSize="20sp"
                 android:textColor="@color/primary_text"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

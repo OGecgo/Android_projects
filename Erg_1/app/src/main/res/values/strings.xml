@@ -7,7 +7,7 @@
     <string name="year">year</string>
 
     <string name="record_title">Expense Recording</string>
-    <string name="date_info">Today is d / m / y</string>
+    <string name="date_info">Today is</string>
     <string name="backslash">/</string>
     <string name="date_button">Set Date</string>
     <string name="error_day">Date input error</string>

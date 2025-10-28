@@ -21,6 +21,7 @@ public class SPUserManagerImpl implements SPUserManager{
     private int month = -1;
     private int year = -1;
 
+    // with checking save properly stats to Users Statistics (UserStatisticsData/UserStatisticsData)
     private void set_stats(){
         if (this.day == -1 || this.month == -1 || this.year == -1) return;
 
@@ -29,7 +30,6 @@ public class SPUserManagerImpl implements SPUserManager{
         float max = 0;
         float min = Float.MAX_VALUE;
 
-        // if month % 2 == 0 then days = 30 else 31
 
         int days = 31;
         if (this.month == 1 || this.month == 3 || this.month == 5 || this.month == 7 || this.month == 8 || this.month == 10 || this.month == 12) days = 30;
@@ -72,6 +72,7 @@ public class SPUserManagerImpl implements SPUserManager{
         this.userStatWeek.setTotal(total);
     }
 
+    // constructor
     public SPUserManagerImpl(Context context){
         this.date = new SPDateManagerImpl(context);
         this.rec = new SPRecordManagerImpl(context);
@@ -79,6 +80,7 @@ public class SPUserManagerImpl implements SPUserManager{
         this.userStatMonth = new UserStatisticsData(-1, -1, -1, -1);
         set_date_from_store();
     }
+
     public void update_context(Context context){
         this.rec.setContext(context);
         this.date.setContext(context);
