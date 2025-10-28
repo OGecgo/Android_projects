@@ -1,7 +1,5 @@
 package com.example.expense_recording.Interfaces;
 
-import android.content.Context;
-
 import com.example.expense_recording.Enum.Date;
 public interface UserManager {
 

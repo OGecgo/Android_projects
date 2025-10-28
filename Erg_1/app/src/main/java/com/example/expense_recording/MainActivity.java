@@ -17,6 +17,8 @@ import com.example.expense_recording.Class.SPUserManagerImpl;
 
 import com.example.expense_recording.Enum.Date;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private SPUserManager user_m;
@@ -72,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         if      (temp_d == Date.WEEK ) temp = "week";
         else if (temp_d == Date.MONTH) temp = "month";
 
-        String average = "Average " + temp + " " + String.format("%.2f", user_m.get_average(temp_d)) + "$";
-        String max     = "Max "     + temp + " " + String.format("%.2f", user_m.get_max(temp_d))     + "$";
-        String min     = "Min "     + temp + " " + String.format("%.2f", user_m.get_min(temp_d))     + "$";
-        String total   = "Total "   + temp + " " + String.format("%.2f", user_m.total(temp_d))       + "$";
+        String average = "Average " + temp + " " + String.format(Locale.getDefault(), "%.2f", user_m.get_average(temp_d)) + "$";
+        String max     = "Max "     + temp + " " + String.format(Locale.getDefault(), "%.2f", user_m.get_max(temp_d))     + "$";
+        String min     = "Min "     + temp + " " + String.format(Locale.getDefault(), "%.2f", user_m.get_min(temp_d))     + "$";
+        String total   = "Total "   + temp + " " + String.format(Locale.getDefault(), "%.2f", user_m.total(temp_d))       + "$";
 
         String h_stat = "Your Statistics " + temp + " Mode";
 
@@ -138,30 +140,30 @@ public class MainActivity extends AppCompatActivity {
         this.user_m = new SPUserManagerImpl(this);
 
         // set TextView
-        this.tv_date      = (TextView) findViewById(R.id.textView_data             );
-        this.tv_average   = (TextView) findViewById(R.id.textView_average          );
-        this.tv_max       = (TextView) findViewById(R.id.textView_max              );
-        this.tv_min       = (TextView) findViewById(R.id.textView_min              );
-        this.tv_total     = (TextView) findViewById(R.id.textView_total            );
-        this.tv_error_day = (TextView) findViewById(R.id.textView_error_day        );
-        this.tv_h_stat    = (TextView) findViewById(R.id.textView_header_statistics);
-        this.tv_error_rec = (TextView) findViewById(R.id.textView_error_rec        );
+        this.tv_date      = findViewById(R.id.textView_data             );
+        this.tv_average   = findViewById(R.id.textView_average          );
+        this.tv_max       = findViewById(R.id.textView_max              );
+        this.tv_min       = findViewById(R.id.textView_min              );
+        this.tv_total     = findViewById(R.id.textView_total            );
+        this.tv_error_day = findViewById(R.id.textView_error_day        );
+        this.tv_h_stat    = findViewById(R.id.textView_header_statistics);
+        this.tv_error_rec = findViewById(R.id.textView_error_rec        );
 
         // set EditText
-        this.et_day    = (EditText) findViewById(R.id.editText_day   );
-        this.et_month  = (EditText) findViewById(R.id.editText_month );
-        this.et_year   = (EditText) findViewById(R.id.editText_year  );
-        this.et_record = (EditText) findViewById(R.id.editText_record);
+        this.et_day    = findViewById(R.id.editText_day   );
+        this.et_month  = findViewById(R.id.editText_month );
+        this.et_year   = findViewById(R.id.editText_year  );
+        this.et_record = findViewById(R.id.editText_record);
 
         // set Buttons
-        Button btn_save_record = (Button) findViewById(R.id.button_save_record);
+        Button btn_save_record = findViewById(R.id.button_save_record);
         btn_save_record.setOnClickListener(v -> onClick_record());
 
-        Button btn_set_date = (Button) findViewById(R.id.button_set_date);
+        Button btn_set_date = findViewById(R.id.button_set_date);
         btn_set_date.setOnClickListener(v -> onClick_date());
 
-        Button btn_week_info = (Button) findViewById(R.id.button_week_info);
-        Button btn_month_info = (Button) findViewById(R.id.button_month_info);
+        Button btn_week_info  = findViewById(R.id.button_week_info );
+        Button btn_month_info = findViewById(R.id.button_month_info);
         btn_week_info.setOnClickListener (v -> onClick_set_type_statistics(Date.WEEK ));
         btn_month_info.setOnClickListener(v -> onClick_set_type_statistics(Date.MONTH));
 

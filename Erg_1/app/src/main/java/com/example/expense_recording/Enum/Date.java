@@ -4,5 +4,5 @@ public enum Date {
     DAY,
     WEEK,
     MONTH,
-    YEAR;
+    YEAR
 }

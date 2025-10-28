@@ -3,8 +3,6 @@ package com.example.expense_recording.Class;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.NonNull;
-
 import com.example.expense_recording.Interfaces.SharedPreferences.SPRecordManager;
 
 // use Shared Preferences for store data
