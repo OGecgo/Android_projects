@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     // if empty or not valid input show message
     private void onClick_record(){
         // not save record
-        if (this.user_m.getDay() == -1 || this.user_m.getMonth() == -1 || this.user_m.getYear() == -1) return;
+        if (test_date(this.user_m.getDay(), this.user_m.getMonth(), this.user_m.getYear()) == 1) return;
 
         try {
             float record = Float.parseFloat(this.et_record.getText().toString());
