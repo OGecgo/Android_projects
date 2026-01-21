@@ -6,4 +6,5 @@
     <string name="Logo">FireChat</string>
     <string name="main_menu">Main Menu</string>
     <string name="signup">SignUp</string>
+    <string name="signin">SignIn</string>
 </resources>
