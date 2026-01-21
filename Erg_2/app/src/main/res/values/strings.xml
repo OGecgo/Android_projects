@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UnipiFireChat</string>
+    <string name="none">_None_</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="Logo">FireChat</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="signup">SignUp</string>
 </resources>
