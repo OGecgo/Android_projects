@@ -2,6 +2,7 @@ package com.example.unipifirechat.Interfaces;
 
 public interface IUserContr {
 
+    // cheks and logs from IUserContr
     interface AuthCallback {
         void onCompose (boolean success, String ErrorLog);
     }
@@ -10,7 +11,7 @@ public interface IUserContr {
 
 
     public void SignUp(String email, String password, AuthCallback authCB);
-    public boolean SignIn(String email, String password);
-    public boolean LogOut();
-    public boolean DeleteUser(String password);
+    public void SignIn(String email, String password, AuthCallback authCB);
+    public void LogOut(AuthCallback authCB);
+    public void DeleteUser(String password, AuthCallback authCsV);
 }

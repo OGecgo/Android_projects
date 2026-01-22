@@ -24,21 +24,12 @@ public class UserContr implements  IUserContr{
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
 
-    private boolean signIn;
-    private boolean successExe;
 
 
     // private
     // --constructor
     private UserContr(){
         this.user = mAuth.getCurrentUser();
-        if (this.user != null){
-            this.signIn = true;
-            return;
-        }
-        this.signIn = false;
-        this.ErrorLog = "";
-        this.successExe = true;
     }
 
     // --var
@@ -80,22 +71,14 @@ public class UserContr implements  IUserContr{
         }
     }
 
-    // --methods
 
-    private void updateSingUp(Exception e){
-        if (e == null){
-            this.successExe = true;
-            return;
-        }
-        setError(e);
-    }
 
     // public
 
 
 
     // --var
-    public boolean getSignIn(){ return this.signIn;}
+    public boolean getSignIn(){ return user != null; }
 
     public String getErrorLog(){ return this.ErrorLog; }
     public static IUserContr getInstance(){
@@ -107,11 +90,15 @@ public class UserContr implements  IUserContr{
 
     // --methods
 
+
+
     @Override
     public void SignUp(String email, String password, AuthCallback authCB){
-        this.successExe = false;
+        boolean errInput = false;
         if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
+            Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
             this.ErrorLog = "Please Fill In All Fields";
+            authCB.onCompose(false, ErrorLog);
             return;
         }
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
@@ -125,35 +112,21 @@ public class UserContr implements  IUserContr{
                         }
                         else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            updateSingUp(task.getException());
-                            authCB.onCompose(false, "error");
+                            setError(task.getException());
+                            authCB.onCompose(false, ErrorLog);
                         }
                     }
                 }
         );
 
-        if (this.successExe){
-            this.signIn = true;
-        }
-        return;
     }
-    public boolean SignIn(String email, String password){
-        if (this.successExe){
-            this.signIn = true;
-        }
-        return this.successExe;
-    }
-    public boolean LogOut(){
-        if (this.successExe){
-            this.signIn = false;
-        }
-        return this.successExe;
+    public void SignIn(String email, String password, AuthCallback authCB){
 
     }
-    public boolean DeleteUser(String password){
-        if (this.successExe){
-            this.signIn = false;
-        }
-        return this.successExe;
+    public void LogOut(AuthCallback authCB){
+
+    }
+    public void DeleteUser(String password, AuthCallback authCB){
+
     }
 }
