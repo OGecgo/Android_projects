@@ -15,31 +15,27 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.unipifirechat.Class.UserContr;
 import com.example.unipifirechat.Interfaces.IUserContr;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
-    private IUserContr user;
+    IUserContr user;
 
-    private void setUpButtonsSignUp(TextView username, TextView email, TextView password, TextView errorLog){
-        Button bIn = findViewById(R.id.buttonSignUp);
+    // methods
+    private void setUpButton(EditText email, EditText password, TextView ErrorLog){
+        Button bIn = findViewById(R.id.buttonSignIn);
         bIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // take data
-                String sUsername = String.valueOf(username.getText());
                 String sEmail = String.valueOf(email.getText());
                 String sPassword = String.valueOf(password.getText());
-                // signup user
-                user.SignUp(sEmail, sPassword, ((success, ErrorLog) -> {
-                    if (!success){
-                        errorLog.setText(ErrorLog);
+                user.SignIn(sEmail, sPassword, (success, errorLog) -> {
+                    if(!success){
+                        ErrorLog.setText(errorLog);
                         return;
                     }
-                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }));
-
-
+                });
             }
         });
     }
@@ -49,49 +45,48 @@ public class SignUpActivity extends AppCompatActivity {
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
+
+    // override
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.signUp), (v, insets) -> {
+        setContentView(R.layout.activity_signin);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.signIn), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         // set user
-        this.user = UserContr.getInstance();
+        user = UserContr.getInstance();
 
-        // data form
-        EditText username = findViewById(R.id.editTextUsername);
-        EditText email = findViewById(R.id.editTextEmail);
-        EditText password = findViewById(R.id.editTextPassword);
+        // data
+        EditText etEmail = findViewById(R.id.editTextEmail);
+        EditText etPassword = findViewById(R.id.editTextPassword);
+        TextView tvErrorLog = findViewById(R.id.textViewErrorLog);
 
-        // log
-        TextView errLog = findViewById(R.id.textViewErrorLog);
-
-        // button signup
-        setUpButtonsSignUp(username, email, password, errLog);
+        // button
+        setUpButton(etEmail, etPassword, tvErrorLog);
         setUpLogo();
     }
 
-    // they should logout to signup
+    // they should logout to signin
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed got to homepage.
         if(this.user.getSignIn()){
-            Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
     }
-
 }
+

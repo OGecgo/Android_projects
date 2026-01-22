@@ -70,15 +70,15 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/buttonSingUp"
+                android:id="@+id/buttonSignUp"
                 style="@style/button_menu"
                 android:layout_width="0dp"
-                android:layout_marginTop="130dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/signup"
+                app:layout_constraintBottom_toTopOf="@+id/textViewErrorLog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
                 app:layout_constraintWidth_percent="0.70" />
 
             <EditText
@@ -130,16 +130,16 @@
                 android:id="@+id/textViewErrorLog"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="20dp"
 
+                android:layout_marginBottom="40dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/dark_primary_color"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSingUp" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,8 +16,28 @@ import com.example.unipifirechat.Interfaces.IUserContr;
 public class MainActivity extends AppCompatActivity {
 
     IUserContr user;
-    private void loadHome(IUserContr user){
 
+
+    private void setUpButtons(){
+        Button bUp = findViewById(R.id.buttonSignUp);
+        bUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Button bIn = findViewById(R.id.buttonSignIn);
+        bIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);//
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -34,24 +54,18 @@ public class MainActivity extends AppCompatActivity {
         // Set User
         this.user = UserContr.getInstance();
 
-        // buttons
-        Button bReg = findViewById(R.id.buttonSingUp);
-        bReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
+        setUpButtons();
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed got to homepage.
-        if(this.user.getSignIn()){
-            loadHome(this.user);
-        }
-    }
+     @Override
+     public void onStart() {
+         super.onStart();
+         // Check if user is signed got to homepage.
+         if(this.user.getSignIn()){
+             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+             startActivity(intent);
+             finish();
+         }
+     }
 }

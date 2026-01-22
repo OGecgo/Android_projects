@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.unipifirechat.Interfaces.AuthCallback;
 import com.example.unipifirechat.Interfaces.IUserContr;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +20,6 @@ import java.util.Objects;
 
 public class UserContr implements  IUserContr{
     private static IUserContr userInst;
-    private String ErrorLog;
 
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
@@ -33,54 +33,44 @@ public class UserContr implements  IUserContr{
     }
 
     // --var
-    private void setError(Exception e) {
+    private String ErrorLog(Exception e) {
         if (e instanceof FirebaseAuthException){
             String error = ((FirebaseAuthException)e).getErrorCode();
             switch (error){
                 case "ERROR_INVALID_EMAIL":
-                    this.ErrorLog = "Invalid Email";
-                    break;
-                case "ERROR_WEAK_PASSWORD":  // not end for password
-                    this.ErrorLog = "Weak Password";
-                    break;
+                    return "Invalid Email";
+                case "ERROR_WEAK_PASSWORD":
+                    return "Weak Password";
                 case "ERROR_EMAIL_ALREADY_IN_USE":
-                    this.ErrorLog = "That Email Already In Use";
-                    break;
+                    return "That Email Already In Use";
 
                 case "ERROR_USER_NOT_FOUND":
-                    this.ErrorLog = "That User Not Found";
-                    break;
+                    return "That User Not Found";
                 case "ERROR_WRONG_PASSWORD":
-                    this.ErrorLog = "Wrong Password";
-                    break;
+                    return "Wrong Password";
 
                 case "ERROR_USER_DISABLED":
-                    this.ErrorLog = "User Disabled";
-                    break;
+                    return "User Disabled";
                 case "ERROR_NETWORK_REQUEST_FAILED":
-                    this.ErrorLog = "Network Request Failed";
-                    break;
+                    return "Network Request Failed";
                 case "ERROR_TOO_MANY_REQUESTS":
-                    this.ErrorLog = "Too Many Requests";
-                    break;
+                    return "Too Many Requests";
 
                 default:
-                    this.ErrorLog = "Unknow";
-                    break;
+                    return "Unknow Error";
             }
         }
+        return "";
     }
 
 
 
     // public
 
-
-
     // --var
     public boolean getSignIn(){ return user != null; }
 
-    public String getErrorLog(){ return this.ErrorLog; }
+    // singleton
     public static IUserContr getInstance(){
         if (userInst == null){
             userInst = new UserContr();
@@ -94,11 +84,9 @@ public class UserContr implements  IUserContr{
 
     @Override
     public void SignUp(String email, String password, AuthCallback authCB){
-        boolean errInput = false;
         if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
             Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
-            this.ErrorLog = "Please Fill In All Fields";
-            authCB.onCompose(false, ErrorLog);
+            authCB.onCompose(false, "Please Fill In All Fields");
             return;
         }
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
@@ -110,10 +98,9 @@ public class UserContr implements  IUserContr{
                             user = mAuth.getCurrentUser();
                             authCB.onCompose(true, "");
                         }
-                        else {
+                        else { // Error authentication
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            setError(task.getException());
-                            authCB.onCompose(false, ErrorLog);
+                            authCB.onCompose(false, ErrorLog(task.getException()));
                         }
                     }
                 }
@@ -121,12 +108,38 @@ public class UserContr implements  IUserContr{
 
     }
     public void SignIn(String email, String password, AuthCallback authCB){
-
+        if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
+            Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
+            authCB.onCompose(false, "Please Fill In All Fields");
+            return;
+        }
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            user = mAuth.getCurrentUser();
+                            authCB.onCompose(true, "");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            authCB.onCompose(false, ErrorLog(task.getException()));
+                        }
+                    }
+                });
     }
     public void LogOut(AuthCallback authCB){
-
-    }
-    public void DeleteUser(String password, AuthCallback authCB){
+        try {
+            FirebaseAuth.getInstance().signOut();
+            user = mAuth.getCurrentUser();
+            Log.d(TAG, "logoutUser:success");
+            authCB.onCompose(true, "");
+        } catch (Exception e) { // error logout
+            Log.d(TAG, "logoutUser:failure");
+            authCB.onCompose(false, ErrorLog(e));
+        }
 
     }
 }

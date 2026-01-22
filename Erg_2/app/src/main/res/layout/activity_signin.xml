@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/signIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_primary_color">
+    android:background="@color/dark_primary_color"
+    >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -36,6 +37,7 @@
                 android:textColor="@color/text"
                 android:textSize="60sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +46,7 @@
                 android:layout_width="207dp"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:text="@string/main_menu"
+                android:text="@string/signup"
                 android:textColor="@color/text"
                 android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,30 +70,64 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/buttonSignUp"
+                android:id="@+id/buttonSignIn"
                 style="@style/button_menu"
                 android:layout_width="0dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/signin"
+                app:layout_constraintBottom_toTopOf="@+id/textViewErrorLog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.70" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="75dp"
-                android:text="@string/signup"
+                android:autofillHints="emailAddress"
+                android:ems="15"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.70" />
 
-            <Button
-                android:id="@+id/buttonSignIn"
-                style="@style/button_menu"
+            <EditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="0dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="75dp"
-                android:text="@string/signin"
+                android:autofillHints="password"
+                android:ems="15"
+                android:hint="@string/password"
+                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSignUp"
-                app:layout_constraintWidth_percent="0.7" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+                app:layout_constraintWidth_percent="0.70" />
+
+            <TextView
+                android:id="@+id/textViewErrorLog"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/dark_primary_color"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
