@@ -30,6 +30,51 @@ public class HomeActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void initButtonAccount(){
+
+        Button userB = findViewById(R.id.buttonUser);
+        // create dialog
+        View viewAccount = getLayoutInflater().inflate(R.layout.dialog_account, null);
+        AlertDialog accountDialog = new androidx.appcompat.app.AlertDialog.Builder(HomeActivity.this)
+                .setView(viewAccount)
+                .setCancelable(true)
+                .create();
+
+        // set on click button
+        userB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // take object from new dialog
+                Button logOut = viewAccount.findViewById(R.id.buttonLogout);
+                TextView username = viewAccount.findViewById(R.id.textViewUsername);
+                username.setText(user.getUsername());
+
+
+                // buttons dialog alert
+                logOut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        user.LogOut(((success, ErrorLog) -> {
+                                    if (!success){
+                                        showMessage("Error Log Out", ErrorLog);
+                                        return;
+                                    }
+                                    accountDialog.dismiss();
+                                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                })
+                        );
+                    }
+                });
+
+                // show acoutn view
+                accountDialog.show();
+            }
+        });
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // padding
@@ -44,45 +89,9 @@ public class HomeActivity extends AppCompatActivity {
         // user init
         user = UserContr.getInstance();
 
-        // Dialogs
-        View viewAccount = getLayoutInflater().inflate(R.layout.dialog_account, null);
-        AlertDialog accountDialog = new androidx.appcompat.app.AlertDialog.Builder(HomeActivity.this)
-                .setView(viewAccount)
-                .setCancelable(true)
-                .create();
-
 
         // buttons
-        Button userB = findViewById(R.id.buttonUser);
-
-        userB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button logOut = viewAccount.findViewById(R.id.buttonLogout);
-                TextView username = viewAccount.findViewById(R.id.textViewUsername); // for now nothing
-
-                // buttons dialog alert
-                logOut.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        user.LogOut(((success, ErrorLog) -> {
-                                if (!success){
-                                    showMessage("Error Log Out", ErrorLog);
-                                    return;
-                                }
-                                accountDialog.dismiss();
-                                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            })
-                        );
-                    }
-                });
-
-                // show acoutn view
-                accountDialog.show();
-            }
-        });
+        initButtonAccount();
     }
 
     // if someone into home when has no user
