@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String sEmail = String.valueOf(email.getText());
                 String sPassword = String.valueOf(password.getText());
                 // signup user
-                user.SignUp(sEmail, sPassword, ((success, ErrorLog) -> {
+                user.SignUp(sUsername, sEmail, sPassword, ((success, ErrorLog) -> {
                     if (!success){
                         errorLog.setText(ErrorLog);
                         return;

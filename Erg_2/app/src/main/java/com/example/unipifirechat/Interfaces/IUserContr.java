@@ -5,7 +5,7 @@ package com.example.unipifirechat.Interfaces;
 public interface IUserContr  {
     public boolean getSignIn();
 
-    public void SignUp(String email, String password, AuthCallback authCB);
+    public void SignUp(String username, String email, String password, AuthCallback authCB);
     public void SignIn(String email, String password, AuthCallback authCB);
     public void LogOut(AuthCallback authCB);
 }

@@ -14,13 +14,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
 public class UserContr implements  IUserContr{
     private static IUserContr userInst;
 
+    private final FirebaseDatabase mDB = FirebaseDatabase.getInstance();
+    private DatabaseReference userDB;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
 
@@ -30,6 +37,7 @@ public class UserContr implements  IUserContr{
     // --constructor
     private UserContr(){
         this.user = mAuth.getCurrentUser();
+        this.userDB = mDB.getReference();
     }
 
     // --var
@@ -63,6 +71,37 @@ public class UserContr implements  IUserContr{
         return "";
     }
 
+    // --methods
+
+    // RTDB keys cannot contain: . # $ [ ] /
+    private static String emailToKey(String email) {
+        return email.trim().toLowerCase()
+                .replace(".", ",")
+                .replace("#", ",")
+                .replace("$", ",")
+                .replace("[", ",")
+                .replace("]", ",")
+                .replace("/", ",");
+    }
+
+    private void addUserToDatabase(String username) {
+        // data
+        String uid = user.getUid();
+        // email username
+        String email = user.getEmail();
+        if (email == null || username == null) return;
+        email = emailToKey(email); // Email@emMil.email -> email@email,email
+
+
+        Map<String, Object> update = new HashMap<>();
+        update.put("users/" + uid + "/username", username);
+        update.put("users/" + uid + "/email", email);
+
+        update.put("usernames/" + username, uid);
+        update.put("emails/" + email, uid);
+
+        userDB.updateChildren( update, (error, ref) -> { if (error != null) Log.w(TAG, error.getMessage()); });
+    }
 
 
     // public
@@ -83,30 +122,68 @@ public class UserContr implements  IUserContr{
 
 
     @Override
-    public void SignUp(String email, String password, AuthCallback authCB){
-        if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
-            Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
+    public void SignUp(String username, String email, String password, AuthCallback authCB){
+
+        // check for errors null
+        if (username == null || Objects.equals(username, "") || email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
+            Log.w(TAG, "NULL OBJECT EMAIL PASSWORD OR USERNAME");
             authCB.onCompose(false, "Please Fill In All Fields");
             return;
         }
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "createUserWithEmail:success");
-                            user = mAuth.getCurrentUser();
-                            authCB.onCompose(true, "");
-                        }
-                        else { // Error authentication
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            authCB.onCompose(false, ErrorLog(task.getException()));
-                        }
-                    }
+
+        // check for properly symbols
+        String nUsername = username.trim();
+        String nEmail = email.trim();
+        String nPassword = password.trim();
+        if (!nUsername.matches("^[a-zA-Z0-9_]{3,20}$")){ // check for properly username
+            Log.w(TAG, "USERNAME HAS ERROR SYMBOLS");
+            authCB.onCompose(false, "Username Have Error Symbols");
+            return;
+        }
+
+
+        // first read from database for check user
+        userDB.child("usernames").child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                // error read
+                if (!task.isComplete()) {
+                    Log.w(TAG, task.getException());
+                    return;
                 }
-        );
+                // username is exist ?
+                if (task.getResult().exists()){
+                    Log.w(TAG, "USERNAME ALREADY EXIST");
+                    authCB.onCompose(false, "That Username Already Exist");
+                    // if user exist. don't create user
+                    return;
+                }
+
+                // authentication
+                mAuth.createUserWithEmailAndPassword(nEmail, nPassword).addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    user = mAuth.getCurrentUser();
+                                    addUserToDatabase(nUsername);
+                                    authCB.onCompose(true, "");
+                                }
+                                else { // Error authentication
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    authCB.onCompose(false, ErrorLog(task.getException()));
+                                }
+                            }
+                        }
+                );
+            }
+        });
+
 
     }
+
+    @Override
     public void SignIn(String email, String password, AuthCallback authCB){
         if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
             Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
@@ -130,6 +207,8 @@ public class UserContr implements  IUserContr{
                     }
                 });
     }
+
+    @Override
     public void LogOut(AuthCallback authCB){
         try {
             FirebaseAuth.getInstance().signOut();
