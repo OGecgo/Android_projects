@@ -40,8 +40,12 @@ public class ChatsContr implements IChatsContr{
         this.messages = null;
     }
 
-    private boolean CreateChat(String withUserUid){
-        if (withUserUid == null || withUserUid.isEmpty()) return false;
+    @SuppressLint("RestrictedApi")
+    private void CreateChat(String withUserUid, DatabaseCallback chatDB){
+        if (withUserUid == null || withUserUid.isEmpty()){
+            chatDB.onCompose(false, "user uid don't exist");
+            return;
+        }
         String uid = user.getUid();
         // set id
         String chatId = mDB.getReference().child("chats").push().getKey();
@@ -49,14 +53,22 @@ public class ChatsContr implements IChatsContr{
         Map<String, Object> update = new HashMap<>();
         // create chat and add themself to chat
         update.put("chats/" + chatId + "/members/" + uid, true);
-        // add chat to themself chats
-        update.put("users/" + uid + "/chatsId/" + chatId, true);
         // send invite to withUserUid
-        update.put("users/" + withUserUid + "/inviteChat/" + chatId, uid);
+        update.put("users/" + withUserUid + "/inviteChat/" + uid, chatId);
 
-        mDB.getReference().updateChildren(update, ((error, ref) -> { if (error != null) Log.w(ContentValues.TAG, error.getMessage()); }));
+        // only if chat exist user can add chat to users/chats
+        mDB.getReference().updateChildren(update, ((error, ref) -> {
+            if (error == null) {
+                // add chat to themself chats
+                update.put("users/" + uid + "/chatsId/" + chatId, true);
+                chatDB.onCompose(true, "");
+            }
+            else {
+                Log.w(TAG, error.toString());
+                chatDB.onCompose(false, "error create chat");
+            }
+        }));
 
-        return true;
     }
 
     public static IChatsContr  getInstance(){
@@ -83,8 +95,13 @@ public class ChatsContr implements IChatsContr{
     @SuppressLint("RestrictedApi")
     @Override
     public void SendInviteTo(String username, DatabaseCallback chatDB){
+        if (username == null || username.isEmpty()){
+            chatDB.onCompose(false, "User don't exist");
+            return;
+        }
         if (!user.getSignIn()){
             Log.w(TAG, "user not sign in");
+            return;
         }
         String myUid = user.getUid();
 
@@ -92,15 +109,10 @@ public class ChatsContr implements IChatsContr{
         mDB.getReference().child("usernames").child(username.trim()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isCanceled()){
+                if (task.isComplete()){
                     if (task.getResult().exists()){
                         // create chat and add themself to chat and send invite
-                        if(CreateChat(task.getResult().getValue(String.class))){
-                           chatDB.onCompose(true, "");
-                        }
-                        else{
-                            chatDB.onCompose(false, "error chat create");
-                        }
+                        CreateChat(task.getResult().getValue(String.class), chatDB);
                     }
                     else {
                         chatDB.onCompose(false, "username not found");

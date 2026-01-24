@@ -15,12 +15,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.unipifirechat.Class.ChatsContr;
 import com.example.unipifirechat.Class.UserContr;
+import com.example.unipifirechat.Interfaces.IChatsContr;
 import com.example.unipifirechat.Interfaces.IUserContr;
 
 public class HomeActivity extends AppCompatActivity {
 
     IUserContr user;
+    IChatsContr chats;
 
     private void showMessage(String title, String msg){
         new AlertDialog.Builder(HomeActivity.this)
@@ -30,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void setOnClickButtonChat(Button btn, String chatId){
+    private void setOnClickButtonChat(Button btn){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-    private void createButtonChat(String name, String chatId){
+    private void createButtonChat(String name){
         LinearLayout ll = findViewById(R.id.linearLayoutChats);
         Button btn = new Button(this);
 
@@ -55,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         btn.setTextColor(getResources().getColor(R.color.primary_text));
         btn.setBackgroundColor(getResources().getColor(R.color.divider_color));
 
-        setOnClickButtonChat(btn, chatId);
+        setOnClickButtonChat(btn);
         // add to linear layout
         ll.addView(btn);
     }
@@ -125,8 +128,16 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String username = String.valueOf(et.getText());
-                        // send invite and only if exist create button
-                        createButtonChat(username, "0");
+                        chats.SendInviteTo(username, ((success, ErrorLog) -> {
+                            // if error
+                            if (!success){
+                                showMessage("Find User", ErrorLog);
+                                return;
+                            }
+                            accountDialog.dismiss();
+                            // send invite and create chat
+                            createButtonChat(username);
+                        }));
                     }
                 });
 
@@ -152,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // user init
         user = UserContr.getInstance();
+        chats = ChatsContr.getInstance();
 
 
         // buttons
