@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -74,6 +76,36 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    public void initButtonAddUser(){
+        Button btn = findViewById(R.id.buttonAddUser);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    public void initButtonSearch(){
+        Button btn = findViewById(R.id.buttonSearch);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    public void createButtonChat(String name){
+        LinearLayout ll = findViewById(R.id.linearLayoutChats);
+        Button btn = new Button(this);
+        btn.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.
+        ));
+        ll.addView(btn);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +124,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // buttons
         initButtonAccount();
+        initButtonAddUser();
+        initButtonSearch();
     }
 
     // if someone into home when has no user

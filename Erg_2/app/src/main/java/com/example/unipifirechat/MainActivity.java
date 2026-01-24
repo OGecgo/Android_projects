@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     IUserContr user;
 
 
-    private void setUpButtons(){
+    private void initButtons(){
         Button bUp = findViewById(R.id.buttonSignUp);
         bUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         // Set User
         this.user = UserContr.getInstance();
 
-        setUpButtons();
+        initButtons();
     }
 
 

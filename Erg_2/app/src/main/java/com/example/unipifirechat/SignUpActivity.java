@@ -19,7 +19,17 @@ public class SignUpActivity extends AppCompatActivity {
 
     private IUserContr user;
 
-    private void setUpButtonsSignUp(TextView username, TextView email, TextView password, TextView errorLog){
+    private void initButton(){
+
+
+        // data form
+        EditText username = findViewById(R.id.editTextUsername);
+        EditText email = findViewById(R.id.editTextEmail);
+        EditText password = findViewById(R.id.editTextPassword);
+
+        // log
+        TextView errLog = findViewById(R.id.textViewErrorLog);
+
         Button bIn = findViewById(R.id.buttonSignUp);
         bIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
                 // signup user
                 user.SignUp(sUsername, sEmail, sPassword, ((success, ErrorLog) -> {
                     if (!success){
-                        errorLog.setText(ErrorLog);
+                        errLog.setText(ErrorLog);
                         return;
                     }
                     Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
@@ -69,16 +79,9 @@ public class SignUpActivity extends AppCompatActivity {
         // set user
         this.user = UserContr.getInstance();
 
-        // data form
-        EditText username = findViewById(R.id.editTextUsername);
-        EditText email = findViewById(R.id.editTextEmail);
-        EditText password = findViewById(R.id.editTextPassword);
-
-        // log
-        TextView errLog = findViewById(R.id.textViewErrorLog);
 
         // button signup
-        setUpButtonsSignUp(username, email, password, errLog);
+        initButton();
         setUpLogo();
     }
 

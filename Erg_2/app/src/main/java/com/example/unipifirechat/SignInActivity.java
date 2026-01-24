@@ -20,16 +20,23 @@ public class SignInActivity extends AppCompatActivity {
     IUserContr user;
 
     // methods
-    private void setUpButton(EditText email, EditText password, TextView ErrorLog){
+    private void initButton(){
+
+        // data
+        EditText etEmail = findViewById(R.id.editTextEmail);
+        EditText etPassword = findViewById(R.id.editTextPassword);
+        // error log
+        TextView tvErrorLog = findViewById(R.id.textViewErrorLog);
+
         Button bIn = findViewById(R.id.buttonSignIn);
         bIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sEmail = String.valueOf(email.getText());
-                String sPassword = String.valueOf(password.getText());
+                String sEmail = String.valueOf(etEmail.getText());
+                String sPassword = String.valueOf(etPassword.getText());
                 user.SignIn(sEmail, sPassword, (success, errorLog) -> {
                     if(!success){
-                        ErrorLog.setText(errorLog);
+                        tvErrorLog.setText(errorLog);
                         return;
                     }
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
@@ -67,13 +74,8 @@ public class SignInActivity extends AppCompatActivity {
         // set user
         user = UserContr.getInstance();
 
-        // data
-        EditText etEmail = findViewById(R.id.editTextEmail);
-        EditText etPassword = findViewById(R.id.editTextPassword);
-        TextView tvErrorLog = findViewById(R.id.textViewErrorLog);
-
         // button
-        setUpButton(etEmail, etPassword, tvErrorLog);
+        initButton();
         setUpLogo();
     }
 

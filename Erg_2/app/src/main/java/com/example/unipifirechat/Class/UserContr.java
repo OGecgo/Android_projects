@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.unipifirechat.Interfaces.ErrorCallback;
+import com.example.unipifirechat.Interfaces.DatabaseCallback;
 import com.example.unipifirechat.Interfaces.IUserContr;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,11 +41,13 @@ public class UserContr implements  IUserContr{
         this.user = mAuth.getCurrentUser();
         this.userDB = mDB.getReference();
         if (user != null){
-            setObjDataFromDatabase();
+            this.SetObjDataFromDatabase();
         }
     }
 
-    // --var
+
+
+    // --methods
     private String ErrorLog(Exception e) {
         if (e instanceof FirebaseAuthException){
             String error = ((FirebaseAuthException)e).getErrorCode();
@@ -76,26 +78,13 @@ public class UserContr implements  IUserContr{
         return "";
     }
 
-    // --methods
-
-    // RTDB keys cannot contain: . # $ [ ] /
-    private static String emailToKey(String email) {
-        return email.trim().toLowerCase()
-                .replace(".", ",")
-                .replace("#", ",")
-                .replace("$", ",")
-                .replace("[", ",")
-                .replace("]", ",")
-                .replace("/", ",");
-    }
-
-    private void addUserToDatabase(String username) {
+    private void AddUserToDatabase(String username) {
         // data
         String uid = user.getUid();
         // email username
         String email = user.getEmail();
         if (email == null || username == null) return;
-        email = emailToKey(email); // Email@emMil.email -> email@email,email
+        email = email.trim().toLowerCase().replace(".", ","); // Email@emMil.email -> email@email,email
 
 
         Map<String, Object> update = new HashMap<>();
@@ -108,7 +97,7 @@ public class UserContr implements  IUserContr{
         userDB.updateChildren( update, (error, ref) -> { if (error != null) Log.w(TAG, error.getMessage()); });
     }
 
-    private void setObjDataFromDatabase(){
+    private void SetObjDataFromDatabase(){
         if (user == null || userDB == null) {
             objUsername = "";
             objEmail = "";
@@ -122,6 +111,9 @@ public class UserContr implements  IUserContr{
                     if (snap.exists()){
                         objUsername = snap.child("username").getValue(String.class);
                         objEmail = snap.child("email").getValue(String.class);
+                        if (objEmail != null && !Objects.equals(objEmail, "")){
+                            objEmail = objEmail.replace(",", "."); // email@email,email -> email@email.email
+                        }
                     }
                     else{
                         objUsername = "";
@@ -156,7 +148,7 @@ public class UserContr implements  IUserContr{
 
 
     @Override
-    public void SignUp(String username, String email, String password, ErrorCallback authCB){
+    public void SignUp(String username, String email, String password, DatabaseCallback authCB){
 
         // check for errors null
         if (username == null || Objects.equals(username, "") || email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
@@ -202,7 +194,7 @@ public class UserContr implements  IUserContr{
                                     Log.d(TAG, "createUserWithEmail:success");
                                     user = mAuth.getCurrentUser();
                                     // realtime database
-                                    addUserToDatabase(nUsername);
+                                    AddUserToDatabase(nUsername);
                                     // set objs
                                     objUsername = username;
                                     objEmail = email;
@@ -222,7 +214,7 @@ public class UserContr implements  IUserContr{
     }
 
     @Override
-    public void SignIn(String email, String password, ErrorCallback authCB){
+    public void SignIn(String email, String password, DatabaseCallback authCB){
         if (email == null || Objects.equals(email, "") || password == null || Objects.equals(password, "") ){
             Log.w(TAG, "NULL OBJECT EMAIL-PASSWORD");
             authCB.onCompose(false, "Please Fill In All Fields");
@@ -236,7 +228,7 @@ public class UserContr implements  IUserContr{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             user = mAuth.getCurrentUser();
-                            setObjDataFromDatabase();
+                            SetObjDataFromDatabase();
                             authCB.onCompose(true, "");
                         } else {
                             // If sign in fails, display a message to the user.
@@ -248,7 +240,7 @@ public class UserContr implements  IUserContr{
     }
 
     @Override
-    public void LogOut(ErrorCallback authCB){
+    public void LogOut(DatabaseCallback authCB){
         try {
             FirebaseAuth.getInstance().signOut();
             user = mAuth.getCurrentUser();
