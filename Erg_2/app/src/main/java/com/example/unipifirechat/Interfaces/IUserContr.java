@@ -3,6 +3,7 @@ package com.example.unipifirechat.Interfaces;
 
 // DatabaseCallback use for synchronize, logs and errors
 public interface IUserContr  {
+    String getUid();
     String getUsername();
     String getEmail();
     boolean getSignIn();

@@ -131,6 +131,7 @@ public class UserContr implements  IUserContr{
     // ---------------------- public ----------------------
 
     // --var
+    public String getUid(){ return user.getUid(); }
     public String getUsername(){ return this.objUsername; }
     public String getEmail(){ return this.objEmail;}
     public boolean getSignIn(){ return user != null; }

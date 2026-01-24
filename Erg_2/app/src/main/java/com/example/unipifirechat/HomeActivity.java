@@ -1,13 +1,11 @@
 package com.example.unipifirechat;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +30,36 @@ public class HomeActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void setOnClickButtonChat(Button btn, String chatId){
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open chat
+            }
+        });
+    }
+    private void createButtonChat(String name, String chatId){
+        LinearLayout ll = findViewById(R.id.linearLayoutChats);
+        Button btn = new Button(this);
+
+        // set layout parameters for button
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = 4;
+        btn.setLayoutParams(lp);
+
+        // button styling
+        // for now bad
+        btn.setText(name);
+        btn.setTextSize(18);
+        btn.setAllCaps(false);
+        btn.setTextColor(getResources().getColor(R.color.primary_text));
+        btn.setBackgroundColor(getResources().getColor(R.color.divider_color));
+
+        setOnClickButtonChat(btn, chatId);
+        // add to linear layout
+        ll.addView(btn);
+    }
+
     private void initButtonAccount(){
 
         Button userB = findViewById(R.id.buttonUser);
@@ -47,8 +75,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // take object from new dialog
-                Button logOut = viewAccount.findViewById(R.id.buttonLogout);
-                TextView username = viewAccount.findViewById(R.id.textViewUsername);
+                Button logOut = viewAccount.findViewById(R.id.buttonFindUser);
+                TextView username = viewAccount.findViewById(R.id.editTextFindUser);
                 username.setText(user.getUsername());
 
 
@@ -77,35 +105,39 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void initButtonAddUser(){
+        // create dialog
         Button btn = findViewById(R.id.buttonAddUser);
+        // create dialog
+        View viewAccount = getLayoutInflater().inflate(R.layout.dialog_add_user, null);
+        AlertDialog accountDialog = new androidx.appcompat.app.AlertDialog.Builder(HomeActivity.this)
+                .setView(viewAccount)
+                .setCancelable(true)
+                .create();
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Button btn = viewAccount.findViewById(R.id.buttonFindUser);
+                EditText et = viewAccount.findViewById(R.id.editTextFindUser);
 
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String username = String.valueOf(et.getText());
+                        // send invite and only if exist create button
+                        createButtonChat(username, "0");
+                    }
+                });
+
+                accountDialog.show();
             }
         });
     }
-    public void initButtonSearch(){
-        Button btn = findViewById(R.id.buttonSearch);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-    }
 
-    public void createButtonChat(String name){
-        LinearLayout ll = findViewById(R.id.linearLayoutChats);
-        Button btn = new Button(this);
-        btn.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.
-        ));
-        ll.addView(btn);
-    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +157,6 @@ public class HomeActivity extends AppCompatActivity {
         // buttons
         initButtonAccount();
         initButtonAddUser();
-        initButtonSearch();
     }
 
     // if someone into home when has no user

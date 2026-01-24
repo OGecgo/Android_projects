@@ -9,4 +9,5 @@
     <string name="signin">SignIn</string>
     <string name="username">Username</string>
     <string name="logout">LogOut</string>
+    <string name="find_user">Find User</string>
 </resources>
