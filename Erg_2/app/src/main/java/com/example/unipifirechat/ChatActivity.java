@@ -35,6 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private String username;
     private String chatId;
     private LinkedList<MessageData> messages;
+    // the last time message loaded
     private long lasTime;
 
     @SuppressLint("RtlHardcoded")

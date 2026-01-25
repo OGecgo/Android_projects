@@ -60,7 +60,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-    // override
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

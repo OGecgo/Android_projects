@@ -28,6 +28,8 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class ChatsContr implements IChatsContr{
+// ---------------------- private ----------------------
+
     private static IChatsContr chats;
 
     private final FirebaseDatabase mDB = FirebaseDatabase.getInstance();
@@ -87,6 +89,10 @@ public class ChatsContr implements IChatsContr{
 
     }
 
+
+
+// ---------------------- public ----------------------
+
     public static IChatsContr  getInstance(){
         if (chats == null){
             chats = new ChatsContr();
@@ -123,8 +129,6 @@ public class ChatsContr implements IChatsContr{
             }
         });
     }
-
-
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -201,12 +205,7 @@ public class ChatsContr implements IChatsContr{
 
 
     @Override
-    public void getMessages(
-            LinkedList<MessageData> messages,
-            long fromNTimeRead,
-            String chatId,
-            DatabaseCallback chatDB
-    ) {
+    public void getMessages(LinkedList<MessageData> messages, long fromNTimeRead, String chatId, DatabaseCallback chatDB) {
         mDB.getReference().child("chats").child(chatId).child("messages")
                 .orderByChild("time")
                 .startAt(fromNTimeRead + 1)

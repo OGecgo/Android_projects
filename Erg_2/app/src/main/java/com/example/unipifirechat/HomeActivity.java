@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void setOnClickButtonChat(Button btn, String name, String chatId){
+    private void initClickButtonChat(Button btn, String name, String chatId){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         btn.setTextColor(getResources().getColor(R.color.primary_text));
         btn.setBackgroundColor(getResources().getColor(R.color.divider_color));
 
-        setOnClickButtonChat(btn, name, chatId);
+        initClickButtonChat(btn, name, chatId);
         // add to linear layout
         ll.addView(btn);
     }
