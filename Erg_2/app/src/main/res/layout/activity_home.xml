@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonAddUser"
+        android:id="@+id/buttonSendMessage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="20dp"

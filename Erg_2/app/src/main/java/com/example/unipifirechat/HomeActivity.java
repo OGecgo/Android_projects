@@ -1,7 +1,11 @@
 package com.example.unipifirechat;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,10 +24,16 @@ import com.example.unipifirechat.Class.UserContr;
 import com.example.unipifirechat.Interfaces.IChatsContr;
 import com.example.unipifirechat.Interfaces.IUserContr;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HomeActivity extends AppCompatActivity {
 
-    IUserContr user;
-    IChatsContr chats;
+    private IUserContr user;
+    private IChatsContr chats;
+
+    // chats
+    private Map<String, Object> chatsId_username;
 
     private void showMessage(String title, String msg){
         new AlertDialog.Builder(HomeActivity.this)
@@ -33,21 +43,25 @@ public class HomeActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void setOnClickButtonChat(Button btn){
+    private void setOnClickButtonChat(Button btn, String name, String chatId){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open chat
+                Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
+                intent.putExtra("username", name);
+                intent.putExtra("chatId", chatId);
+                startActivity(intent);
+                finish();
             }
         });
     }
-    private void createButtonChat(String name){
+    private void createButtonChat(String name, String chatId){
         LinearLayout ll = findViewById(R.id.linearLayoutChats);
         Button btn = new Button(this);
 
         // set layout parameters for button
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.bottomMargin = 4;
+        lp.bottomMargin = 10;
         btn.setLayoutParams(lp);
 
         // button styling
@@ -58,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         btn.setTextColor(getResources().getColor(R.color.primary_text));
         btn.setBackgroundColor(getResources().getColor(R.color.divider_color));
 
-        setOnClickButtonChat(btn);
+        setOnClickButtonChat(btn, name, chatId);
         // add to linear layout
         ll.addView(btn);
     }
@@ -68,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         Button userB = findViewById(R.id.buttonUser);
         // create dialog
         View viewAccount = getLayoutInflater().inflate(R.layout.dialog_account, null);
-        AlertDialog accountDialog = new androidx.appcompat.app.AlertDialog.Builder(HomeActivity.this)
+        AlertDialog accountDialog = new AlertDialog.Builder(HomeActivity.this)
                 .setView(viewAccount)
                 .setCancelable(true)
                 .create();
@@ -107,12 +121,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public void initButtonAddUser(){
+    private void initButtonAddUser(){
         // create dialog
-        Button btn = findViewById(R.id.buttonAddUser);
+        Button btn = findViewById(R.id.buttonSendMessage);
         // create dialog
         View viewAccount = getLayoutInflater().inflate(R.layout.dialog_add_user, null);
-        AlertDialog accountDialog = new androidx.appcompat.app.AlertDialog.Builder(HomeActivity.this)
+        AlertDialog accountDialog = new AlertDialog.Builder(HomeActivity.this)
                 .setView(viewAccount)
                 .setCancelable(true)
                 .create();
@@ -128,6 +142,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String username = String.valueOf(et.getText());
+                        // send invite and create chat
                         chats.SendInviteTo(username, ((success, ErrorLog) -> {
                             // if error
                             if (!success){
@@ -135,8 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                                 return;
                             }
                             accountDialog.dismiss();
-                            // send invite and create chat
-                            createButtonChat(username);
+                            // ui update automatically
                         }));
                     }
                 });
@@ -146,8 +160,26 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("RestrictedApi")
+    private void updateUiChatsButtons(boolean success, String errorLog){
+        if (success){
+            for (Map.Entry<String, Object> chat: chatsId_username.entrySet()){
+                createButtonChat(chat.getValue().toString(), chat.getKey());
+            }
+        }
+        Log.w(TAG, errorLog);
+    }
 
 
+    private void addExistedChats(){
+        // String String
+        // init maps
+        chatsId_username = new HashMap<>();
+
+        // automatically accept all invites and after take chats
+        chats.AcceptInvites((success, errorLog) -> { });
+        chats.getChatsIdAndUsername(chatsId_username, this::updateUiChatsButtons);
+    }
 
 
     @Override
@@ -169,6 +201,9 @@ public class HomeActivity extends AppCompatActivity {
         // buttons
         initButtonAccount();
         initButtonAddUser();
+
+        // created existed chats
+        addExistedChats();
     }
 
     // if someone into home when has no user

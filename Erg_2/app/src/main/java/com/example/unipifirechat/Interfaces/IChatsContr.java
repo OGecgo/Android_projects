@@ -3,17 +3,15 @@ package com.example.unipifirechat.Interfaces;
 import com.example.unipifirechat.Structs.MessageData;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 public interface IChatsContr {
-    // LinkedList will updated
-    void getInvites(LinkedList<String> invites);
-    void getChatsId(LinkedList<String> chatsId);
-    void getMessages(String chatId, LinkedList<MessageData> messages);
 
+
+    void getChatsIdAndUsername(Map<String, Object> chatsId_username, DatabaseCallback chatDB);
 
     void SendInviteTo(String username, DatabaseCallback chatDB);
-    void AcceptInvite(String chatId, DatabaseCallback chatDB);
-    void DennyInvite(String chatId, DatabaseCallback chatDB);
-
-    void sentMessage(String chatId, String message, DatabaseCallback chatDB);
+    void AcceptInvites(DatabaseCallback chatDB);
+    void getMessages(LinkedList<MessageData> messages, long fromNTimeRead, String chatId, DatabaseCallback chatDB);
+    void sentMessage(String chatId, String text, String username, DatabaseCallback chatDB);
 }
