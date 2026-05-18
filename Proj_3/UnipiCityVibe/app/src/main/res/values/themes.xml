@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.UnipiCityVibe" parent="Theme.Design.Light.NoActionBar">
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorSecondary">@color/very_dark_gray</item>
+        <item name="background">@color/very_light_gray</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+    </style>
+
+    <style name="Theme.UnipiCityVibe" parent="Base.Theme.UnipiCityVibe" />
+</resources>
