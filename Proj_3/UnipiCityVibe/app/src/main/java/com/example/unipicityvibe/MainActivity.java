@@ -1,6 +1,9 @@
 package com.example.unipicityvibe;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    String email;
+    String password;
+    private void loginButton(View l){
+
+    }
+    private void goRegisterPageButton(View view){
+        Intent intent=new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +34,16 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Button b;
+        b = findViewById(R.id.buttonLogin);
+        b.setOnClickListener(this::loginButton);
+        b = findViewById(R.id.buttonRegister);
+        b.setOnClickListener(this::goRegisterPageButton);
+
+        email = "";
+        password = "";
     }
+
+
 }

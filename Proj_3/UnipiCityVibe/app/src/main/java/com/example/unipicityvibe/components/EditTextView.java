@@ -2,6 +2,7 @@ package com.example.unipicityvibe.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -31,13 +32,12 @@ public class EditTextView extends ConstraintLayout {
             try {
                 CharSequence labelText = a.getText(R.styleable.EditTextView_label_text);
                 CharSequence editTextValue = a.getText(R.styleable.EditTextView_edit_text);
+                int inputType = a.getInt(R.styleable.EditTextView_android_inputType, -1);
 
-                if (labelText != null) {
-                    textView.setText(labelText);
-                }
-                if (editTextValue != null) {
-                    editText.setText(editTextValue);
-                }
+                if (labelText != null) textView.setText(labelText);
+                if (editTextValue != null) editText.setText(editTextValue);
+                editText.setInputType(inputType);
+
             } finally {
                 a.recycle();
             }
@@ -70,7 +70,7 @@ public class EditTextView extends ConstraintLayout {
     public String getEditText(){
         return editText.getText().toString();
     }
-    public String getEditText(String text){
-        return editText.getText().toString();
+    public String getLabelText(){
+        return textView.getText().toString();
     }
 }

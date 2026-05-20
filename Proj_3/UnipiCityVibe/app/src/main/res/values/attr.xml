@@ -4,6 +4,7 @@
     <declare-styleable name="EditTextView">
         <attr name="label_text" format="string"/>
         <attr name="edit_text" format="string"/>
+        <attr name="android:inputType"/>
     </declare-styleable>
 
 

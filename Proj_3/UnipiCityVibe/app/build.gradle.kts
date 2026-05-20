@@ -1,6 +1,6 @@
 plugins {
-    id("com.google.gms.google-services") version "4.4.4" apply false
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation(libs.appcompat)
+    implementation(libs.firebase.auth)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)

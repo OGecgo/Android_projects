@@ -8,6 +8,9 @@
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
     </style>
+    <style name="ErrorText">
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
+    </style>
 
     <!-- top view menu -->
     <style name="HomeButton_TopMenu">

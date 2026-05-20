@@ -1,7 +1,10 @@
 <resources>
 <!-- Account Area -->
+    <string name="name">Name</string>
+    <string name="last_name">LastName</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="repeat_password">repeat_password</string>
     <string name="logIn">LogIn</string>
     <string name="register">Register</string>
 
