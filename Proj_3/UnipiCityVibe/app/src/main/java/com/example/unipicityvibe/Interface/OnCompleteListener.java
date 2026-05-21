@@ -1,6 +1,7 @@
 package com.example.unipicityvibe.Interface;
 
-public interface OnCompleteListener {
+import java.lang.reflect.Type;
 
+public interface OnCompleteListener {
     void onCompose(boolean success, String errorLog);
 }

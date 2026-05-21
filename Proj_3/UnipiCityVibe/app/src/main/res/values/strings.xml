@@ -8,6 +8,47 @@
     <string name="logIn">LogIn</string>
     <string name="register">Register</string>
 
+<!--         Authentication & Validation Errors           -->
+    <!-- AuthControl Errors -->
+    <string name="error_user_already_logged_in">You are already logged in. Please log out first</string>
+    <string name="error_user_not_logged_in">You are not logged in</string>
+    
+    <!-- Validation Errors -->
+    <string name="error_email_empty">Email cannot be empty</string>
+    <string name="error_password_empty">Password cannot be empty</string>
+    <string name="error_email_invalid">Email format is invalid. Please enter a valid email</string>
+    <string name="error_uid_empty">User ID is empty</string>
+    <string name="error_name_empty">Name cannot be empty</string>
+    <string name="error_lastname_empty">Last name cannot be empty</string>
+    
+    <!-- User Authentication Errors -->
+    <string name="error_user_create_failed">Failed to create user account. Please try again</string>
+    <string name="error_user_delete_failed">Failed to delete user account</string>
+    <string name="error_user_not_exist">User does not exist</string>
+    <string name="error_signin_failed">Failed to sign in. Please check your credentials</string>
+    <string name="error_auth_failed">Authentication failed. Please try again</string>
+    <string name="error_signout_failed">Failed to sign out</string>
+    
+    <!-- User Data Errors -->
+    <string name="error_user_data_not_found">User data not found</string>
+    <string name="error_get_user_failed">Failed to retrieve user data</string>
+    
+    <!-- Ticket Errors -->
+    <string name="error_ticket_add_failed">Failed to add ticket</string>
+    <string name="error_ticket_not_found">Ticket data not found</string>
+    <string name="error_get_ticket_failed">Failed to retrieve ticket information</string>
+    <string name="error_no_tickets">No tickets found for your account</string>
+    <string name="error_get_tickets_failed">Failed to retrieve your tickets</string>
+    
+    <!-- General Errors -->
+    <string name="error_unknown">An unknown error occurred. Please try again</string>
+    <string name="error_all_fields_required">Please fill all fields</string>
+    <string name="error_passwords_not_match">Passwords do not match</string>
+    <string name="error_password_too_short">Password must be at least 7 characters</string>
+
+
+
+    
 
 
 <!-- General Area -->

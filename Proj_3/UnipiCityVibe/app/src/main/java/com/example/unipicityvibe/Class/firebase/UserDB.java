@@ -6,7 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.unipicityvibe.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Constants.UserDBException;
+    import com.example.unipicityvibe.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Interface.firebase.IUserDB;
 import com.example.unipicityvibe.Struct.TicketStruct;
 import com.example.unipicityvibe.Struct.UserAuthStruct;
@@ -34,16 +35,16 @@ public class UserDB implements IUserDB {
     private boolean userTestValues(@NonNull UserAuthStruct user, @NonNull OnCompleteListener l){
         // empty value
         if (user.email.isEmpty()){
-            l.onCompose(false, "Email can not be empty");
+            l.onCompose(false, UserDBException.EMPTY_EMAIL);
             return true;
         }
         if (user.uID.isEmpty()){
-            l.onCompose(false, "ID can not be empty");
+            l.onCompose(false, UserDBException.EMPTY_UID);
             return true;
         }
         // simple email validation
         if (!user.email.contains("@") && !user.email.contains(".")){
-            l.onCompose(false, "Email validation error");
+            l.onCompose(false, UserDBException.EMAIL_VALIDATION_ERROR);
             return true;
         }
         return false;
@@ -52,7 +53,7 @@ public class UserDB implements IUserDB {
     private void onCompleteListenerGetUserData(@NotNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, UserDataStruct userData){
         if (task.isComplete()){
             if (task.getResult().exists()){
-                Log.d(TAG, "Get User:: Success");
+                Log.d(TAG, "[UserDB] User data retrieved successfully");
 
                 DataSnapshot snapshot = task.getResult();
                 userData.email = snapshot.child("email").getValue(String.class);
@@ -62,53 +63,53 @@ public class UserDB implements IUserDB {
                 l.onCompose(true, "");
             }
             else{
-                Log.w(TAG, "Get User:: Failure\n", task.getException());
-                l.onCompose(false, "Empty user");
+                Log.w(TAG, "[UserDB] User data not found in database");
+                l.onCompose(false, UserDBException.EMPTY_USER);
             }
         }
         else{
-            Log.w(TAG, "Get User:: Failure\n", task.getException());
-            l.onCompose(false, "Error get user");
+            Log.e(TAG, "[UserDB] Failed to retrieve user data", task.getException());
+            l.onCompose(false, UserDBException.ERROR_GET_USER);
         }
     }
 
     private void onCompleteListenerAddUser(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "User Add To Database:: Success");
+            Log.d(TAG, "[UserDB] User profile saved to database successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "User Add To Database:: Failure\n", task.getException());
-            l.onCompose(false, "Error user create");
+            Log.e(TAG, "[UserDB] Failed to save user profile to database", task.getException());
+            l.onCompose(false, UserDBException.ERROR_USER_CREATE);
         }
     }
 
     private void onCompleteListenerDeleteUser(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "Delete User From Database:: Success");
+            Log.d(TAG, "[UserDB] User profile deleted from database successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "Delete User From Database:: Failure\n", task.getException());
-            l.onCompose(false, "Error user delete");
+            Log.e(TAG, "[UserDB] Failed to delete user profile from database", task.getException());
+            l.onCompose(false, UserDBException.ERROR_USER_DELETE);
         }
     }
 
     private void onCompleteListenerAddTicket(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isComplete()){
-            Log.d(TAG, "Ticket Added To User:: success");
+            Log.d(TAG, "[UserDB] Ticket added to user profile successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "Ticket Added To User:: Failure\n", task.getException());
-            l.onCompose(false, "Ticket is not added to User");
+            Log.e(TAG, "[UserDB] Failed to add ticket to user profile", task.getException());
+            l.onCompose(false, UserDBException.TICKET_NOT_ADDED);
         }
     }
 
     private void onCompleteListenerGetTicketData(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, TicketStruct ticket){
         if (task.isComplete()){
             if (task.getResult().exists()){
-                Log.d(TAG, "Get Ticket:: Success");
+                Log.d(TAG, "[UserDB] Ticket data retrieved successfully");
 
                 DataSnapshot snapshot = task.getResult();
                 ticket.event_id = snapshot.child("event_id").getValue(String.class);
@@ -117,20 +118,20 @@ public class UserDB implements IUserDB {
                 l.onCompose(true, "");
             }
             else{
-                Log.w(TAG, "Get Ticket:: Failure\n", task.getException());
-                l.onCompose(false, "Empty ticket");
+                Log.w(TAG, "[UserDB] Ticket data not found in database");
+                l.onCompose(false, UserDBException.EMPTY_TICKET);
             }
         }
         else{
-            Log.w(TAG, "Get Ticket:: Failure\n", task.getException());
-            l.onCompose(false, "Error get ticket");
+            Log.e(TAG, "[UserDB] Failed to retrieve ticket data", task.getException());
+            l.onCompose(false, UserDBException.ERROR_GET_TICKET);
         }
     }
 
     private void onCompleteListenerGetUserTickets(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull AtomicReference<TicketStruct[]> ticketsRef){
         if (task.isComplete()){
             if (task.getResult().exists()){
-                Log.d(TAG, "Get Ticket:: Success");
+                Log.d(TAG, "[UserDB] User tickets retrieved successfully");
 
                 DataSnapshot snapshot = task.getResult();
                 int size = Math.toIntExact(snapshot.getChildrenCount());
@@ -146,13 +147,13 @@ public class UserDB implements IUserDB {
                 l.onCompose(true, "");
             }
             else{
-                Log.w(TAG, "Get Tickets:: Failure\n", task.getException());
-                l.onCompose(false, "No Tickets Find");
+                Log.w(TAG, "[UserDB] No tickets found for user");
+                l.onCompose(false, UserDBException.NO_TICKETS_FOUND);
             }
         }
         else{
-            Log.w(TAG, "Get Tickets:: Failure\n", task.getException());
-            l.onCompose(false, "Error get tickets");
+            Log.e(TAG, "[UserDB] Failed to retrieve user tickets", task.getException());
+            l.onCompose(false, UserDBException.ERROR_GET_TICKETS);
         }
     }
 
@@ -172,11 +173,11 @@ public class UserDB implements IUserDB {
         // test
         if (userTestValues(user, l)) return;
         if (name.isEmpty()){
-            l.onCompose(false, "Name cannot be empty");
+            l.onCompose(false, UserDBException.NAME_EMPTY);
             return;
         }
         if (lastName.isEmpty()){
-            l.onCompose(false, "Last Name cannot be empty");
+            l.onCompose(false, UserDBException.LASTNAME_EMPTY);
             return;
         }
 
@@ -194,7 +195,7 @@ public class UserDB implements IUserDB {
     @Override
     public void deleteUser(@NonNull UserAuthStruct user, @NonNull OnCompleteListener l){
         if (user.uID.isEmpty()){
-            l.onCompose(false, "User Not Exist");
+            l.onCompose(false, UserDBException.USER_NOT_EXIST);
             return;
         }
         userDB.child("users").child(user.uID).removeValue().addOnCompleteListener(task ->  this.onCompleteListenerDeleteUser(task, l));

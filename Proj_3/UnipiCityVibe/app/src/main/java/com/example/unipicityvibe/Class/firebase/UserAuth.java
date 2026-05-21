@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.unipicityvibe.Constants.UserAuthException;
 import com.example.unipicityvibe.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Interface.firebase.IUserAuth;
 import com.example.unipicityvibe.Struct.UserAuthStruct;
@@ -29,16 +30,16 @@ public class UserAuth implements IUserAuth {
     private boolean emailPasswordTest(String email, String password, @NonNull OnCompleteListener l){
         // empty values
         if (Objects.equals(email, "") || email == null){
-            l.onCompose(false, "Email can not be empty");
+            l.onCompose(false, UserAuthException.EMPTY_EMAIL);
             return true;
         }
         if (Objects.equals(password, "") || password == null){
-            l.onCompose(false, "Password can not be empty");
+            l.onCompose(false, UserAuthException.EMPTY_PASSWORD);
             return true;
         }
         // simple email validation
         if (!email.contains("@") || !email.contains(".")){
-            l.onCompose(false, "Email validation error");
+            l.onCompose(false, UserAuthException.EMAIL_VALIDATION_ERROR);
             return true;
         }
         return false;
@@ -46,43 +47,43 @@ public class UserAuth implements IUserAuth {
 
     private void onCompleteListenerCreatedUser(@NonNull Task<AuthResult> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "Create User With Email:: Success");
+            Log.d(TAG, "[UserAuth] User account created successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "Create User With Email:: Failure\n", task.getException());
-            l.onCompose(false, "Error user create");
+            Log.e(TAG, "[UserAuth] Failed to create user account", task.getException());
+            l.onCompose(false, UserAuthException.ERROR_USER_CREATE);
         }
     }
     private void onCompleteListenerSingIn(@NonNull Task<AuthResult> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "SingIn User With Email:: Success");
+            Log.d(TAG, "[UserAuth] User signed in successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "SingIn User With Email:: Failure\n", task.getException());
-            l.onCompose(false, "Error user singIn");
+            Log.e(TAG, "[UserAuth] Failed to sign in user", task.getException());
+            l.onCompose(false, UserAuthException.ERROR_USER_SIGNIN);
         }
     }
     private void onCompleteListenerDelete(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "Delete User:: Success");
+            Log.d(TAG, "[UserAuth] User account deleted successfully");
             l.onCompose(true, "");
         }
         else{
-            Log.w(TAG, "Delete User:: Failure\n", task.getException());
-            l.onCompose(false, "Error user delete");
+            Log.e(TAG, "[UserAuth] Failed to delete user account", task.getException());
+            l.onCompose(false, UserAuthException.ERROR_USER_DELETE);
         }
     }
     private void onCompleteListenerReauthenticate(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
-            Log.d(TAG, "Authentication:: Success");
+            Log.d(TAG, "[UserAuth] User re-authentication successful, proceeding with deletion");
             // onCompleteListenerReauthenticate called only if current User is not null
             fAuth.getCurrentUser().delete().addOnCompleteListener((task2) -> this.onCompleteListenerDelete(task2, l));
         }
         else{
-            Log.w(TAG, "Authentication:: Failure\n", task.getException());
-            l.onCompose(false, "Error user authentication");
+            Log.e(TAG, "[UserAuth] User re-authentication failed", task.getException());
+            l.onCompose(false, UserAuthException.ERROR_USER_AUTHENTICATION);
         }
     }
 
@@ -127,18 +128,18 @@ public class UserAuth implements IUserAuth {
     public void singOut(OnCompleteListener l){
         try {
             FirebaseAuth.getInstance().signOut();
-            Log.d(TAG, "LogOut User:: Success");
+            Log.d(TAG, "[UserAuth] User signed out successfully");
             l.onCompose(true, "");
         } catch (Exception e) { // error logout
-            Log.d(TAG, "LogOut User:: Failure");
-            l.onCompose(false, "SingOut fail");
+            Log.e(TAG, "[UserAuth] Failed to sign out user", e);
+            l.onCompose(false, UserAuthException.SIGNOUT_FAIL);
         }
     }
     @Override
     public void deleteUser(String password, @NonNull OnCompleteListener l){
         FirebaseUser userAuth = fAuth.getCurrentUser();
         if (userAuth == null){
-            l.onCompose(false, "User not exist");
+            l.onCompose(false, UserAuthException.USER_NOT_EXIST);
             return;
         }
         String email = userAuth.getEmail();
