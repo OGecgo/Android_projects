@@ -9,38 +9,23 @@
 
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints">
-
-        <com.example.unipicityvibe.components.TopViewMenu
-            android:id="@+id/top_view_menu"
+        <com.example.unipicityvibe.Components.TopViewMenu
+            android:id="@+id/topViewMenu"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/MainPage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="271dp">
 
-            <com.example.unipicityvibe.components.EditTextView
+            <com.example.unipicityvibe.Components.EditTextView
                 android:id="@+id/editTextViewName"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="150dp"
                 app:label_text="@string/name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.unipicityvibe.components.EditTextView
+            <com.example.unipicityvibe.Components.EditTextView
                 android:id="@+id/editTextViewLastName"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -50,7 +35,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextViewName" />
 
-            <com.example.unipicityvibe.components.EditTextView
+            <com.example.unipicityvibe.Components.EditTextView
                 android:id="@+id/editTextViewEmail"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -60,7 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextViewLastName"
                 app:label_text="@string/email"/>
 
-            <com.example.unipicityvibe.components.EditTextView
+            <com.example.unipicityvibe.Components.EditTextView
                 android:id="@+id/editTextViewPassword"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -71,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextViewEmail" />
 
-            <com.example.unipicityvibe.components.EditTextView
+            <com.example.unipicityvibe.Components.EditTextView
                 android:id="@+id/editTextViewPassword2"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -106,6 +91,5 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        </com.example.unipicityvibe.Components.TopViewMenu>
 </androidx.constraintlayout.widget.ConstraintLayout>

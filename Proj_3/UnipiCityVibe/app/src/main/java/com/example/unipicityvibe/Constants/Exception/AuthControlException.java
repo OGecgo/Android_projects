@@ -1,4 +1,4 @@
-package com.example.unipicityvibe.Constants;
+package com.example.unipicityvibe.Constants.Exception;
 
 public final class AuthControlException {
     public static final String USER_LOGGED_IN = "USER_LOGGED_IN";

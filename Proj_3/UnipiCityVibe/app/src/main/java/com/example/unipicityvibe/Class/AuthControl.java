@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Class.firebase.UserAuth;
 import com.example.unipicityvibe.Class.firebase.UserDB;
-import com.example.unipicityvibe.Constants.AuthControlException;
+import com.example.unipicityvibe.Constants.Exception.AuthControlException;
 import com.example.unipicityvibe.Interface.IAuthControl;
 import com.example.unipicityvibe.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Interface.firebase.IUserAuth;
@@ -23,6 +23,14 @@ public class AuthControl implements IAuthControl {
     private AuthControl(){
         userAuth = UserAuth.getInstance();
         userDB = UserDB.getInstance();
+    }
+
+    private void onCompleteListenerDeleteUser(boolean success, String errorLog, @NonNull OnCompleteListener l, String password){
+        if(success){
+            userAuth.deleteUser(password, l);
+            return;
+        }
+        l.onCompose(false, errorLog);
     }
 
     private void onCompleteListenerRegister(boolean success, String errorLog, @NonNull OnCompleteListener l, String name, String lastName){
@@ -57,11 +65,10 @@ public class AuthControl implements IAuthControl {
         userAuth.singOut(l);
     }
     public void userRegister(String email, String password, String name, String lastName, @NonNull OnCompleteListener l){
-        
         userAuth.createUser(email, password, (success, errorLog) -> onCompleteListenerRegister(success, errorLog, l, name, lastName));
     }
     public void userDelete(String password, @NonNull OnCompleteListener l){
-        userAuth.deleteUser(password, l);
+        userDB.deleteUser(userAuth.getUser(), (success, errorText) -> this.onCompleteListenerDeleteUser(success, errorText, l, password));
     }
 
 }

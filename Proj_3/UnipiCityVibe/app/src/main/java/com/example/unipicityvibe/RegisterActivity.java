@@ -1,6 +1,5 @@
 package com.example.unipicityvibe;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,16 +13,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.unipicityvibe.Class.AuthControl;
-import com.example.unipicityvibe.Constants.AuthControlException;
-import com.example.unipicityvibe.Constants.UserAuthException;
-import com.example.unipicityvibe.Constants.UserDBException;
+import com.example.unipicityvibe.Constants.ExceptionToMessage;
 import com.example.unipicityvibe.Interface.IAuthControl;
-import com.example.unipicityvibe.components.EditTextView;
-import com.example.unipicityvibe.components.TopViewMenu;
+import com.example.unipicityvibe.Struct.UserAuthStruct;
+import com.example.unipicityvibe.Components.EditTextView;
+import com.example.unipicityvibe.Components.TopViewMenu;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private IAuthControl authControl;
     private EditTextView editTextViewName;
     private EditTextView editTextViewLastName;
     private EditTextView editTextViewEmail;
@@ -32,100 +29,24 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView errorText;
 
 
+    private IAuthControl authControl;
 
-    private void goHome(){
+    private void goHomePage(){
+        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void goLogiPage(){
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
     private void onComposeListenerButton(boolean success, String errorLog){
         if (!success){
-            // handle exception and convert it to text for user
-            int textResId;
-            switch (errorLog){
-                // AuthControl exceptions
-                case AuthControlException.USER_LOGGED_IN:
-                    textResId = R.string.error_user_already_logged_in;
-                    break;
-                case AuthControlException.USER_NOT_LOGGED_IN:
-                    textResId = R.string.error_user_not_logged_in;
-                    break;
-
-                // UserAuth & UserDB Validation
-                case UserAuthException.EMPTY_EMAIL: // UserDBException.EMPTY_EMAIL
-                    textResId = R.string.error_email_empty;
-                    break;
-                case UserAuthException.EMPTY_PASSWORD:
-                    textResId = R.string.error_password_empty;
-                    break;
-                case UserAuthException.EMAIL_VALIDATION_ERROR: // UserDBException.EMAIL_VALIDATION_ERROR
-                    textResId = R.string.error_email_invalid;
-                    break;
-                case UserDBException.EMPTY_UID:
-                    textResId = R.string.error_uid_empty;
-                    break;
-                // UserAuth & UserDB Authentication
-                case UserAuthException.ERROR_USER_CREATE: // UserDBException.ERROR_USER_CREATE
-                    textResId = R.string.error_user_create_failed;
-                    break;
-                case UserAuthException.ERROR_USER_DELETE: // UserDBException.ERROR_USER_DELETE
-                    textResId = R.string.error_user_delete_failed;
-                    break;
-                case UserAuthException.USER_NOT_EXIST: // UserDBException.USER_NOT_EXIST
-                    textResId = R.string.error_user_not_exist;
-                    break;
-
-                // UserAuth exceptions
-                case UserAuthException.ERROR_USER_SIGNIN:
-                    textResId = R.string.error_signin_failed;
-                    break;
-
-                case UserAuthException.ERROR_USER_AUTHENTICATION:
-                    textResId = R.string.error_auth_failed;
-                    break;
-                case UserAuthException.SIGNOUT_FAIL:
-                    textResId = R.string.error_signout_failed;
-                    break;
-
-                
-                // UserDB exceptions
-                case UserDBException.NAME_EMPTY:
-                    textResId = R.string.error_name_empty;
-                    break;
-                case UserDBException.LASTNAME_EMPTY:
-                    textResId = R.string.error_lastname_empty;
-                    break;
-                case UserDBException.EMPTY_USER:
-                    textResId = R.string.error_user_data_not_found;
-                    break;
-                case UserDBException.ERROR_GET_USER:
-                    textResId = R.string.error_get_user_failed;
-                    break;
-                case UserDBException.TICKET_NOT_ADDED:
-                    textResId = R.string.error_ticket_add_failed;
-                    break;
-                case UserDBException.EMPTY_TICKET:
-                    textResId = R.string.error_ticket_not_found;
-                    break;
-                case UserDBException.ERROR_GET_TICKET:
-                    textResId = R.string.error_get_ticket_failed;
-                    break;
-                case UserDBException.NO_TICKETS_FOUND:
-                    textResId = R.string.error_no_tickets;
-                    break;
-                case UserDBException.ERROR_GET_TICKETS:
-                    textResId = R.string.error_get_tickets_failed;
-                    break;
-                
-                default:
-                    textResId = R.string.error_unknown;
-                    break;
-            }
-
-            errorText.setText(textResId);
+            errorText.setText(ExceptionToMessage.AuthExceptionToTextId(errorLog));
         }
         else{
-            goHome();
+            goHomePage();
         }
     }
 
@@ -151,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void goHomePageButton(View view){
-        goHome();
+        goLogiPage();
     }
 
     private void registerButton(View view){
@@ -187,12 +108,18 @@ public class RegisterActivity extends AppCompatActivity {
         editTextViewPassword2 = findViewById(R.id.editTextViewPassword2);
         errorText = findViewById(R.id.textViewError);
 
-        TopViewMenu tvm = findViewById(R.id.top_view_menu);
-        tvm.setOnClickListener(this::goHomePageButton);
+        TopViewMenu tvm = findViewById(R.id.topViewMenu );
+        tvm.setOnClickListenerButtonLogo(this::goHomePageButton);
 
         Button reg = findViewById(R.id.buttonRegister);
         reg.setOnClickListener(this::registerButton);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        UserAuthStruct user = authControl.getUserAuth();
+        if (!user.uID.isEmpty()) goHomePage();
     }
 }

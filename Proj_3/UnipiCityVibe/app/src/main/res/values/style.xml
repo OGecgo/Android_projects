@@ -10,23 +10,26 @@
     </style>
     <style name="ErrorText">
         <item name="android:textColor">?attr/colorSecondaryVariant</item>
+        <item name="android:text">center</item>
+    </style>
+    <style name="DefaultTextView">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+    <style name="DefaultEditText">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
     </style>
 
+
     <!-- top view menu -->
-    <style name="HomeButton_TopMenu">
+    <style name="Button_TopMenu">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:gravity">center</item>
     </style>
     <style name="TopMenu">
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <!-- edit text view -->
-    <style name="Label_EditTextView">
-        <item name="android:textColor">?attr/colorPrimary</item>
-    </style>
-    <style name="EditText_EditTextView">
-        <item name="android:textColor">?attr/colorPrimary</item>
-        <item name="android:backgroundTint">?attr/colorPrimary</item>
-    </style>
+
 </resources>

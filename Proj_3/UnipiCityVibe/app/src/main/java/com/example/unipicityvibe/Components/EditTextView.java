@@ -1,8 +1,7 @@
-package com.example.unipicityvibe.components;
+package com.example.unipicityvibe.Components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -20,6 +19,10 @@ public class EditTextView extends ConstraintLayout {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
         LayoutInflater.from(context).inflate(R.layout.edit_text_view, this, true);
+
+        // proper work on graphic redactor
+        if(isInEditMode()) return;
+
         editText = findViewById(R.id.editText);
         textView = findViewById(R.id.textView);
 

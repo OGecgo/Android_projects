@@ -6,9 +6,12 @@
     <string name="password">Password</string>
     <string name="repeat_password">repeat_password</string>
     <string name="logIn">LogIn</string>
+    <string name="logOut">LogOut</string>
+    <string name="deleteUser">Delete User</string>
     <string name="register">Register</string>
 
-<!--         Authentication & Validation Errors           -->
+    <string name="question_user_delete_account">Are you sure you want to delete the account?</string>
+
     <!-- AuthControl Errors -->
     <string name="error_user_already_logged_in">You are already logged in. Please log out first</string>
     <string name="error_user_not_logged_in">You are not logged in</string>
@@ -54,4 +57,7 @@
 <!-- General Area -->
     <string name="none">None</string>
     <string name="app_name">UnipiCityVibe</string>
+    <string name="event_map">Event map</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 </resources>

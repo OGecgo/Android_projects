@@ -1,4 +1,4 @@
-package com.example.unipicityvibe.Constants;
+package com.example.unipicityvibe.Constants.Exception;
 
 public final class UserAuthException {
     public static final String EMPTY_EMAIL = "EMPTY_EMAIL";

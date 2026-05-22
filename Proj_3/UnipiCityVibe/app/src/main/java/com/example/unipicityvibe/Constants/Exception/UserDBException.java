@@ -1,4 +1,4 @@
-package com.example.unipicityvibe.Constants;
+package com.example.unipicityvibe.Constants.Exception;
 
 public final class UserDBException {
     // Validation errors

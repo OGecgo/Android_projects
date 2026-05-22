@@ -13,19 +13,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:orientation="vertical">
 
         <TextView
-            style="@style/Label_EditTextView"
+            style="@style/DefaultTextView"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="@string/none"/>
 
         <EditText
-            style="@style/EditText_EditTextView"
+            style="@style/DefaultEditText"
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

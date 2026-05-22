@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.unipicityvibe.Constants.UserAuthException;
+import com.example.unipicityvibe.Constants.Exception.UserAuthException;
 import com.example.unipicityvibe.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Interface.firebase.IUserAuth;
 import com.example.unipicityvibe.Struct.UserAuthStruct;

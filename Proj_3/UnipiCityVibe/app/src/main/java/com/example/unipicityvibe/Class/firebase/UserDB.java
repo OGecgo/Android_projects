@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.unipicityvibe.Constants.UserDBException;
+import com.example.unipicityvibe.Constants.Exception.UserDBException;
     import com.example.unipicityvibe.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Interface.firebase.IUserDB;
 import com.example.unipicityvibe.Struct.TicketStruct;
