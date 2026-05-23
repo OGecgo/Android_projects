@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +19,19 @@ import com.example.unipicityvibe.Struct.UserAuthStruct;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private TextView errorText;
+
     private void goLoginPage(){
         Intent intent = new Intent(HomeActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void logOutButton(boolean success, String errorText){
+    private void logOutButton(boolean success, String erroLog){
         if (success){
             goLoginPage();
         }
-        // i can show dialog with error
+        errorText.setText(erroLog);
     }
 
     private void deleteButton(View view){
@@ -52,5 +55,7 @@ public class HomeActivity extends AppCompatActivity {
         topViewMenu.setFragmentManager(getSupportFragmentManager());
         topViewMenu.setOnClickListenerButtonLogOut(this::logOutButton);
         topViewMenu.setOnClickListenerDeleteAccount(this::deleteButton);
+
+        errorText = findViewById(R.id.textViewError);
     }
 }
