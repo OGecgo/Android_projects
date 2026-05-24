@@ -5,91 +5,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/MainPage">
 
 
 
-        <com.example.unipicityvibe.Components.TopViewMenu
-            android:id="@+id/topViewMenu"
+
+
+
+        <com.example.unipicityvibe.UI.CustomView.EditTextView
+            android:id="@+id/editTextViewName"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="150dp"
+            app:label_text="@string/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/fragment_top_view_menu"/>
+
+        <com.example.unipicityvibe.UI.CustomView.EditTextView
+            android:id="@+id/editTextViewLastName"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            app:label_text="@string/last_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextViewName" />
+
+        <com.example.unipicityvibe.UI.CustomView.EditTextView
+            android:id="@+id/editTextViewEmail"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextViewLastName"
+            app:label_text="@string/email"/>
+
+        <com.example.unipicityvibe.UI.CustomView.EditTextView
+            android:id="@+id/editTextViewPassword"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            android:inputType="textPassword"
+            app:label_text="@string/password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextViewEmail" />
+
+        <com.example.unipicityvibe.UI.CustomView.EditTextView
+            android:id="@+id/editTextViewPassword2"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            android:inputType="textPassword"
+            app:label_text="@string/repeat_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextViewPassword" />
+
+        <Button
+            style="@style/DefaultButton"
+            android:id="@+id/buttonRegister"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Error -->
+        <TextView
+            style="@style/ErrorText"
+            android:id="@+id/textViewError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/topViewMenuContainer"
+            android:name="com.example.unipicityvibe.UI.Fragments.TopViewMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout=""/>
 
-
-            <com.example.unipicityvibe.Components.EditTextView
-                android:id="@+id/editTextViewName"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="150dp"
-                app:label_text="@string/name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.example.unipicityvibe.Components.EditTextView
-                android:id="@+id/editTextViewLastName"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                app:label_text="@string/last_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextViewName" />
-
-            <com.example.unipicityvibe.Components.EditTextView
-                android:id="@+id/editTextViewEmail"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextViewLastName"
-                app:label_text="@string/email"/>
-
-            <com.example.unipicityvibe.Components.EditTextView
-                android:id="@+id/editTextViewPassword"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                android:inputType="textPassword"
-                app:label_text="@string/password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextViewEmail" />
-
-            <com.example.unipicityvibe.Components.EditTextView
-                android:id="@+id/editTextViewPassword2"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                android:inputType="textPassword"
-                app:label_text="@string/repeat_password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextViewPassword" />
-
-            <Button
-                style="@style/DefaultButton"
-                android:id="@+id/buttonRegister"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:text="@string/register"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <!-- Error -->
-            <TextView
-                style="@style/ErrorText"
-                android:id="@+id/textViewError"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text=""
-                app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-        </com.example.unipicityvibe.Components.TopViewMenu>
 </androidx.constraintlayout.widget.ConstraintLayout>

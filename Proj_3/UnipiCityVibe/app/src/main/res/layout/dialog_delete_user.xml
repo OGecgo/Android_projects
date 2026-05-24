@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.unipicityvibe.Components.EditTextView
+    <com.example.unipicityvibe.UI.CustomView.EditTextView
         android:id="@+id/editTextViewPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

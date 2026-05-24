@@ -30,13 +30,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
+    implementation(libs.annotation)
     implementation(libs.appcompat)
     implementation(libs.firebase.auth)
+    implementation(libs.fragment)
     implementation(libs.legacy.support.v4)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
