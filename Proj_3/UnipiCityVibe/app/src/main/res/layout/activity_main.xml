@@ -55,8 +55,8 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            style="@style/ErrorText"
             android:id="@+id/textViewError"
+            style="@style/ErrorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

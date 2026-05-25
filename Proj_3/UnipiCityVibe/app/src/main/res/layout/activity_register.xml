@@ -21,8 +21,7 @@
             app:label_text="@string/name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout="@layout/fragment_top_view_menu"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.unipicityvibe.UI.CustomView.EditTextView
             android:id="@+id/editTextViewLastName"
@@ -97,6 +96,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout=""/>
+            tools:layout="@layout/fragment_top_view_menu"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

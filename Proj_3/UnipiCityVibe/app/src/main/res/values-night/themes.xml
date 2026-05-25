@@ -4,11 +4,13 @@
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:textAllCaps">false</item>
 
         <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/very_light_gray</item>
         <item name="background">@color/very_dark_gray</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorSecondaryVariant">@color/light_red</item>
+
     </style>
 </resources>

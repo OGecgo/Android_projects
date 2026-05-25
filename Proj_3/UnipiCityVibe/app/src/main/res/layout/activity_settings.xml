@@ -19,33 +19,149 @@
         tools:layout="@layout/fragment_top_view_menu"/>
 
 
-<!--    VAZW STYLE GIA TO SIZE. WSTE O HRISTINS NA BOREI NA TO ALAXEI. EPISEIS VAZW KAI STYLE GRAMATOSIRA-->
-<!--  MIN TO XEHASEIS -->
-    <TextView
-        android:id="@+id/textView1"
+    <LinearLayout
+        android:id="@+id/linearLayoutEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:layout_marginTop="120dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/email" />
+
+        <TextView
+            style="@style/HeaderText"
+            android:id="@+id/textViewEmail"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEmail">
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/name"/>
+
+        <TextView
+            style="@style/HeaderText"
+            android:id="@+id/textViewName"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutName">
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/last_name" />
+
+        <TextView
+            android:id="@+id/textViewLastName"
+            style="@style/HeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:text="@string/none" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewError"
+        style="@style/ErrorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="513dp" />
+        android:layout_marginTop="20dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLastName" />
 
-    <TextView
-        android:id="@+id/textView3"
+
+    <RadioGroup
+        android:id="@+id/radioGroupTextSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="419dp" />
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/switchDarkMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            style="@style/HeaderText"
+            android:id="@+id/radioButtonSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_small_size" />
+
+        <RadioButton
+            style="@style/HeaderText"
+            android:layout_marginTop="10dp"
+            android:id="@+id/radioButtonNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_normal_size" />
+
+        <RadioButton
+            style="@style/HeaderText"
+            android:layout_marginTop="10dp"
+            android:id="@+id/radioButtonLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_large_size" />
+    </RadioGroup>
+
+
+    <Switch
+        android:id="@+id/switchDarkMode"
+        style="@style/HeaderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/dark_mode"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        style="@style/DefaultButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/deleteUser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

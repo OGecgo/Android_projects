@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,7 +18,7 @@ import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private EditTextView editTextViewEmail;
     private EditTextView editTextViewPassword;

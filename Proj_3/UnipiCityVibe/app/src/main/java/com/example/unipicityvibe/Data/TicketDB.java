@@ -51,7 +51,7 @@ public class TicketDB implements ITicketDB {
 
     // ------ Call Back ------
     private void onCompleteListenerAddTicket(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             Log.d(TAG, "[UserDB] Ticket added to user profile successfully");
             l.onCompose(true, "");
         }
@@ -62,7 +62,7 @@ public class TicketDB implements ITicketDB {
     }
 
     private void onCompleteListenerGetTicketData(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, TicketData ticket){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             if (task.getResult().exists()){
                 Log.d(TAG, "[UserDB] Ticket data retrieved successfully");
 
@@ -84,7 +84,7 @@ public class TicketDB implements ITicketDB {
     }
 
     private void onCompleteListenerGetUserTickets(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull AtomicReference<TicketData[]> ticketsRef){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             if (task.getResult().exists()){
                 Log.d(TAG, "[UserDB] User tickets retrieved successfully");
 

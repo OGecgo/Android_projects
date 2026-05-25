@@ -1,21 +1,17 @@
 package com.example.unipicityvibe.UI.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.unipicityvibe.R;
-import com.example.unipicityvibe.Service.AuthService;
-import com.example.unipicityvibe.Data.Models.UserAuthData;
 
-public class HomeActivity extends AppCompatActivity {
+
+public class HomeActivity extends BaseActivity {
 
     private TextView errorText;
 
@@ -29,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         errorText = findViewById(R.id.textViewError);
     }

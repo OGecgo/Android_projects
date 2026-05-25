@@ -52,16 +52,16 @@ public class UserDB implements IUserDB {
 
     // ------ Call Back ------
     private void onCompleteListenerGetUserData(@NotNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, UserData userData){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             if (task.getResult().exists()){
-                Log.d(TAG, "[UserDB] User data retrieved successfully");
+               Log.d(TAG, "[UserDB] User data retrieved successfully");
 
-                DataSnapshot snapshot = task.getResult();
-                userData.email = snapshot.child("email").getValue(String.class);
-                userData.name = snapshot.child("name").getValue(String.class);
-                userData.last_name = snapshot.child("last_name").getValue(String.class);
+               DataSnapshot snapshot = task.getResult();
+               userData.email = snapshot.child("email").getValue(String.class);
+               userData.name = snapshot.child("name").getValue(String.class);
+               userData.last_name = snapshot.child("last_name").getValue(String.class);
 
-                l.onCompose(true, "");
+               l.onCompose(true, "");
             }
             else{
                 Log.w(TAG, "[UserDB] User data not found in database");
@@ -104,7 +104,10 @@ public class UserDB implements IUserDB {
     }
     @Override
     public void getUserData(@NonNull UserAuthData user, @NonNull UserData userRef, @NonNull OnCompleteListener l){
-        if (user.uID.isEmpty()) return;
+        if (user.uID.isEmpty()){
+            l.onCompose(false, UserDBException.EMPTY_USER);
+            return;
+        }
 
         userDB.child("users").child(user.uID).get().addOnCompleteListener(task -> onCompleteListenerGetUserData(task, l, userRef));
     }

@@ -24,7 +24,7 @@ public class EventDB implements IEventDB {
         this.eventDB = FirebaseDatabase.getInstance().getReference().child("events");
     }
     private void onCompleteListenerGetEventData(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull EventData event){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             if(task.getResult().exists()){
                 Log.d(TAG, "[EventDB] Event retrieved successfully");
 
@@ -50,7 +50,7 @@ public class EventDB implements IEventDB {
     }
 
     private  void onCompleteListenerGetEventsRadius(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull AtomicReference<EventData[]> events){
-        if (task.isComplete()){
+        if (task.isSuccessful()){
             if(task.getResult().exists()){
                 Log.d(TAG, "[EventDB] Events retrieved successfully");
 
