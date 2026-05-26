@@ -44,14 +44,14 @@ public class SettingsFragment extends Fragment {
     }
 
     // ------ Call Back ------
-    private void onCompleteListenerGetData(boolean success, String errorLog, UserData userData) {
+    private void onCompleteListenerGetData(boolean success, String errorLog, UserData userData, View view) {
         if (success) {
             TextView tv;
-            tv = getView().findViewById(R.id.textViewEmail);
+            tv = view.findViewById(R.id.textViewEmail);
             tv.setText(userData.email);
-            tv = getView().findViewById(R.id.textViewName);
+            tv = view.findViewById(R.id.textViewName);
             tv.setText(userData.name);
-            tv = getView().findViewById(R.id.textViewLastName);
+            tv = view.findViewById(R.id.textViewLastName);
             tv.setText(userData.last_name);
             return;
         }
@@ -110,7 +110,7 @@ public class SettingsFragment extends Fragment {
         // get user data and set it
         IAuthService service = AuthService.getInstance();
         UserData userData = new UserData();
-        service.getUserData(userData, (success, errorLog) -> this.onCompleteListenerGetData(success, errorLog, userData));
+        service.getUserData(userData, (success, errorLog) -> this.onCompleteListenerGetData(success, errorLog, userData, view));
 
         // get last settings. After set to radio group and switch
         float scale = AppSettings.getFontScale(requireContext());

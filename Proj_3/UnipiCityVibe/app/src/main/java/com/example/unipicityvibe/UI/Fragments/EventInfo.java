@@ -44,9 +44,9 @@ public class EventInfo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textViewTitle = getView().findViewById(R.id.textViewTitle);
-        textViewDifferent = getView().findViewById(R.id.textViewDifferent);
-        textViewTime = getView().findViewById(R.id.textViewTime);
+        textViewTitle = view.findViewById(R.id.textViewTitle);
+        textViewDifferent = view.findViewById(R.id.textViewDifferent);
+        textViewTime = view.findViewById(R.id.textViewTime);
     }
 
     public void setValues(@NonNull EventData eventData){
