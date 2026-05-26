@@ -6,11 +6,12 @@
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:textAllCaps">false</item>
 
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorSecondary">@color/very_light_gray</item>
-        <item name="background">@color/very_dark_gray</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorSecondaryVariant">@color/light_red</item>
+        <item name="textColor">@color/white</item>
+        <item name="textColorReverse">@color/black</item>
+        <item name="textErrorColor">@color/light_red</item>
+        <item name="textSuccessColor">@color/light_green</item>
+        <item name="primaryColor">@color/very_light_gray</item>
+        <item name="backgroundColor">@color/very_dark_gray</item>
 
     </style>
 </resources>

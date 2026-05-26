@@ -7,5 +7,16 @@
         <attr name="android:inputType"/>
     </declare-styleable>
 
+    <!-- Theme Attributes -->
+    <attr name="colorTextSuccess" format="color"/>
+    <attr name="primaryColor" format="color"/>
+    <attr name="backgroundColor" format="color"/>
+    <attr name="textErrorColor" format="color"/>
+    <attr name="textSuccessColor" format="color"/>
+    <attr name="textColor" format="color"/>
+    <attr name="textColorReverse" format="color"/>
+
+
+
 
 </resources>

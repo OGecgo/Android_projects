@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnipiCityVibe">
         <activity
-            android:name=".UI.Activity.MainActivity"
+            android:name=".UI.Activity.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UI.Activity.RegisterActivity"/>
-        <activity android:name=".UI.Activity.HomeActivity"/>
-        <activity android:name=".UI.Activity.SettingsActivity"/>
+        <activity android:name=".UI.Activity.UserActivity"/>
     </application>
 
 </manifest>

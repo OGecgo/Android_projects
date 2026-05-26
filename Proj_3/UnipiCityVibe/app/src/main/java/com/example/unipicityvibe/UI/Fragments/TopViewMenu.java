@@ -1,7 +1,6 @@
 package com.example.unipicityvibe.UI.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.Service.AuthService;
+import com.example.unipicityvibe.Service.Interface.RefFunction;
 import com.example.unipicityvibe.UI.PopupMenu.PopUpMenuAccount;
-import com.example.unipicityvibe.UI.Activity.HomeActivity;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.UI.Activity.MainActivity;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 
@@ -26,22 +24,24 @@ public class TopViewMenu extends Fragment {
 
     private PopUpMenuAccount popUpMenuAccount;
     private Button buttonName;
+    private RefFunction homeListener;
 
     // ------ Buttons ------
-    private void logoButtonLogIn(View view){
-        if (requireContext().getClass().equals(MainActivity.class)) return;
-        Intent intent = new Intent(requireContext(), MainActivity.class);
-        startActivity(intent);
-    }
-    private void logoButtonHome(View view){
-        if (requireContext().getClass().equals(HomeActivity.class)) return;
-        Intent intent = new Intent(requireContext(), HomeActivity.class);
-        startActivity(intent);
+    private void logoButton(View view){
+        if (homeListener != null) homeListener.execute();
     }
     private void nameButton(View view){
         popUpMenuAccount.showAsDropDown(buttonName);
     }
     // ------ End Buttons ------
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // initialize popupmenu for button buttonName
+        popUpMenuAccount = new PopUpMenuAccount(getContext());
+    }
 
     @Override
     @Nullable
@@ -53,36 +53,29 @@ public class TopViewMenu extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // initialize popupmenu for button buttonName
-        popUpMenuAccount = new PopUpMenuAccount(getContext());
-
         // initialization for testing.
         // If user exist. buttonLogo will do transfer to Home page and buttonName will work
         // If not. buttonLogo will do transfer to LogIn page
         IAuthService authService = AuthService.getInstance();
         UserAuthData user = authService.getUserAuth();
 
-        Button buttonLogo = getView().findViewById(R.id.buttonLogo);
-        buttonName  = getView().findViewById(R.id.buttonName);
+        Button buttonLogo = view.findViewById(R.id.buttonLogo);
+        buttonName  = view.findViewById(R.id.buttonName);
 
         if (!user.uID.isEmpty()) {
             buttonName.setText(user.email);
             buttonName.setOnClickListener(this::nameButton);
-            buttonLogo.setOnClickListener(this::logoButtonHome);
         }
-        else{
-            buttonLogo.setOnClickListener(this::logoButtonLogIn);
-        }
+        buttonLogo.setOnClickListener(this::logoButton);
     }
 
 
+    public void setHomeButton(@NonNull RefFunction l){
+        homeListener = l;
+    }
 
+    public void setSettingsButton(@NonNull RefFunction l) {
+        popUpMenuAccount.setSettingsListener(l);
+    }
 
 }
-
-
-
-
-
-
-

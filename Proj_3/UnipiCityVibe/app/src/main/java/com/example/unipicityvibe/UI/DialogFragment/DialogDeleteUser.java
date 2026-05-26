@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.unipicityvibe.UI.Activity.MainActivity;
+import com.example.unipicityvibe.UI.Activity.AuthActivity;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
 import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
@@ -33,7 +33,7 @@ public class DialogDeleteUser extends DialogFragment {
             return;
         }
         dismiss();
-        Intent intent = new Intent(getContext(), MainActivity.class);
+        Intent intent = new Intent(getContext(), AuthActivity.class);
         startActivity(intent);
     }
     // ------ End Call Back ------

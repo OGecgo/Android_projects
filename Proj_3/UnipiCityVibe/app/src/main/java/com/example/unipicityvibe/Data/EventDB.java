@@ -34,7 +34,8 @@ public class EventDB implements IEventDB {
                 event.description = snapshot.child("description").getValue(String.class);
                 event.time = snapshot.child("time").getValue(String.class);
                 event.price = snapshot.child("price").getValue(String.class);
-                event.location = snapshot.child("location").getValue(String.class);
+                event.latitude = snapshot.child("latitude").getValue(String.class);
+                event.longitude = snapshot.child("longitude").getValue(String.class);
 
                 l.onCompose(true, "");
             }
@@ -63,7 +64,8 @@ public class EventDB implements IEventDB {
                     events.get()[pos].description = snapshot.child("description").getValue(String.class);
                     events.get()[pos].time = snapshot.child("time").getValue(String.class);
                     events.get()[pos].price = snapshot.child("price").getValue(String.class);
-                    events.get()[pos].location = snapshot.child("location").getValue(String.class);
+                    events.get()[pos].latitude = snapshot.child("latitude").getValue(String.class);
+                    events.get()[pos].longitude = snapshot.child("longitude").getValue(String.class);
                     pos ++;
                 }
                 l.onCompose(true, "");

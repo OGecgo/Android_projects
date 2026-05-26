@@ -2,6 +2,7 @@ package com.example.unipicityvibe.Service;
 
 import androidx.annotation.NonNull;
 
+import com.example.unipicityvibe.Data.UserAuth;
 import com.example.unipicityvibe.Data.UserDB;
 import com.example.unipicityvibe.Service.Exception.AuthServiceException;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
@@ -21,7 +22,7 @@ public class AuthService implements IAuthService {
 
 
     private AuthService(){
-        userAuth = com.example.unipicityvibe.Data.UserAuth.getInstance();
+        userAuth = UserAuth.getInstance();
         userDB = UserDB.getInstance();
     }
 
