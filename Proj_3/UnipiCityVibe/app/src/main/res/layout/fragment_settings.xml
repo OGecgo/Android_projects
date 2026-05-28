@@ -1,154 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MainPage">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            style="@style/HeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/email" />
-
-        <TextView
-            style="@style/HeaderText"
-            android:id="@+id/textViewEmail"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/none" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEmail">
-
-        <TextView
-            style="@style/HeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/name"/>
-
-        <TextView
-            style="@style/HeaderText"
-            android:id="@+id/textViewName"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/none" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutName">
-
-        <TextView
-            style="@style/HeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/last_name" />
-
-        <TextView
-            android:id="@+id/textViewLastName"
-            style="@style/HeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:text="@string/none" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textViewError"
-        style="@style/ErrorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLastName" />
-
-
-    <RadioGroup
-        android:id="@+id/radioGroupTextSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/switchDarkMode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <RadioButton
-            style="@style/HeaderText"
-            android:id="@+id/radioButtonSmall"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_small_size" />
+            android:orientation="vertical">
 
-        <RadioButton
-            style="@style/HeaderText"
-            android:layout_marginTop="10dp"
-            android:id="@+id/radioButtonNormal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_normal_size" />
+            <!-- Section 1: User Settings -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/userSettingsContainer"
+                android:name="com.example.unipicityvibe.UI.Fragments.SettingsUserSettingsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_settings_user"/>
 
-        <RadioButton
-            style="@style/HeaderText"
-            android:layout_marginTop="10dp"
-            android:id="@+id/radioButtonLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_large_size" />
-    </RadioGroup>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginHorizontal="16dp" />
 
+            <!-- Section 2: Permissions -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/permissionsSettingsContainer"
+                android:name="com.example.unipicityvibe.UI.Fragments.SettingsPermissionsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_settings_permissions"/>
 
-    <Switch
-        android:id="@+id/switchDarkMode"
-        style="@style/HeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="@string/dark_mode"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDelete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginHorizontal="16dp" />
 
-    <Button
-        android:id="@+id/buttonDelete"
-        style="@style/DefaultButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="@string/deleteUser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <!-- Section 3: General Settings -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/generalSettingsContainer"
+                android:name="com.example.unipicityvibe.UI.Fragments.SettingsGeneralSettingsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_settings_general"/>
 
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

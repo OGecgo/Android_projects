@@ -30,6 +30,12 @@
     </style>
     <style name="HeaderText">
         <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="LargeText">
+        <item name="android:textColor">?attr/textColor</item>
         <item name="android:textSize">21sp</item>
         <item name="android:gravity">center</item>
     </style>

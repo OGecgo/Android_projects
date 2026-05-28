@@ -46,15 +46,7 @@ public class UserActivity extends BaseActivity {
 
     private void showSettingsFragment() {
         if (settingsFragment == null) settingsFragment = new SettingsFragment();
-        settingsFragment.setRestartListener(this::restartAndShowSettings);
         replaceFragment(settingsFragment, true);
-    }
-    // set up reload page for settings
-    private void restartAndShowSettings() {
-        Intent intent = getIntent();
-        intent.putExtra("SHOW_SETTINGS", true);
-        finish();
-        startActivity(intent);
     }
 
     private void showEventListFragment() {
@@ -85,12 +77,7 @@ public class UserActivity extends BaseActivity {
         });
 
         if (savedInstanceState == null) {
-            // if settings do restart. move to settings. no to home page
-            if (getIntent().getBooleanExtra("SHOW_SETTINGS", false)) {
-                showSettingsFragment();
-            } else {
-                showHomeFragment();
-            }
+            showHomeFragment();
         }
 
         // take fragment
