@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.unipicityvibe.Data.Exception.UserAuthException;
 import com.example.unipicityvibe.UI.Activity.AuthActivity;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
@@ -41,6 +42,11 @@ public class DialogDeleteUser extends DialogFragment {
     // ------ Buttons ------
     private void submitButton(View view) {
         String password = editTextViewPassword.getEditText().toString();
+        // test empty password
+        if (password.isEmpty()) {
+            errorText.setText(R.string.error_password_empty);
+            return;
+        }
         authService.userDelete(password, this::onCompleteListenerSubmit);
     }
 

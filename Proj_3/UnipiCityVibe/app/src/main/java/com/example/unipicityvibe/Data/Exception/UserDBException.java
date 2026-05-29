@@ -7,6 +7,7 @@ public final class UserDBException {
     public static final String EMAIL_VALIDATION_ERROR = "EMAIL_VALIDATION_ERROR";
     public static final String NAME_EMPTY = "NAME_EMPTY";
     public static final String LASTNAME_EMPTY = "LASTNAME_EMPTY";
+    public static final String ERROR_USER_AUTHENTICATION = "ERROR_USER_AUTHENTICATION";
 
     // User operations
     public static final String EMPTY_USER = "EMPTY_USER";

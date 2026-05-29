@@ -78,7 +78,7 @@ public class AuthService implements IAuthService {
     }
     @Override
     public void userDelete(String password, @NonNull OnCompleteListener l){
-        userDB.deleteUser(userAuth.getUserAuth(), (success, errorText) -> this.onCompleteListenerDeleteUser(success, errorText, l, password));
+        userDB.deleteUser(userAuth.getFirebaseUser(), password, (success, errorText) -> this.onCompleteListenerDeleteUser(success, errorText, l, password));
     }
 
 }

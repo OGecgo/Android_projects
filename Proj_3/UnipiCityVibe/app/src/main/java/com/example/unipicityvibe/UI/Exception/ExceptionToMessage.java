@@ -42,14 +42,13 @@ public final class ExceptionToMessage {
             case UserAuthException.USER_NOT_EXIST: // UserDBException
                 textResId = R.string.error_user_not_exist;
                 break;
+            case UserAuthException.ERROR_USER_AUTHENTICATION: // UserDBException
+                textResId = R.string.error_auth_failed;
+                break;
 
             // UserAuth exceptions
             case UserAuthException.ERROR_USER_SIGNIN:
                 textResId = R.string.error_signin_failed;
-                break;
-
-            case UserAuthException.ERROR_USER_AUTHENTICATION:
-                textResId = R.string.error_auth_failed;
                 break;
             case UserAuthException.SIGNOUT_FAIL:
                 textResId = R.string.error_signout_failed;

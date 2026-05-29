@@ -31,15 +31,18 @@ public class UserAuth implements IUserAuth {
     private boolean emailPasswordTest(String email, String password, @NonNull OnCompleteListener l){
         // empty values
         if (Objects.equals(email, "") || email == null){
+            Log.w(TAG, "[UserAuth] User email is empty");
             l.onCompose(false, UserAuthException.EMPTY_EMAIL);
             return true;
         }
         if (Objects.equals(password, "") || password == null){
+            Log.w(TAG, "[UserDB] User password is empty");
             l.onCompose(false, UserAuthException.EMPTY_PASSWORD);
             return true;
         }
         // simple email validation
         if (!email.contains("@") || !email.contains(".")){
+            Log.w(TAG, "[UserAuth] User email validation error");
             l.onCompose(false, UserAuthException.EMAIL_VALIDATION_ERROR);
             return true;
         }
@@ -111,6 +114,10 @@ public class UserAuth implements IUserAuth {
         return sUserAuth;
     }
     @Override
+    public FirebaseUser getFirebaseUser(){
+        return fAuth.getCurrentUser();
+    }
+    @Override
     public void createUser(String email, String password, @NonNull OnCompleteListener l){
         if (emailPasswordTest(email, password, l)) return;
 
@@ -141,6 +148,7 @@ public class UserAuth implements IUserAuth {
     public void deleteUser(String password, @NonNull OnCompleteListener l){
         FirebaseUser userAuth = fAuth.getCurrentUser();
         if (userAuth == null){
+            Log.w(TAG, "[UserAuth] User not exist");
             l.onCompose(false, UserAuthException.USER_NOT_EXIST);
             return;
         }

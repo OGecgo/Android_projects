@@ -6,12 +6,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.unipicityvibe.Data.Exception.UserAuthException;
 import com.example.unipicityvibe.Data.Exception.UserDBException;
 import com.example.unipicityvibe.Data.Interface.IUserDB;
 import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Data.Models.UserData;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,15 +40,18 @@ public class UserDB implements IUserDB {
     private boolean userTestValues(@NonNull UserAuthData user, @NonNull OnCompleteListener l){
         // empty value
         if (user.email.isEmpty()){
+            Log.w(TAG, "[UserDB] User email is empty");
             l.onCompose(false, UserDBException.EMPTY_EMAIL);
             return true;
         }
         if (user.uID.isEmpty()){
+            Log.w(TAG, "[UserDB] User not exist");
             l.onCompose(false, UserDBException.EMPTY_UID);
             return true;
         }
         // simple email validation
         if (!user.email.contains("@") && !user.email.contains(".")){
+            Log.w(TAG, "[UserDB] User email validation error");
             l.onCompose(false, UserDBException.EMAIL_VALIDATION_ERROR);
             return true;
         }
@@ -85,6 +93,15 @@ public class UserDB implements IUserDB {
         }
     }
 
+    private void onCompleteListenerReauthenticate(Task<Void> task, String uID, @NonNull OnCompleteListener l){
+        if (task.isSuccessful()) {
+            userDB.child("users").child(uID).removeValue().addOnCompleteListener((task_t) -> this.onCompleteListenerDeleteUser(task_t, l));
+        }
+        else{
+            Log.w(TAG, "[UserDB] User authentication error", task.getException());
+            l.onCompose(false, UserDBException.ERROR_USER_AUTHENTICATION);
+        }
+    }
     private void onCompleteListenerDeleteUser(@NonNull Task<Void> task, @NonNull OnCompleteListener l){
         if (task.isSuccessful()){
             Log.d(TAG, "[UserDB] User profile deleted from database successfully");
@@ -105,6 +122,7 @@ public class UserDB implements IUserDB {
     @Override
     public void getUserData(@NonNull UserAuthData user, @NonNull UserData userRef, @NonNull OnCompleteListener l){
         if (user.uID.isEmpty()){
+            Log.w(TAG, "[UserDB] User is empty");
             l.onCompose(false, UserDBException.EMPTY_USER);
             return;
         }
@@ -116,10 +134,12 @@ public class UserDB implements IUserDB {
         // test
         if (userTestValues(user, l)) return;
         if (name.isEmpty()){
+            Log.w(TAG, "[UserDB] User name is empty");
             l.onCompose(false, UserDBException.NAME_EMPTY);
             return;
         }
         if (last_name.isEmpty()){
+            Log.w(TAG, "[UserDB] User last name is empty");
             l.onCompose(false, UserDBException.LASTNAME_EMPTY);
             return;
         }
@@ -136,12 +156,21 @@ public class UserDB implements IUserDB {
         userDB.updateChildren(update).addOnCompleteListener(task ->  this.onCompleteListenerAddUser(task, l));
     }
     @Override
-    public void deleteUser(@NonNull UserAuthData user, @NonNull OnCompleteListener l){
-        if (user.uID.isEmpty()){
+    public void deleteUser(@NonNull FirebaseUser userF, String password, @NonNull OnCompleteListener l){
+        // test user and password
+        if (userF.getUid().isEmpty()){
+            Log.w(TAG, "[UserDB] User is empty");
             l.onCompose(false, UserDBException.USER_NOT_EXIST);
             return;
         }
-        userDB.child("users").child(user.uID).removeValue().addOnCompleteListener(task ->  this.onCompleteListenerDeleteUser(task, l));
+        if (password.isEmpty()){
+            Log.w(TAG, "[UserDB] User authentication error");
+            l.onCompose(false, UserDBException.ERROR_USER_AUTHENTICATION);
+            return;
+        }
+        AuthCredential credential = EmailAuthProvider.getCredential(userF.getEmail(), password);
+        userF.reauthenticate(credential).addOnCompleteListener((task) -> this.onCompleteListenerReauthenticate(task, userF.getUid(), l));
     }
+
 
 }
