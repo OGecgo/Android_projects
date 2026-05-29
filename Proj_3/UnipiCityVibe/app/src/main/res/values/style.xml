@@ -20,12 +20,12 @@
     </style>
     <style name="ErrorText">
         <item name="android:textColor">?attr/textErrorColor</item>
-        <item name="android:text">center</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">15sp</item>
     </style>
     <style name="SuccessText">
         <item name="android:textColor">?attr/textSuccessColor</item>
-        <item name="android:text">center</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">15sp</item>
     </style>
     <style name="HeaderText">

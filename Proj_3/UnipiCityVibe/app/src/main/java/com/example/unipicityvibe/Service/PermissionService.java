@@ -1,0 +1,55 @@
+package com.example.unipicityvibe.Service;
+
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+public final class PermissionService {
+
+    public static final int PERMISSION_REQUEST_CODE_GPS = 0;
+    public static final int PERMISSION_REQUEST_CODE_NOTIFICATION = 0;
+
+
+
+    // ----- Location Permissions -----
+    public static void requestGPSFinePermission(Activity activity) {
+        boolean fine = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        if (fine) {
+            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_REQUEST_CODE_GPS);
+        }
+    }
+    public static void requestGPSCoarsePermission(Activity activity) {
+        boolean coarse = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        if (coarse) {
+            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION }, PERMISSION_REQUEST_CODE_GPS);
+        }
+    }
+    public static void requestLocationPermission(Activity activity) {
+        boolean fine = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        boolean coarse = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (!fine || !coarse) {
+            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION }, PERMISSION_REQUEST_CODE_GPS);
+        }
+    }
+    public static boolean isGrantedLocationPermission(Context context){
+        boolean fine = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        boolean coarse = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return fine || coarse;
+    }
+    public static boolean isGrantedFine(Context context){
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+    public static boolean isGrantedCoarse(Context context){
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+    // ----- End Location Permissions -----
+
+}
+
+

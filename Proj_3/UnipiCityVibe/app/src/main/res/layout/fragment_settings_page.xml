@@ -47,7 +47,7 @@
             <!-- Section 3: General Settings -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/generalSettingsContainer"
-                android:name="com.example.unipicityvibe.UI.Fragments.SettingsGeneralSettingsFragment"
+                android:name="com.example.unipicityvibe.UI.Fragments.SettingsGeneralFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout="@layout/fragment_settings_general"/>

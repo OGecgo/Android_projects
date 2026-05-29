@@ -65,7 +65,7 @@
     <!-- General Area -->
     <string name="none">None</string>
     <string name="app_name">UnipiCityVibe</string>
-    <string name="event_map">Event map</string>
+    <string name="event_map">Event Map</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="title_activity_maps">MapsActivity</string>
@@ -84,4 +84,8 @@
     <string name="permissions">Permissions</string>
     <string name="text_size">Text Size:</string>
     <string name="general_settings">General Settings</string>
+
+    <!-- Permissions -->
+    <string name="location_permission_denied_message">Access to the location has been denied.\n It is impossible to find the event nearby without location permission.</string>
+    <string name="permission_denied">Permission Denied</string>
 </resources>

@@ -15,13 +15,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.Data.Local.AppSettings;
 import com.example.unipicityvibe.R;
-import com.example.unipicityvibe.Service.Interface.RefFunction;
 
-public class SettingsGeneralSettingsFragment extends Fragment {
+public class SettingsGeneralFragment extends Fragment {
 
     // activity reload for settings apply
     private void restartActivity() {
-        getActivity().recreate();
+        requireActivity().recreate();
     }
 
     // ----- RadioGroup -----

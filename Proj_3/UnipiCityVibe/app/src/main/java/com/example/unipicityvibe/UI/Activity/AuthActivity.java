@@ -7,8 +7,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.R;
@@ -42,15 +40,6 @@ public class AuthActivity extends BaseActivity { //implements LoginFragment.Logi
     private void showRegisterFragment() {
         if (registerFragment == null) registerFragment = new RegisterFragment();
         replaceFragment(registerFragment, true);
-    }
-    // fragment manager transaction pages
-    private void replaceFragment(Fragment fragment, boolean addToBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
     }
     // ----- End Fragments -----
 

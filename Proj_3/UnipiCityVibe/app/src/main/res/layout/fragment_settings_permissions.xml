@@ -30,27 +30,44 @@
         android:text="@string/location"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupLocation"
+    <TextView
+        style="@style/ErrorText"
+        android:id="@+id/textViewError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/layoutLocationDetails"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radioButtonGPS"
+        <Switch
+            android:id="@+id/switchGPS"
             style="@style/LargeText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GPS" />
+            android:layoutDirection="rtl"
+            android:textDirection="ltr"
+            android:gravity="end"
+            android:text="@string/GPS"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <RadioButton
-            android:id="@+id/radioButtonWifi_CellTower"
+        <Switch
+            android:id="@+id/switchWIFICallTower"
             style="@style/LargeText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/wifi_and_cell_tower" />
-    </RadioGroup>
+            android:layoutDirection="rtl"
+            android:textDirection="ltr"
+            android:gravity="end"
+            android:text="@string/wifi_and_cell_tower"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </LinearLayout>
 
 </LinearLayout>

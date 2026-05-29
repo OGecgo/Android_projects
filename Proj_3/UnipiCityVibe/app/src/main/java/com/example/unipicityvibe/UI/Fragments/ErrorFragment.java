@@ -11,16 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.R;
 
-public class EventListFragment extends Fragment {
-
+public class ErrorFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_event_list_page, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_error_page, container, false);
     }
 }
