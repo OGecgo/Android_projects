@@ -1,8 +1,11 @@
 package com.example.unipicityvibe.UI.Activity;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,10 +21,11 @@ import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
 import com.example.unipicityvibe.Service.LocationService;
-import com.example.unipicityvibe.Service.PermissionService;
+import com.example.unipicityvibe.Utils.PermissionHelper;
 import com.example.unipicityvibe.UI.Fragments.ErrorFragment;
 import com.example.unipicityvibe.UI.Fragments.EventListFragment;
 import com.example.unipicityvibe.UI.Fragments.HomeFragment;
+import com.example.unipicityvibe.UI.Fragments.MapsFragment;
 import com.example.unipicityvibe.UI.Fragments.SettingsFragment;
 import com.example.unipicityvibe.UI.Fragments.TopViewMenu;
 
@@ -32,6 +36,7 @@ public class UserActivity extends BaseActivity {
     private SettingsFragment settingsFragment;
     private EventListFragment eventListFragment;
     private ErrorFragment errorFragment;
+    private MapsFragment mapsFragment;
 
     // Location
     private ILocationService locationService;
@@ -49,13 +54,13 @@ public class UserActivity extends BaseActivity {
     // ----- Fragments -----
     private void showHomeFragment() {
         if (homeFragment == null) homeFragment = new HomeFragment();
-        if (!PermissionService.isGrantedLocationPermission(this)){
+        if (AppSettings.getLocationAccuracy(this) == LocationTypeEnum.OFF_LOCATION){
             homeFragment.setEventListButton(this::showErrorFragment);
             homeFragment.setEventMapButton(this::showErrorFragment);
         }
         else{
             homeFragment.setEventListButton(this::showEventListFragment);
-            // homeFragment.set(this::showEventMapFragment);
+            homeFragment.setEventMapButton(this::showMapsFragment);
         }
         // homeFragment.set(this::showMyTicketsFragment);
         replaceFragment(homeFragment, false);
@@ -75,6 +80,11 @@ public class UserActivity extends BaseActivity {
     private void showErrorFragment() {
         if (errorFragment == null) errorFragment = new ErrorFragment();
         replaceFragment(errorFragment, false);
+    }
+
+    private void showMapsFragment() {
+        if (mapsFragment == null) mapsFragment = new MapsFragment();
+        replaceFragment(mapsFragment, true);
     }
 
     // ----- End Fragments -----
@@ -103,9 +113,9 @@ public class UserActivity extends BaseActivity {
         tvm.setSettingsButton(this::showSettingsFragment);
 
         // request permissions from user if not required
-        if (!PermissionService.isGrantedLocationPermission(this)) {
+        if (!PermissionHelper.isGrantedLocationPermission(this)) {
             AppSettings.setLocationAccuracy(getBaseContext(), LocationTypeEnum.OFF_LOCATION);
-            PermissionService.requestLocationPermission(this);
+            PermissionHelper.requestLocationPermission(this);
         }
 
 
@@ -117,19 +127,21 @@ public class UserActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PermissionService.PERMISSION_REQUEST_CODE_GPS){
-            if (PermissionService.isGrantedLocationPermission(this)) {
-                if (PermissionService.isGrantedFine(this)){
+        if (requestCode == PermissionHelper.PERMISSION_REQUEST_CODE_GPS){
+            if (PermissionHelper.isGrantedLocationPermission(this)) {
+                if (PermissionHelper.isGrantedFine(this)){
                     AppSettings.setLocationAccuracy(this, LocationTypeEnum.FINE);
                 }
-                else if (PermissionService.isGrantedCoarse(this)){
+                else if (PermissionHelper.isGrantedCoarse(this)){
                     AppSettings.setLocationAccuracy(this, LocationTypeEnum.COARSE);
                 }
-                // i do recreate activity for syncronize data
-                Intent starterIntent = getIntent();
-                finish();
-                startActivity(starterIntent);
+                // recreate activity for synchronize data
+                this.recreate();
             }
+            else{
+                AppSettings.setLocationAccuracy(this, LocationTypeEnum.OFF_LOCATION);
+            }
+            this.recreate();
         }
     }
 
@@ -145,35 +157,45 @@ public class UserActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LocationTypeEnum accuracy;
-        // is permissions changed and not location is not available
-        if (PermissionService.isGrantedLocationPermission(this)) {
-            // after reload have chance the locationService be null
-            if (locationService == null) locationService = new LocationService(this);
-            // if permission changed and fine now is not available
-            accuracy = AppSettings.getLocationAccuracy(this);
-            if (!PermissionService.isGrantedFine(this) && accuracy == LocationTypeEnum.FINE){
+
+        // is permissions changed nothing is available.s
+        if (PermissionHelper.isGrantedLocationPermission(this)){
+            locationService = LocationService.getInstance(getApplicationContext());
+            // if permission denied. locationService will be null
+            if (locationService == null) {
+                Log.w(TAG, "[UserActivity] locationService is null");
+                return;
+            }
+
+            // if permission changed and fine is not available
+            if (!PermissionHelper.isGrantedFine(this) && AppSettings.getLocationAccuracy(this) == LocationTypeEnum.FINE){
                 AppSettings.setLocationAccuracy(this, LocationTypeEnum.COARSE);
             }
 
-            accuracy = AppSettings.getLocationAccuracy(this);
+            // if appSettings changed permissions
+            LocationTypeEnum accuracy = AppSettings.getLocationAccuracy(this);
             if (accuracy == LocationTypeEnum.FINE){
-                locationService.startLocationUpdate(LocationTypeEnum.FINE);
+                locationService.stopLocationUpdate();
+                locationService.startLocationUpdate(LocationTypeEnum.FINE, this);
             }
             else if (accuracy == LocationTypeEnum.COARSE){
-                locationService.startLocationUpdate(LocationTypeEnum.COARSE);
+                locationService.stopLocationUpdate();
+                locationService.startLocationUpdate(LocationTypeEnum.COARSE, this);
+            }
+            else {
+                locationService.stopLocationUpdate();
             }
         }
         else{
             AppSettings.setLocationAccuracy(getBaseContext(), LocationTypeEnum.OFF_LOCATION);
+            if (locationService != null) locationService.stopLocationUpdate();
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // stop location tracking
-        if (locationService != null && PermissionService.isGrantedLocationPermission(this))
+        if (locationService != null)
             locationService.stopLocationUpdate();
     }
 

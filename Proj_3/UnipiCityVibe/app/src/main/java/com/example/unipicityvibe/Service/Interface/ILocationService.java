@@ -1,14 +1,15 @@
 package com.example.unipicityvibe.Service.Interface;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
 
 public interface ILocationService {
 
     void stopLocationUpdate();
-    void startLocationUpdate(@NonNull LocationTypeEnum e);
+    void startLocationUpdate(@NonNull LocationTypeEnum e, Context context);
 
 
     // data will do update every N time after startLocationUpdate

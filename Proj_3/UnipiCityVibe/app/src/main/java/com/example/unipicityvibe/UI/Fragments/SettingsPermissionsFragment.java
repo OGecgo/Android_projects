@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.unipicityvibe.Data.Local.AppSettings;
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
 import com.example.unipicityvibe.R;
-import com.example.unipicityvibe.Service.PermissionService;
+import com.example.unipicityvibe.Utils.PermissionHelper;
 
 public class SettingsPermissionsFragment extends Fragment {
 
@@ -30,6 +30,10 @@ public class SettingsPermissionsFragment extends Fragment {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchLocation, switchGPS, switchWIFICallTower;
 
+    // activity reload for settings apply
+    private void restartActivity() {
+        requireActivity().recreate();
+    }
 
     private void syncSwitches() {
         LocationTypeEnum accuracy = AppSettings.getLocationAccuracy(requireContext());
@@ -48,10 +52,10 @@ public class SettingsPermissionsFragment extends Fragment {
     }
 
     private void setDefaultAppSettingValue(){
-        if (PermissionService.isGrantedFine(requireContext())){
+        if (PermissionHelper.isGrantedFine(requireContext())){
             AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
         }
-        else if (PermissionService.isGrantedCoarse(requireContext())){
+        else if (PermissionHelper.isGrantedCoarse(requireContext())){
             AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
         } else {
             AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
@@ -59,14 +63,17 @@ public class SettingsPermissionsFragment extends Fragment {
     }
 
     // ----- Switch -----
-    private void locationSwitch(@NonNull CompoundButton buttonView, boolean isChecked){
+    private void locationSwitch(View view){
+        boolean isChecked = ((CompoundButton) view).isChecked();
         errorText.setText("");
 
         if (isChecked){
-            if(PermissionService.isGrantedLocationPermission(requireContext())){
+            if(PermissionHelper.isGrantedLocationPermission(requireContext())){
                 setDefaultAppSettingValue();
                 layoutLocationDetails.setVisibility(VISIBLE);
                 syncSwitches();
+                // set new values
+                restartActivity();
             }
             else{
                 switchLocation.setChecked(false);
@@ -76,53 +83,69 @@ public class SettingsPermissionsFragment extends Fragment {
         else{
             layoutLocationDetails.setVisibility(INVISIBLE);
             AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
+            // set new values
+            restartActivity();
         }
     }
 
-    private void fineSwitch(CompoundButton buttonView, boolean isChecked) {
+    private void fineSwitch(View view) {
+        boolean isChecked = ((CompoundButton) view).isChecked();
         errorText.setText("");
 
         if (isChecked) {
-            if (PermissionService.isGrantedFine(requireContext())) {
+            if (PermissionHelper.isGrantedFine(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
                 syncSwitches();
+                // set new values
+                restartActivity();
             } else {
                 errorText.setText(R.string.permission_denied);
                 switchGPS.setChecked(false);
             }
         } else {
             // If we turn off fine, we either fall back to WI-FI/Call-tower or turn off location
-            if (PermissionService.isGrantedCoarse(requireContext())) {
+            if (PermissionHelper.isGrantedCoarse(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
                 syncSwitches();
+                // set new values
+                restartActivity();
             } else {
                 switchLocation.setChecked(false);
                 layoutLocationDetails.setVisibility(INVISIBLE);
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
+                // set new values
+                restartActivity();
             }
         }
     }
 
-    private void coarseSwitch(CompoundButton buttonView, boolean isChecked) {
+    private void coarseSwitch(View view) {
+        boolean isChecked = ((CompoundButton) view).isChecked();
         errorText.setText("");
 
         if (isChecked) {
-            if (PermissionService.isGrantedCoarse(requireContext())) {
+            if (PermissionHelper.isGrantedCoarse(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
                 syncSwitches();
+                // set new values
+                restartActivity();
             } else {
                 errorText.setText(R.string.permission_denied);
                 switchWIFICallTower.setChecked(false);
             }
         } else {
             // If we turn off WI-FI/Call-tower, we either fall back to GPS or turn off location
-            if (PermissionService.isGrantedFine(requireContext())) {
+            if (PermissionHelper.isGrantedFine(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
                 syncSwitches();
+                // set new values
+                restartActivity();
             } else {
                 switchLocation.setChecked(false);
                 layoutLocationDetails.setVisibility(INVISIBLE);
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
+                // set new values
+                restartActivity();
             }
         }
     }
@@ -144,12 +167,11 @@ public class SettingsPermissionsFragment extends Fragment {
         switchGPS = view.findViewById(R.id.switchGPS);
         switchWIFICallTower = view.findViewById(R.id.switchWIFICallTower);
 
-
-
         // Set listeners
-        switchLocation.setOnCheckedChangeListener(this::locationSwitch);
-        switchGPS.setOnCheckedChangeListener(this::fineSwitch);
-        switchWIFICallTower.setOnCheckedChangeListener(this::coarseSwitch);
+        // use onClickListener because in that case the function setChecked should not trigger my listeners
+        switchLocation.setOnClickListener(this::locationSwitch);
+        switchGPS.setOnClickListener(this::fineSwitch);
+        switchWIFICallTower.setOnClickListener(this::coarseSwitch);
     }
 
     @Override

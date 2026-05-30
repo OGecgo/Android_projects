@@ -1,4 +1,4 @@
-package com.example.unipicityvibe.Service;
+package com.example.unipicityvibe.Utils;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
@@ -7,10 +7,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-public final class PermissionService {
+public final class PermissionHelper {
 
     public static final int PERMISSION_REQUEST_CODE_GPS = 0;
     public static final int PERMISSION_REQUEST_CODE_NOTIFICATION = 0;
@@ -18,13 +17,13 @@ public final class PermissionService {
 
 
     // ----- Location Permissions -----
-    public static void requestGPSFinePermission(Activity activity) {
+    public static void requestFinePermission(Activity activity) {
         boolean fine = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
         if (fine) {
             ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_REQUEST_CODE_GPS);
         }
     }
-    public static void requestGPSCoarsePermission(Activity activity) {
+    public static void requestCoarsePermission(Activity activity) {
         boolean coarse = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
         if (coarse) {
             ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION }, PERMISSION_REQUEST_CODE_GPS);
