@@ -53,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
             android:textDirection="ltr"
-            android:gravity="end"
-            android:text="@string/GPS"
+            android:gravity="start"
+            android:text="@string/high_performance_mode"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <Switch
@@ -65,8 +65,8 @@
             android:layout_marginTop="10dp"
             android:layoutDirection="rtl"
             android:textDirection="ltr"
-            android:gravity="end"
-            android:text="@string/wifi_and_cell_tower"
+            android:gravity="start"
+            android:text="@string/balance_mode"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 

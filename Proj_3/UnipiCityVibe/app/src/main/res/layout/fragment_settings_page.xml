@@ -19,7 +19,7 @@
             <!-- Section 1: User Settings -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/userSettingsContainer"
-                android:name="com.example.unipicityvibe.UI.Fragments.SettingsUserSettingsFragment"
+                android:name="com.example.unipicityvibe.UI.Fragments.SettingsUserFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout="@layout/fragment_settings_user"/>

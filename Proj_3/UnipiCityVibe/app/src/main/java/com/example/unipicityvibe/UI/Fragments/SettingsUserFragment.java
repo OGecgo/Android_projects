@@ -18,10 +18,13 @@ import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.UI.DialogFragment.DialogDeleteUser;
 import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
 
-public class SettingsUserSettingsFragment extends Fragment {
+public class SettingsUserFragment extends Fragment {
 
     // ----- Call Back -----
-    private void onCompleteListenerUserData(boolean success, String errorLog, View view, UserData userData){
+    private void onCompleteListenerUserData(boolean success, String errorLog, UserData userData){
+        View view = getView();
+        if (view == null) return;
+        
         if (success) {
             TextView textViewEmail = view.findViewById(R.id.textViewEmail);
             TextView textViewName = view.findViewById(R.id.textViewName);
@@ -56,7 +59,7 @@ public class SettingsUserSettingsFragment extends Fragment {
         // take data for user from database
         IAuthService service = AuthService.getInstance();
         UserData userData = new UserData();
-        service.getUserData(userData, ((success, errorLog) -> onCompleteListenerUserData(success, errorLog, view, userData)));
+        service.getUserData(userData, ((success, errorLog) -> onCompleteListenerUserData(success, errorLog, userData)));
 
         Button btnDelete = view.findViewById(R.id.buttonDelete);
         btnDelete.setOnClickListener(this::deleteButton);

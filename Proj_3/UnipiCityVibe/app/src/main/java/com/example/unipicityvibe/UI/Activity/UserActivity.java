@@ -54,6 +54,7 @@ public class UserActivity extends BaseActivity {
     // ----- Fragments -----
     private void showHomeFragment() {
         if (homeFragment == null) homeFragment = new HomeFragment();
+        
         if (AppSettings.getLocationAccuracy(this) == LocationTypeEnum.OFF_LOCATION){
             homeFragment.setEventListButton(this::showErrorFragment);
             homeFragment.setEventMapButton(this::showErrorFragment);
@@ -62,9 +63,9 @@ public class UserActivity extends BaseActivity {
             homeFragment.setEventListButton(this::showEventListFragment);
             homeFragment.setEventMapButton(this::showMapsFragment);
         }
-        // homeFragment.set(this::showMyTicketsFragment);
+        // homeFragment.setMyTicketButton(this::showMyTicketsFragment);
+        
         replaceFragment(homeFragment, false);
-
     }
 
     private void showSettingsFragment() {
@@ -102,15 +103,17 @@ public class UserActivity extends BaseActivity {
             return insets;
         });
 
+        // take fragment
+        TopViewMenu tvm = (TopViewMenu) getSupportFragmentManager().findFragmentById(R.id.topViewMenuContainer);
+        if (tvm != null) {
+            // set button home and settings for movement
+            tvm.setHomeButton(this::showHomeFragment);
+            tvm.setSettingsButton(this::showSettingsFragment);
+        }
+
         if (savedInstanceState == null) {
             showHomeFragment();
         }
-
-        // take fragment
-        TopViewMenu tvm = (TopViewMenu) getSupportFragmentManager().findFragmentById(R.id.topViewMenuContainer);
-        // set button home and settings for movement
-        tvm.setHomeButton(this::showHomeFragment);
-        tvm.setSettingsButton(this::showSettingsFragment);
 
         // request permissions from user if not required
         if (!PermissionHelper.isGrantedLocationPermission(this)) {
@@ -135,13 +138,14 @@ public class UserActivity extends BaseActivity {
                 else if (PermissionHelper.isGrantedCoarse(this)){
                     AppSettings.setLocationAccuracy(this, LocationTypeEnum.COARSE);
                 }
-                // recreate activity for synchronize data
+                // recreate for synchronize data
                 this.recreate();
             }
             else{
                 AppSettings.setLocationAccuracy(this, LocationTypeEnum.OFF_LOCATION);
+                if (locationService != null) locationService.stopLocationUpdate();
             }
-            this.recreate();
+
         }
     }
 

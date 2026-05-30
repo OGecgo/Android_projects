@@ -79,8 +79,8 @@
     <string name="text_large_size">Text Large Size</string>
     <string name="notifications">Notifications</string>
     <string name="location">Location</string>
-    <string name="GPS">GPS</string>
-    <string name="wifi_and_cell_tower">Wifi and Cell Tower</string>
+    <string name="high_performance_mode">High Performance Mode \n(use GPS)</string>
+    <string name="balance_mode">Balance Mode \n(Use GPS or Wi-Fi with Cell Tower)</string>
     <string name="permissions">Permissions</string>
     <string name="text_size">Text Size:</string>
     <string name="general_settings">General Settings</string>
