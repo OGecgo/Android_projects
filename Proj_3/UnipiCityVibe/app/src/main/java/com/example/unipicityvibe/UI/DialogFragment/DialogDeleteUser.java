@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.unipicityvibe.Data.Exception.UserAuthException;
 import com.example.unipicityvibe.UI.Activity.AuthActivity;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
-import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
+import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.R;
 
@@ -30,7 +29,7 @@ public class DialogDeleteUser extends DialogFragment {
     // ------ Call Back ------
     private void onCompleteListenerSubmit(boolean success, String errorLog) {
         if (!success) {
-            errorText.setText(ExceptionToMessage.AuthExceptionToTextId(errorLog));
+            errorText.setText(ExceptionToMessageHelper.AuthExceptionToTextId(errorLog));
             return;
         }
         dismiss();

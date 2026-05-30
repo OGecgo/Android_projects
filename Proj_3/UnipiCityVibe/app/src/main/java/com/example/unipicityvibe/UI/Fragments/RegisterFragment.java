@@ -17,7 +17,7 @@ import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.UI.Activity.UserActivity;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
-import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
+import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 
 public class RegisterFragment extends Fragment {
 
@@ -46,7 +46,7 @@ public class RegisterFragment extends Fragment {
     // ----- Call Back ------
     private void onComposeListenerButton(boolean success, String errorLog) {
         if (!success) {
-            errorText.setText(ExceptionToMessage.AuthExceptionToTextId(errorLog));
+            errorText.setText(ExceptionToMessageHelper.AuthExceptionToTextId(errorLog));
         } else {
             goHomePage();
         }

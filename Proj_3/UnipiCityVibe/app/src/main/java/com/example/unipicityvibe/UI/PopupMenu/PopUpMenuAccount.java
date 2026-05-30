@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.Service.Interface.RefFunction;
+import com.example.unipicityvibe.Listeners.RefFunctionListener;
 import com.example.unipicityvibe.UI.Activity.AuthActivity;
 import com.example.unipicityvibe.R;
 
@@ -19,7 +19,7 @@ public class PopUpMenuAccount extends PopupWindow {
 
     private final IAuthService authService;
     private final Context context;
-    private RefFunction settingsListener;
+    private RefFunctionListener settingsListener;
 
     // ------ Call Back ------
     private void onCompleteListenerLogOut(boolean success, String errorText){
@@ -64,7 +64,7 @@ public class PopUpMenuAccount extends PopupWindow {
         b.setOnClickListener(this::settingsButton);
     }
 
-    public void setSettingsListener(@NonNull RefFunction l) {
+    public void setSettingsListener(@NonNull RefFunctionListener l) {
         this.settingsListener = l;
     }
 }

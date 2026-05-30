@@ -7,14 +7,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Data.Interface.IEventDB;
-import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Data.Exception.EventDBException;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 import com.example.unipicityvibe.Data.Models.EventData;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.HashMap;
 
 public class EventDB implements IEventDB {
     private final DatabaseReference eventDB;
@@ -41,62 +42,58 @@ public class EventDB implements IEventDB {
             }
             else{
                 Log.w(TAG, "[EventDB] No event found");
-                l.onCompose(true, "");
+                l.onCompose(true, EventDBException.NO_EVENT_FOUND);
             }
         }
         else{
             Log.w(TAG, "[EventDB] Failed to retrieve event");
-            l.onCompose(false, "");
+            l.onCompose(false, EventDBException.ERROR_GET_EVENT);
         }
     }
 
-    private  void onCompleteListenerGetEventsRadius(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull AtomicReference<EventData[]> events){
+    private  void onCompleteListenerGetAllEvents(@NonNull Task<DataSnapshot> task, @NonNull OnCompleteListener l, @NonNull HashMap<String, EventData> eventMapRef){
         if (task.isSuccessful()){
             if(task.getResult().exists()){
                 Log.d(TAG, "[EventDB] Events retrieved successfully");
-
                 DataSnapshot snapshot = task.getResult();
-                int size = Math.toIntExact(snapshot.getChildrenCount());
-                int pos = 0;
-                for (DataSnapshot snapshotTicket: snapshot.getChildren()) {
-                    events.get()[pos].event_id = snapshot.getKey();
-                    events.get()[pos].title = snapshot.child("title").getValue(String.class);
-                    events.get()[pos].description = snapshot.child("description").getValue(String.class);
-                    events.get()[pos].time = snapshot.child("time").getValue(String.class);
-                    events.get()[pos].price = snapshot.child("price").getValue(String.class);
-                    events.get()[pos].latitude = snapshot.child("latitude").getValue(String.class);
-                    events.get()[pos].longitude = snapshot.child("longitude").getValue(String.class);
-                    pos ++;
+
+                for (DataSnapshot snapshotEvent: snapshot.getChildren()) {
+                    EventData event = new EventData();
+                    event.event_id    = snapshotEvent.getKey();
+                    event.title       = snapshotEvent.child("title")      .getValue(String.class);
+                    event.description = snapshotEvent.child("description").getValue(String.class);
+                    event.time        = snapshotEvent.child("time")       .getValue(String.class);
+                    event.price       = snapshotEvent.child("price")      .getValue(String.class);
+                    event.latitude    = snapshotEvent.child("latitude")   .getValue(String.class);
+                    event.longitude   = snapshotEvent.child("longitude")  .getValue(String.class);
+
+                    eventMapRef.put(event.event_id, event);
                 }
                 l.onCompose(true, "");
             }
             else{
                 Log.w(TAG, "[EventDB] No events found");
-                l.onCompose(true, "");
+                l.onCompose(true, EventDBException.NO_EVENTS_FOUND);
             }
         }
         else{
             Log.w(TAG, "[EventDB] Failed to retrieve events");
-            l.onCompose(false, "");
+            l.onCompose(false, EventDBException.ERROR_GET_EVENTS);
         }
     }
 
 
 
 
-    public EventDB getInstance(){
+    public static EventDB getInstance(){
         if (event == null) event = new EventDB();
         return event;
     }
 
-    public void getEventData(@NonNull EventData event, int event_id, @NonNull OnCompleteListener l){
-        eventDB.child(Integer.toString(event_id)).get().addOnCompleteListener(task -> this.onCompleteListenerGetEventData(task, l, event));
+    public void getEventData(@NonNull EventData eventRef, String event_id, @NonNull OnCompleteListener l){
+        eventDB.child(event_id).get().addOnCompleteListener(task -> this.onCompleteListenerGetEventData(task, l, eventRef));
     }
-    public void getEventRadius(@NonNull AtomicReference<EventData[]> events, int min, int max, @NonNull OnCompleteListener l){
-        eventDB
-                .orderByChild("time")
-                .startAt(min)
-                .endAt(max)
-                .get().addOnCompleteListener(task -> this.onCompleteListenerGetEventsRadius(task, l, events));
+    public void getAllEvents(@NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l){
+        eventDB.get().addOnCompleteListener(task -> this.onCompleteListenerGetAllEvents(task, l, eventMapRef));
     }
 }

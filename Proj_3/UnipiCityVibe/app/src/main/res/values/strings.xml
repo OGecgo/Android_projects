@@ -46,6 +46,12 @@
     <string name="error_no_tickets">No tickets found for your account</string>
     <string name="error_get_tickets_failed">Failed to retrieve your tickets</string>
 
+    <!-- Event Errors -->
+    <string name="error_get_event_failed">Failed to retrieve event data</string>
+    <string name="error_no_event">No event found</string>
+    <string name="error_get_events_failed">Failed to retrieve events list</string>
+    <string name="error_no_events">No events found in this range</string>
+
     <!-- General Errors -->
     <string name="error_unknown">An unknown error occurred. Please try again</string>
     <string name="error_all_fields_required">Please fill all fields</string>

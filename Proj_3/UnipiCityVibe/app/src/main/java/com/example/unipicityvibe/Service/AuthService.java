@@ -6,7 +6,7 @@ import com.example.unipicityvibe.Data.UserAuth;
 import com.example.unipicityvibe.Data.UserDB;
 import com.example.unipicityvibe.Service.Exception.AuthServiceException;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 import com.example.unipicityvibe.Data.Interface.IUserAuth;
 import com.example.unipicityvibe.Data.Interface.IUserDB;
 import com.example.unipicityvibe.Data.Models.UserAuthData;

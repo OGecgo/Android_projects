@@ -1,12 +1,13 @@
-package com.example.unipicityvibe.UI.Exception;
+package com.example.unipicityvibe.Utils;
 
 import com.example.unipicityvibe.Service.Exception.AuthServiceException;
+import com.example.unipicityvibe.Data.Exception.EventDBException;
 import com.example.unipicityvibe.Data.Exception.TicketDBException;
 import com.example.unipicityvibe.Data.Exception.UserAuthException;
 import com.example.unipicityvibe.Data.Exception.UserDBException;
 import com.example.unipicityvibe.R;
 
-public final class ExceptionToMessage {
+public final class ExceptionToMessageHelper {
 
     public static int AuthExceptionToTextId(String errorText){
         int textResId;
@@ -87,6 +88,18 @@ public final class ExceptionToMessage {
                 break;
 
             // Event DB
+            case EventDBException.ERROR_GET_EVENT:
+                textResId = R.string.error_get_event_failed;
+                break;
+            case EventDBException.NO_EVENT_FOUND:
+                textResId = R.string.error_no_event;
+                break;
+            case EventDBException.ERROR_GET_EVENTS:
+                textResId = R.string.error_get_events_failed;
+                break;
+            case EventDBException.NO_EVENTS_FOUND:
+                textResId = R.string.error_no_events;
+                break;
 
             default:
                 textResId = R.string.error_unknown;

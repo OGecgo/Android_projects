@@ -5,20 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.R;
-import com.example.unipicityvibe.Service.Interface.RefFunction;
+import com.example.unipicityvibe.Listeners.RefFunctionListener;
 
 public class HomeFragment extends Fragment {
 
-    private RefFunction eventListListener;
-    private RefFunction eventMapListener;
-    private RefFunction myTicketListener;
+    private RefFunctionListener eventListListener;
+    private RefFunctionListener eventMapListener;
+    private RefFunctionListener myTicketListener;
 
 
     // ----- Buttons -----
@@ -53,13 +52,13 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void setEventListButton(@NonNull RefFunction l){
+    public void setEventListButton(@NonNull RefFunctionListener l){
         eventListListener = l;
     }
-    public void setEventMapButton(@NonNull RefFunction l){
+    public void setEventMapButton(@NonNull RefFunctionListener l){
         eventMapListener = l;
     }
-    public void setMyTicketButton(@NonNull RefFunction l){
+    public void setMyTicketButton(@NonNull RefFunctionListener l){
         myTicketListener = l;
     }
 

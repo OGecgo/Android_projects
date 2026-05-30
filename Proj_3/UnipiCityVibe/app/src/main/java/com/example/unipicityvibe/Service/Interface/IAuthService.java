@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Data.Models.UserData;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 
 public interface IAuthService {
     UserAuthData getUserAuth();

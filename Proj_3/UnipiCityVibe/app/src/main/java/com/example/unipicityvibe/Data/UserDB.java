@@ -6,13 +6,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.unipicityvibe.Data.Exception.UserAuthException;
 import com.example.unipicityvibe.Data.Exception.UserDBException;
 import com.example.unipicityvibe.Data.Interface.IUserDB;
-import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Data.Models.UserData;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;

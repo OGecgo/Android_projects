@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.Service.Interface.RefFunction;
+import com.example.unipicityvibe.Listeners.RefFunctionListener;
 import com.example.unipicityvibe.UI.Activity.UserActivity;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
-import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
+import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 
 public class LoginFragment extends Fragment {
 
@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment {
     private TextView errorText;
 
     private IAuthService authService;
-    private RefFunction transferListener;
+    private RefFunctionListener transferListener;
 
 
     // ------ Page Change ------
@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
     // ----- Call Back ------
     private void onCompleteListenerLogIn(boolean success, String errorLog) {
         if (!success) {
-            errorText.setText(ExceptionToMessage.AuthExceptionToTextId(errorLog));
+            errorText.setText(ExceptionToMessageHelper.AuthExceptionToTextId(errorLog));
             return;
         }
         goHomePage();
@@ -105,7 +105,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void setRegisterButton(@NonNull RefFunction l){
+    public void setRegisterButton(@NonNull RefFunctionListener l){
         transferListener = l;
     }
 }

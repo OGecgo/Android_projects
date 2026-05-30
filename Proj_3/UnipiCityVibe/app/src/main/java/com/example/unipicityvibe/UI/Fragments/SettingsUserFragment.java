@@ -16,7 +16,7 @@ import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.UI.DialogFragment.DialogDeleteUser;
-import com.example.unipicityvibe.UI.Exception.ExceptionToMessage;
+import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 
 public class SettingsUserFragment extends Fragment {
 
@@ -34,7 +34,7 @@ public class SettingsUserFragment extends Fragment {
             textViewLastName.setText(userData.last_name);
         } else {
             TextView errorText = view.findViewById(R.id.textViewError);
-            errorText.setText(ExceptionToMessage.AuthExceptionToTextId(errorLog));
+            errorText.setText(ExceptionToMessageHelper.AuthExceptionToTextId(errorLog));
         }
     }
     // ----- End Call Back -----

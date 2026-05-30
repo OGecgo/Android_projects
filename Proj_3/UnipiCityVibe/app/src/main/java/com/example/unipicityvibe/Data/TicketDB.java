@@ -10,7 +10,7 @@ import com.example.unipicityvibe.Data.Exception.TicketDBException;
 import com.example.unipicityvibe.Data.Interface.ITicketDB;
 import com.example.unipicityvibe.Data.Models.TicketData;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
-import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

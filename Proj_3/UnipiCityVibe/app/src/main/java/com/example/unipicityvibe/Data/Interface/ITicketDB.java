@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Data.Models.TicketData;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
-import com.example.unipicityvibe.Service.Interface.OnCompleteListener;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 
 import java.util.concurrent.atomic.AtomicReference;
 

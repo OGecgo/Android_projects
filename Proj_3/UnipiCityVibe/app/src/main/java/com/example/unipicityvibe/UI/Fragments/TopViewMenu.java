@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.Service.AuthService;
-import com.example.unipicityvibe.Service.Interface.RefFunction;
+import com.example.unipicityvibe.Listeners.RefFunctionListener;
 import com.example.unipicityvibe.UI.PopupMenu.PopUpMenuAccount;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.R;
@@ -24,7 +24,7 @@ public class TopViewMenu extends Fragment {
 
     private PopUpMenuAccount popUpMenuAccount;
     private Button buttonName;
-    private RefFunction homeListener;
+    private RefFunctionListener homeListener;
 
     // ------ Buttons ------
     private void logoButton(View view){
@@ -70,11 +70,11 @@ public class TopViewMenu extends Fragment {
     }
 
 
-    public void setHomeButton(@NonNull RefFunction l){
+    public void setHomeButton(@NonNull RefFunctionListener l){
         homeListener = l;
     }
 
-    public void setSettingsButton(@NonNull RefFunction l) {
+    public void setSettingsButton(@NonNull RefFunctionListener l) {
         popUpMenuAccount.setSettingsListener(l);
     }
 
