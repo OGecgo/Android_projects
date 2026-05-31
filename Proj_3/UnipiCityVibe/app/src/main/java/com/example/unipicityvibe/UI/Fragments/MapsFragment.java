@@ -42,14 +42,20 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
             // permission tested on onViewCreated
-            if (!PermissionHelper.isGrantedLocationPermission(requireContext()))
+            if (!PermissionHelper.isGrantedLocationPermission(requireContext())) {
                 goHomePage();
+                return;
+            }
 
             googleMap.clear(); // Clear old markers
             googleMap.setMyLocationEnabled(true);
 
 
             if (locationService != null && eventsData != null){
+                if (eventsData.length == 0) {
+                    Toast.makeText(requireContext(), R.string.error_no_events, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // markers on maps around a user
                 for (EventData event : eventsData){
                     double eventLat = Double.parseDouble(event.latitude);
@@ -90,11 +96,11 @@ public class MapsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // test permissions
-        if (!PermissionHelper.isGrantedLocationPermission(requireContext()))
+        if (!PermissionHelper.isGrantedLocationPermission(requireContext())){
             goHomePage();
+            return;
+        }
 
-        // TODO maybe good idea will be make and the eventsData (have only what is in radius) global for reduce memory copy
-        //  sand cycles
         eventsData = eventService.getRadiusEvents(locationService.getLatitude(), locationService.getLongitude());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {

@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -27,13 +28,13 @@ public class LocationService implements ILocationService {
     private static final int INTERVAL_HIGH_SEC = 2;
     private static final int INTERVAL_BALANCE_SEC = 6;
     // configure for fine
-    private static final LocationRequest locationRequestHigh = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY)
-            .setIntervalMillis(1000 * INTERVAL_HIGH_SEC)
-                .build();
+    private static final LocationRequest locationRequestHigh = new LocationRequest.Builder(1000 * INTERVAL_HIGH_SEC)
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+            .build();
     // configure for coarse
-    private static final LocationRequest locationRequestBalance = new LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-            .setIntervalMillis(1000 * INTERVAL_BALANCE_SEC)
-                .build();
+    private static final LocationRequest locationRequestBalance = new LocationRequest.Builder(1000 * INTERVAL_BALANCE_SEC)
+            .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
+            .build();
     // singleton
     private static LocationService service;
 
@@ -47,6 +48,7 @@ public class LocationService implements ILocationService {
             for (Location location : locationResult.getLocations()) {
                 mCurrentLocation = location;
             }
+            Log.d(TAG, "[LocationService] Position Updated");
         }
     };
     // ----- End Call Back -----
@@ -62,6 +64,7 @@ public class LocationService implements ILocationService {
     }
 
 
+    @Nullable
     public static LocationService getInstance(Context context){
         // test permissions
         if (!PermissionHelper.isGrantedLocationPermission(context)){

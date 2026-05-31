@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EventService implements IEventService {
-    private final static int MILLISECOND_TO_SECOND = 1000;
     private final static int RADIUS_M = 200;
     private static EventService service;
     private final IEventDB eventDB;
@@ -65,8 +64,7 @@ public class EventService implements IEventService {
     public void StartReceiveEvents(@NonNull OnCompleteListener l){
         events.clear();
         long currentTime = System.currentTimeMillis();
-        // protect from very frequent receives
-        eventDB.setListenerForEventMapRef(currentTime / MILLISECOND_TO_SECOND, events, l);
+        eventDB.setListenerForEventMapRef(currentTime, events, l);
 
     }
     @Override

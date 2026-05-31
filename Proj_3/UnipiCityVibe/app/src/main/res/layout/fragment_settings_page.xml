@@ -25,10 +25,9 @@
                 tools:layout="@layout/fragment_settings_user"/>
 
             <View
+                style="@style/ViewLineColor"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginHorizontal="16dp" />
+                android:layout_height="1dp" />
 
             <!-- Section 2: Permissions -->
             <androidx.fragment.app.FragmentContainerView
@@ -39,10 +38,10 @@
                 tools:layout="@layout/fragment_settings_permissions"/>
 
             <View
+                style="@style/ViewLineColor"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginHorizontal="16dp" />
+                android:layout_height="1dp" />
+
 
             <!-- Section 3: General Settings -->
             <androidx.fragment.app.FragmentContainerView

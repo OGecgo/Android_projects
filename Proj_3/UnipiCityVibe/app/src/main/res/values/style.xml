@@ -45,6 +45,10 @@
         <item name="tint">?attr/textColorReverse</item>
     </style>
 
+    <style name="ViewLineColor">
+        <item name="android:background">?attr/primaryColor</item>
+    </style>
+
     <!-- top view menu -->
     <style name="Button_LogoTopMenu">
         <item name="android:background">?attr/primaryColor</item>

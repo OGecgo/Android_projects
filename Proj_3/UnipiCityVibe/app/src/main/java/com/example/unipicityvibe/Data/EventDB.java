@@ -34,6 +34,8 @@ public class EventDB implements IEventDB {
         event.title       = snapshotEvent.child("title")      .getValue() != null ? String.valueOf(snapshotEvent.child("title").getValue()) : "";
         event.description = snapshotEvent.child("description").getValue() != null ? String.valueOf(snapshotEvent.child("description").getValue()) : "";
         event.time        = snapshotEvent.child("time")       .getValue() != null ? String.valueOf(snapshotEvent.child("time").getValue()) : "";
+        // convert sec to milli
+        event.time += "000";
         event.price       = snapshotEvent.child("price")      .getValue() != null ? String.valueOf(snapshotEvent.child("price").getValue()) : "";
         event.latitude    = snapshotEvent.child("latitude")   .getValue() != null ? String.valueOf(snapshotEvent.child("latitude").getValue()) : "";
         event.longitude   = snapshotEvent.child("longitude")  .getValue() != null ? String.valueOf(snapshotEvent.child("longitude").getValue()) : "";
@@ -78,7 +80,9 @@ public class EventDB implements IEventDB {
         childEventListener = null;
     }
     @Override
-    public void setListenerForEventMapRef(long timestampSec, @NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l) {
+    public void setListenerForEventMapRef(long timestampMilli, @NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l) {
+        // convert timestampMilli to Sec
+        long timestampSec = timestampMilli / 1000;
         if (childEventListener != null) {
             Log.w(TAG, "[EventDB] childEventListener replaced");
             // delete old listener

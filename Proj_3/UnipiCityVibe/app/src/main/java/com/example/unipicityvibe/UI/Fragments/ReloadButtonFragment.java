@@ -1,6 +1,9 @@
 package com.example.unipicityvibe.UI.Fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +11,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import com.example.unipicityvibe.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.widget.Toast;
 
 public class ReloadButtonFragment extends Fragment {
 
@@ -21,10 +26,12 @@ public class ReloadButtonFragment extends Fragment {
         if (parentFragment != null) {
             parentFragment.getParentFragmentManager().beginTransaction()
                     .detach(parentFragment)
-                    .commitNow();
+                    .commit();
             parentFragment.getParentFragmentManager().beginTransaction()
                     .attach(parentFragment)
-                    .commitNow();
+                    .commit();
+        } else {
+            Log.e(TAG, "[ReloadButtonFragment] Parent fragment not found");
         }
     }
     // ----- End Button -----
