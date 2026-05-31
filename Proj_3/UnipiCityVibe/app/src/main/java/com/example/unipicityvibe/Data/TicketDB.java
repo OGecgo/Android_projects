@@ -67,8 +67,8 @@ public class TicketDB implements ITicketDB {
                 Log.d(TAG, "[UserDB] Ticket data retrieved successfully");
 
                 DataSnapshot snapshot = task.getResult();
-                ticket.event_id = snapshot.child("event_id").getValue(String.class);
-                ticket.time_stamp= snapshot.child("time_stamp").getValue(String.class);
+                ticket.event_id = snapshot.child("event_id").getValue() != null ? String.valueOf(snapshot.child("event_id").getValue()) : "";
+                ticket.time_stamp= snapshot.child("time_stamp").getValue() != null ? String.valueOf(snapshot.child("time_stamp").getValue()) : "";
 
                 l.onCompose(true, "");
             }
@@ -94,8 +94,8 @@ public class TicketDB implements ITicketDB {
                 int pos = 0;
                 for (DataSnapshot snapshotTicket: snapshot.getChildren()){
                     ticketsRef.get()[pos].ticket_id = snapshotTicket.getKey();
-                    ticketsRef.get()[pos].event_id = snapshotTicket.child("event_id").getValue(String.class);
-                    ticketsRef.get()[pos].time_stamp= snapshotTicket.child("time_stamp").getValue(String.class);
+                    ticketsRef.get()[pos].event_id = snapshotTicket.child("event_id").getValue() != null ? String.valueOf(snapshotTicket.child("event_id").getValue()) : "";
+                    ticketsRef.get()[pos].time_stamp= snapshotTicket.child("time_stamp").getValue() != null ? String.valueOf(snapshotTicket.child("time_stamp").getValue()) : "";
                     pos ++;
                 }
 

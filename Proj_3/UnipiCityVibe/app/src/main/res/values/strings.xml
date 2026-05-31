@@ -77,6 +77,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="event_list">Event List</string>
     <string name="my_tickets">My Tickets</string>
+    <string name="reload">Reload</string>
 
     <!-- Settings -->
     <string name="dark_mode">Dark Mode</string>

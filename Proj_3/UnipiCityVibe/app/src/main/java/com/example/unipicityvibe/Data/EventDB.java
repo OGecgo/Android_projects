@@ -31,12 +31,12 @@ public class EventDB implements IEventDB {
 
                 DataSnapshot snapshot = task.getResult();
                 event.event_id = snapshot.getKey();
-                event.title = snapshot.child("title").getValue(String.class);
-                event.description = snapshot.child("description").getValue(String.class);
-                event.time = snapshot.child("time").getValue(String.class);
-                event.price = snapshot.child("price").getValue(String.class);
-                event.latitude = snapshot.child("latitude").getValue(String.class);
-                event.longitude = snapshot.child("longitude").getValue(String.class);
+                event.title = snapshot.child("title")            .getValue() != null ? String.valueOf(snapshot.child("title").getValue()) : "";
+                event.description = snapshot.child("description").getValue() != null ? String.valueOf(snapshot.child("description").getValue()) : "";
+                event.time = snapshot.child("time")              .getValue() != null ? String.valueOf(snapshot.child("time").getValue()) : "";
+                event.price = snapshot.child("price")            .getValue() != null ? String.valueOf(snapshot.child("price").getValue()) : "";
+                event.latitude = snapshot.child("latitude")      .getValue() != null ? String.valueOf(snapshot.child("latitude").getValue()) : "";
+                event.longitude = snapshot.child("longitude")    .getValue() != null ? String.valueOf(snapshot.child("longitude").getValue()) : "";
 
                 l.onCompose(true, "");
             }
@@ -46,7 +46,7 @@ public class EventDB implements IEventDB {
             }
         }
         else{
-            Log.w(TAG, "[EventDB] Failed to retrieve event");
+            Log.e(TAG, "[EventDB] Failed to retrieve event", task.getException());
             l.onCompose(false, EventDBException.ERROR_GET_EVENT);
         }
     }
@@ -60,12 +60,12 @@ public class EventDB implements IEventDB {
                 for (DataSnapshot snapshotEvent: snapshot.getChildren()) {
                     EventData event = new EventData();
                     event.event_id    = snapshotEvent.getKey();
-                    event.title       = snapshotEvent.child("title")      .getValue(String.class);
-                    event.description = snapshotEvent.child("description").getValue(String.class);
-                    event.time        = snapshotEvent.child("time")       .getValue(String.class);
-                    event.price       = snapshotEvent.child("price")      .getValue(String.class);
-                    event.latitude    = snapshotEvent.child("latitude")   .getValue(String.class);
-                    event.longitude   = snapshotEvent.child("longitude")  .getValue(String.class);
+                    event.title       = snapshotEvent.child("title")      .getValue() != null ? String.valueOf(snapshotEvent.child("title").getValue()) : "";
+                    event.description = snapshotEvent.child("description").getValue() != null ? String.valueOf(snapshotEvent.child("description").getValue()) : "";
+                    event.time        = snapshotEvent.child("time")       .getValue() != null ? String.valueOf(snapshotEvent.child("time").getValue()) : "";
+                    event.price       = snapshotEvent.child("price")      .getValue() != null ? String.valueOf(snapshotEvent.child("price").getValue()) : "";
+                    event.latitude    = snapshotEvent.child("latitude")   .getValue() != null ? String.valueOf(snapshotEvent.child("latitude").getValue()) : "";
+                    event.longitude   = snapshotEvent.child("longitude")  .getValue() != null ? String.valueOf(snapshotEvent.child("longitude").getValue()) : "";
 
                     eventMapRef.put(event.event_id, event);
                 }
@@ -77,7 +77,7 @@ public class EventDB implements IEventDB {
             }
         }
         else{
-            Log.w(TAG, "[EventDB] Failed to retrieve events");
+            Log.e(TAG, "[EventDB] Failed to retrieve events", task.getException());
             l.onCompose(false, EventDBException.ERROR_GET_EVENTS);
         }
     }
@@ -90,10 +90,17 @@ public class EventDB implements IEventDB {
         return event;
     }
 
+    @Override
     public void getEventData(@NonNull EventData eventRef, String event_id, @NonNull OnCompleteListener l){
         eventDB.child(event_id).get().addOnCompleteListener(task -> this.onCompleteListenerGetEventData(task, l, eventRef));
     }
-    public void getAllEvents(@NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l){
-        eventDB.get().addOnCompleteListener(task -> this.onCompleteListenerGetAllEvents(task, l, eventMapRef));
+
+
+    @Override
+    public void getAllEventsSince(long timestampSec, @NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l) {
+        eventDB.orderByChild("time")
+                .startAt(timestampSec)
+                .get()
+                .addOnCompleteListener(task -> this.onCompleteListenerGetAllEvents(task, l, eventMapRef));
     }
 }

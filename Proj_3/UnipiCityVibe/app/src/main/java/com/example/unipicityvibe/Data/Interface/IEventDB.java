@@ -9,5 +9,5 @@ import java.util.HashMap;
 
 public interface IEventDB {
     void getEventData(@NonNull EventData eventRef, String event_id, @NonNull OnCompleteListener l);
-    void getAllEvents(@NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l);
+    void getAllEventsSince(long timestamp, @NonNull HashMap<String, EventData> eventMapRef, @NonNull OnCompleteListener l);
 }

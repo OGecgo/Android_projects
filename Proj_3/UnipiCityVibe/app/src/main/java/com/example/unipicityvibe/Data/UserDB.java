@@ -63,9 +63,9 @@ public class UserDB implements IUserDB {
                Log.d(TAG, "[UserDB] User data retrieved successfully");
 
                DataSnapshot snapshot = task.getResult();
-               userData.email = snapshot.child("email").getValue(String.class);
-               userData.name = snapshot.child("name").getValue(String.class);
-               userData.last_name = snapshot.child("last_name").getValue(String.class);
+               userData.email = snapshot.child("email")        .getValue() != null ? String.valueOf(snapshot.child("email")    .getValue()) : "";
+               userData.name = snapshot.child("name")          .getValue() != null ? String.valueOf(snapshot.child("name")     .getValue()) : "";
+               userData.last_name = snapshot.child("last_name").getValue() != null ? String.valueOf(snapshot.child("last_name").getValue()) : "";
 
                l.onCompose(true, "");
             }
