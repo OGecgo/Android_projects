@@ -18,8 +18,8 @@ import com.example.unipicityvibe.UI.Fragments.TopViewMenu;
 
 public class AuthActivity extends BaseActivity { //implements LoginFragment.LoginFragmentListener {
 
-    private LoginFragment loginFragment;
-    private RegisterFragment registerFragment;
+    private static final String TAG_LOGIN = "TAG_LOGIN";
+    private static final String TAG_REGISTER = "TAG_REGISTER";
 
     // ----- Change Page -----
     private void goHomePage() {
@@ -31,15 +31,17 @@ public class AuthActivity extends BaseActivity { //implements LoginFragment.Logi
 
     // ----- Fragments -----
     private void showLoginFragment() {
+        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(TAG_LOGIN);
         if (loginFragment == null) loginFragment = new LoginFragment();
         // set button register for movement
         loginFragment.setRegisterButton(this::showRegisterFragment);
-        replaceFragment(loginFragment, false);
+        replaceFragment(loginFragment, TAG_LOGIN, false);
     }
 
     private void showRegisterFragment() {
+        RegisterFragment registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentByTag(TAG_REGISTER);
         if (registerFragment == null) registerFragment = new RegisterFragment();
-        replaceFragment(registerFragment, true);
+        replaceFragment(registerFragment, TAG_REGISTER, true);
     }
     // ----- End Fragments -----
 
@@ -60,8 +62,10 @@ public class AuthActivity extends BaseActivity { //implements LoginFragment.Logi
 
         // take fragment
         TopViewMenu tvm = (TopViewMenu) getSupportFragmentManager().findFragmentById(R.id.topViewMenuContainer);
-        // set button home for movement
-        tvm.setHomeButton(this::showLoginFragment);
+        if (tvm != null){
+            // set button home for movement
+            tvm.setHomeButton(this::showLoginFragment);
+        }
     }
 
     @Override

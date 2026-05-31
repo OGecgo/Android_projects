@@ -15,11 +15,11 @@ public class BaseActivity extends AppCompatActivity {
 
 
     // fragment manager transaction pages
-    protected void replaceFragment(Fragment fragment, boolean addToBackStack) {
+    protected void replaceFragment(Fragment fragment, String tag, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment, tag);
         if (addToBackStack) {
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(tag);
         }
         transaction.commit();
     }
@@ -34,8 +34,4 @@ public class BaseActivity extends AppCompatActivity {
         AppSettings.applyDarkMode(AppSettings.isDarkMode(this));
         super.onCreate(savedInstanceState);
     }
-
-
-
-
 }

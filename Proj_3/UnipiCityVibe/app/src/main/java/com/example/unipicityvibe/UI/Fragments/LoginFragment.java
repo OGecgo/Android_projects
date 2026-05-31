@@ -75,7 +75,7 @@ public class LoginFragment extends Fragment {
         authService.userLogIn(email, password, this::onCompleteListenerLogIn);
     }
 
-    private  void registerButton(View view) {
+    private void registerButton(View view) {
         if (transferListener != null) transferListener.execute();
     }
     // ------ End Buttons ------
@@ -105,7 +105,16 @@ public class LoginFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // free listeners
+        transferListener = null;
+    }
+
     public void setRegisterButton(@NonNull RefFunctionListener l){
         transferListener = l;
     }
+
+
 }

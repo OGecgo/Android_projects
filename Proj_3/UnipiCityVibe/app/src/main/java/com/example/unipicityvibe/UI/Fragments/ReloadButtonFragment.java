@@ -15,8 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ReloadButtonFragment extends Fragment {
 
-
-    private void reloadParentFragmentButton(View view) {
+    // ----- Button -----
+    private void reloadParentFragmentButton(View view){
         Fragment parentFragment = getParentFragment();
         if (parentFragment != null) {
             parentFragment.getParentFragmentManager().beginTransaction()
@@ -27,6 +27,7 @@ public class ReloadButtonFragment extends Fragment {
                     .commitNow();
         }
     }
+    // ----- End Button -----
 
     @Nullable
     @Override
@@ -35,7 +36,7 @@ public class ReloadButtonFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
         FloatingActionButton reloadBtn = view.findViewById(R.id.floatingActionButton);

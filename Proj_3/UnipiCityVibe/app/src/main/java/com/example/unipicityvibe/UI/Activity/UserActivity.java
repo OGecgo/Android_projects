@@ -6,6 +6,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,9 +19,12 @@ import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
+import com.example.unipicityvibe.Service.EventService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
+import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
 import com.example.unipicityvibe.Service.LocationService;
+import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Utils.PermissionHelper;
 import com.example.unipicityvibe.UI.Fragments.ErrorFragment;
 import com.example.unipicityvibe.UI.Fragments.EventListFragment;
@@ -31,15 +35,28 @@ import com.example.unipicityvibe.UI.Fragments.TopViewMenu;
 
 public class UserActivity extends BaseActivity {
 
-    // Fragments
-    private HomeFragment homeFragment;
-    private SettingsFragment settingsFragment;
-    private EventListFragment eventListFragment;
-    private ErrorFragment errorFragment;
-    private MapsFragment mapsFragment;
+    // Tags for Fragments
+    private static final String TAG_HOME = "TAG_HOME";
+    private static final String TAG_SETTINGS = "TAG_SETTINGS";
+    private static final String TAG_EVENT_LIST = "TAG_EVENT_LIST";
+    private static final String TAG_ERROR = "TAG_ERROR";
+    private static final String TAG_MAPS = "TAG_MAPS";
 
     // Location
     private ILocationService locationService;
+    private IEventService eventService;
+
+    // ----- Call Back -----
+    private void onCompleteListenerStartReceive(boolean success, String errorLog){
+        // show errors
+        if (!success){
+            int messageResId = ExceptionToMessageHelper.AuthExceptionToTextId(errorLog);
+            Toast.makeText(this, getString(messageResId), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // TODO another call back for notifications. they will called somewhere every time user go out of radius
+    // ----- End Call Back -----
 
 
     // ------ Change Page ------
@@ -53,7 +70,10 @@ public class UserActivity extends BaseActivity {
 
     // ----- Fragments -----
     private void showHomeFragment() {
-        if (homeFragment == null) homeFragment = new HomeFragment();
+        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(TAG_HOME);
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
+        }
         
         if (AppSettings.getLocationAccuracy(this) == LocationTypeEnum.OFF_LOCATION){
             homeFragment.setEventListButton(this::showErrorFragment);
@@ -65,27 +85,31 @@ public class UserActivity extends BaseActivity {
         }
         // homeFragment.setMyTicketButton(this::showMyTicketsFragment);
         
-        replaceFragment(homeFragment, false);
+        replaceFragment(homeFragment, TAG_HOME, false);
     }
 
     private void showSettingsFragment() {
+        SettingsFragment settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(TAG_SETTINGS);
         if (settingsFragment == null) settingsFragment = new SettingsFragment();
-        replaceFragment(settingsFragment, false);
+        replaceFragment(settingsFragment, TAG_SETTINGS, false);
     }
 
     private void showEventListFragment() {
+        EventListFragment eventListFragment = (EventListFragment) getSupportFragmentManager().findFragmentByTag(TAG_EVENT_LIST);
         if (eventListFragment == null) eventListFragment = new EventListFragment();
-        replaceFragment(eventListFragment, true);
+        replaceFragment(eventListFragment, TAG_EVENT_LIST, true);
     }
 
     private void showErrorFragment() {
+        ErrorFragment errorFragment = (ErrorFragment) getSupportFragmentManager().findFragmentByTag(TAG_ERROR);
         if (errorFragment == null) errorFragment = new ErrorFragment();
-        replaceFragment(errorFragment, false);
+        replaceFragment(errorFragment, TAG_ERROR, false);
     }
 
     private void showMapsFragment() {
+        MapsFragment mapsFragment = (MapsFragment) getSupportFragmentManager().findFragmentByTag(TAG_MAPS);
         if (mapsFragment == null) mapsFragment = new MapsFragment();
-        replaceFragment(mapsFragment, true);
+        replaceFragment(mapsFragment, TAG_MAPS, true);
     }
 
     // ----- End Fragments -----
@@ -115,14 +139,18 @@ public class UserActivity extends BaseActivity {
             showHomeFragment();
         }
 
-        // request permissions from user if not required
+        // start receive data from database
+        eventService = EventService.getInstance();
+        eventService.StartReceiveEvents(this::onCompleteListenerStartReceive);
+
+
+        // require permissions from user if not required
+        // location permission
         if (!PermissionHelper.isGrantedLocationPermission(this)) {
             AppSettings.setLocationAccuracy(getBaseContext(), LocationTypeEnum.OFF_LOCATION);
             PermissionHelper.requestLocationPermission(this);
         }
-
-
-        // permission notification
+        // notification permission
 
     }
 
@@ -197,11 +225,13 @@ public class UserActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (locationService != null)
             locationService.stopLocationUpdate();
+        if (eventService != null) 
+            eventService.StopReceiveEvents();
     }
-
-
 }
+
+

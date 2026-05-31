@@ -20,13 +20,11 @@ public class EventService implements IEventService {
     private static EventService service;
     private final IEventDB eventDB;
     private final HashMap<String, EventData> events;
-    private long timeLastReceive;
 
-
+    // constructor
     private EventService(){
         eventDB = EventDB.getInstance();
         events = new HashMap<>();
-        timeLastReceive = 0;
     }
 
 
@@ -36,6 +34,7 @@ public class EventService implements IEventService {
         return service;
     }
 
+    @Override
     public EventData getEventInfo(String eventId){
         if (events.containsKey(eventId)) {
             return events.get(eventId);
@@ -44,6 +43,7 @@ public class EventService implements IEventService {
             return new EventData();
         }
     }
+    @Override
     public EventData[] getRadiusEvents(double userLatitude, double userLongitude){
         List<EventData> list = new ArrayList<>();
         for (EventData data : events.values()){
@@ -61,17 +61,17 @@ public class EventService implements IEventService {
 
         return list.toArray( new EventData[0]);
     }
-
-    public void receiveEvents(@NonNull OnCompleteListener l){
+    @Override
+    public void StartReceiveEvents(@NonNull OnCompleteListener l){
         events.clear();
         long currentTime = System.currentTimeMillis();
         // protect from very frequent receives
-        if (currentTime - timeLastReceive > MILLISECOND_TO_SECOND * 10 ){
-            eventDB.getAllEventsSince(currentTime / MILLISECOND_TO_SECOND, events, l);
-        }
-        else{
-            l.onCompose(true, "");
-        }
+        eventDB.setListenerForEventMapRef(currentTime / MILLISECOND_TO_SECOND, events, l);
 
+    }
+    @Override
+    public void StopReceiveEvents(){
+        events.clear();
+        eventDB.deleteListenerForEventMapRef();
     }
 }

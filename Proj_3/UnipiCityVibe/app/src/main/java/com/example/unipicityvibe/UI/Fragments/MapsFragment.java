@@ -36,6 +36,7 @@ public class MapsFragment extends Fragment {
     private IEventService eventService;
     private EventData[] eventsData;
 
+    // Map
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         @Override
@@ -64,23 +65,6 @@ public class MapsFragment extends Fragment {
     };
 
 
-    private void onCompleteListenerReceiveData(boolean success, String errorLog){
-        if (success){
-            eventsData = eventService.getRadiusEvents(locationService.getLatitude(), locationService.getLongitude());
-        }
-        else{
-            int messageResId = ExceptionToMessageHelper.AuthExceptionToTextId(errorLog);
-            Toast.makeText(requireContext(), getString(messageResId), Toast.LENGTH_SHORT).show();
-        }
-
-        // only after try to receive data show the map
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }
-
-    }
-
     private void goHomePage() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), UserActivity.class);
@@ -104,15 +88,18 @@ public class MapsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // TODO create a reload map button (reload only fragment. ot whole activity)
-        //  or make maps update in locaitonService (locationService should a while update functions for that cases)
-        //  maybe i do that with refFun
-
         super.onViewCreated(view, savedInstanceState);
         // test permissions
         if (!PermissionHelper.isGrantedLocationPermission(requireContext()))
             goHomePage();
 
-        eventService.receiveEvents(this::onCompleteListenerReceiveData);
+        // TODO maybe good idea will be make and the eventsData (have only what is in radius) global for reduce memory copy
+        //  sand cycles
+        eventsData = eventService.getRadiusEvents(locationService.getLatitude(), locationService.getLongitude());
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+        }
+
     }
 }

@@ -52,6 +52,15 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // free listeners
+        eventListListener = null;
+        eventMapListener = null;
+        myTicketListener = null;
+    }
+    
     public void setEventListButton(@NonNull RefFunctionListener l){
         eventListListener = l;
     }
