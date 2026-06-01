@@ -16,9 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.unipicityvibe.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.widget.Toast;
-
-public class ReloadButtonFragment extends Fragment {
+public class ButtonReloadFragment extends Fragment {
 
     // ----- Button -----
     private void reloadParentFragmentButton(View view){
@@ -39,7 +37,7 @@ public class ReloadButtonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reload_button, container, false);
+        return inflater.inflate(R.layout.fragment_button_reload, container, false);
     }
 
     @Override

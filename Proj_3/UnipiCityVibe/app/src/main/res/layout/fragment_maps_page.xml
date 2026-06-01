@@ -14,11 +14,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/reload_button_container"
-        android:name="com.example.unipicityvibe.UI.Fragments.ReloadButtonFragment"
+        android:name="com.example.unipicityvibe.UI.Fragments.ButtonReloadFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout="@layout/fragment_reload_button"/>
+        tools:layout="@layout/fragment_button_reload"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

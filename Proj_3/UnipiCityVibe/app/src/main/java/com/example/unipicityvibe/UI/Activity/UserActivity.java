@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.unipicityvibe.Data.Local.AppSettings;
+import com.example.unipicityvibe.Data.Models.EventData;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
 import com.example.unipicityvibe.R;
@@ -24,6 +25,7 @@ import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
 import com.example.unipicityvibe.Service.LocationService;
+import com.example.unipicityvibe.UI.Fragments.EventFragment;
 import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Utils.PermissionHelper;
 import com.example.unipicityvibe.UI.Fragments.ErrorFragment;
@@ -31,7 +33,7 @@ import com.example.unipicityvibe.UI.Fragments.EventListFragment;
 import com.example.unipicityvibe.UI.Fragments.HomeFragment;
 import com.example.unipicityvibe.UI.Fragments.MapsFragment;
 import com.example.unipicityvibe.UI.Fragments.SettingsFragment;
-import com.example.unipicityvibe.UI.Fragments.TopViewMenu;
+import com.example.unipicityvibe.UI.Fragments.TopMenuFragment;
 
 public class UserActivity extends BaseActivity {
 
@@ -41,6 +43,7 @@ public class UserActivity extends BaseActivity {
     private static final String TAG_EVENT_LIST = "TAG_EVENT_LIST";
     private static final String TAG_ERROR = "TAG_ERROR";
     private static final String TAG_MAPS = "TAG_MAPS";
+    private static final String TAG_EVENT = "TAG_EVENT";
 
     // Location
     private ILocationService locationService;
@@ -69,49 +72,42 @@ public class UserActivity extends BaseActivity {
 
 
     // ----- Fragments -----
-    private void showHomeFragment() {
+    public void showHomeFragment() {
         HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(TAG_HOME);
-        if (homeFragment == null) {
-            homeFragment = new HomeFragment();
-        }
-        
-        if (AppSettings.getLocationAccuracy(this) == LocationTypeEnum.OFF_LOCATION){
-            homeFragment.setEventListButton(this::showErrorFragment);
-            homeFragment.setEventMapButton(this::showErrorFragment);
-        }
-        else{
-            homeFragment.setEventListButton(this::showEventListFragment);
-            homeFragment.setEventMapButton(this::showMapsFragment);
-        }
-        // homeFragment.setMyTicketButton(this::showMyTicketsFragment);
-        
+        if (homeFragment == null) homeFragment = new HomeFragment();
         replaceFragment(homeFragment, TAG_HOME, false);
     }
 
-    private void showSettingsFragment() {
+    public void showSettingsFragment() {
         SettingsFragment settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(TAG_SETTINGS);
         if (settingsFragment == null) settingsFragment = new SettingsFragment();
         replaceFragment(settingsFragment, TAG_SETTINGS, false);
     }
 
-    private void showEventListFragment() {
+    public void showEventListFragment() {
         EventListFragment eventListFragment = (EventListFragment) getSupportFragmentManager().findFragmentByTag(TAG_EVENT_LIST);
         if (eventListFragment == null) eventListFragment = new EventListFragment();
         replaceFragment(eventListFragment, TAG_EVENT_LIST, true);
     }
 
-    private void showErrorFragment() {
+    public void showErrorFragment() {
         ErrorFragment errorFragment = (ErrorFragment) getSupportFragmentManager().findFragmentByTag(TAG_ERROR);
         if (errorFragment == null) errorFragment = new ErrorFragment();
         replaceFragment(errorFragment, TAG_ERROR, false);
     }
 
-    private void showMapsFragment() {
+    public void showMapsFragment() {
         MapsFragment mapsFragment = (MapsFragment) getSupportFragmentManager().findFragmentByTag(TAG_MAPS);
         if (mapsFragment == null) mapsFragment = new MapsFragment();
         replaceFragment(mapsFragment, TAG_MAPS, true);
     }
 
+    public void showEventFragment(EventData eventData) {
+        EventFragment eventFragment = (EventFragment) getSupportFragmentManager().findFragmentByTag(TAG_EVENT);
+        if (eventFragment == null) eventFragment = new EventFragment();
+        eventFragment.setEventData(eventData);
+        replaceFragment(eventFragment, TAG_EVENT, true);
+    }
     // ----- End Fragments -----
 
 
@@ -128,7 +124,7 @@ public class UserActivity extends BaseActivity {
         });
 
         // take fragment
-        TopViewMenu tvm = (TopViewMenu) getSupportFragmentManager().findFragmentById(R.id.topViewMenuContainer);
+        TopMenuFragment tvm = (TopMenuFragment) getSupportFragmentManager().findFragmentById(R.id.topViewMenuContainer);
         if (tvm != null) {
             // set button home and settings for movement
             tvm.setHomeButton(this::showHomeFragment);

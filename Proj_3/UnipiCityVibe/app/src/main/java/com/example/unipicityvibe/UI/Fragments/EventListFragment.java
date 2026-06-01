@@ -31,6 +31,7 @@ public class EventListFragment extends Fragment {
     private ILocationService locationService;
     private IEventService eventService;
 
+    // ----- Change Page -----
     private void goHomePage() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), UserActivity.class);
@@ -38,7 +39,13 @@ public class EventListFragment extends Fragment {
             getActivity().finish();
         }
     }
+    // ----- Change Page -----
 
+    // ----- Button -----
+    private void eventButton(View view, EventData event){
+        ((UserActivity) requireActivity()).showEventFragment(event);
+    }
+    // ----- End Button -----
 
     private void showEvents(EventData[] eventsData) {
         View view = getView();
@@ -58,6 +65,7 @@ public class EventListFragment extends Fragment {
         for (EventData event : eventsData) {
             EventInfoView eventView = new EventInfoView(requireContext());
             eventView.setValues(event);
+            eventView.setOnClickListener(v -> eventButton(v, event));
             container.addView(eventView);
         }
     }

@@ -21,13 +21,12 @@ import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
 import com.example.unipicityvibe.Service.LocationService;
 import com.example.unipicityvibe.UI.Activity.UserActivity;
-import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Utils.PermissionHelper;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
@@ -38,6 +37,13 @@ public class MapsFragment extends Fragment {
 
     // Map
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
+
+        private boolean markerListener(@NonNull Marker marker){
+            // tag have only the event Data
+            EventData eventData = (EventData) marker.getTag();
+            ((UserActivity) requireActivity()).showEventFragment(eventData);
+            return false;
+        }
 
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -61,12 +67,14 @@ public class MapsFragment extends Fragment {
                     double eventLat = Double.parseDouble(event.latitude);
                     double eventLon = Double.parseDouble(event.longitude);
                     LatLng pos = new LatLng(eventLat, eventLon);
-                    googleMap.addMarker(new MarkerOptions().position(pos).title(event.title));
+                    // add marker on map
+                    Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title(event.title));
+                    // transfer event to marker listener
+                    if (marker != null) marker.setTag(event);
                 }
             }
-            else{
-                Log.w(TAG, "[MapsFragment] data is null");
-            }
+            // set functionality on markers
+            googleMap.setOnMarkerClickListener(this::markerListener);
         }
     };
 

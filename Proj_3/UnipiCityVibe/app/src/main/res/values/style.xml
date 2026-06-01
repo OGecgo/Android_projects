@@ -28,6 +28,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="TitleText">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="HeaderText">
         <item name="android:textColor">?attr/textColor</item>
         <item name="android:textSize">24sp</item>
@@ -48,6 +54,11 @@
     <style name="ViewLineColor">
         <item name="android:background">?attr/primaryColor</item>
     </style>
+    <style name="ViewLineColorReverse">
+        <item name="android:background">?attr/backgroundColor</item>
+    </style>
+
+
 
     <!-- top view menu -->
     <style name="Button_LogoTopMenu">
@@ -65,6 +76,7 @@
     <style name="TopMenu">
         <item name="android:background">?attr/primaryColor</item>
     </style>
+
 
 
 </resources>

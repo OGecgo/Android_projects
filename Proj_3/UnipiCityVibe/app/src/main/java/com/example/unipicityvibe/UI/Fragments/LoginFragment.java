@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.Listeners.RefFunctionListener;
+import com.example.unipicityvibe.UI.Activity.AuthActivity;
 import com.example.unipicityvibe.UI.Activity.UserActivity;
 import com.example.unipicityvibe.UI.CustomView.EditTextView;
 import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
@@ -27,8 +27,6 @@ public class LoginFragment extends Fragment {
     private TextView errorText;
 
     private IAuthService authService;
-    private RefFunctionListener transferListener;
-
 
     // ------ Page Change ------
     // change activity
@@ -76,7 +74,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void registerButton(View view) {
-        if (transferListener != null) transferListener.execute();
+        ((AuthActivity)requireActivity()).showRegisterFragment();
     }
     // ------ End Buttons ------
 
@@ -104,17 +102,4 @@ public class LoginFragment extends Fragment {
         registerBtn.setOnClickListener(this::registerButton);
 
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // free listeners
-        transferListener = null;
-    }
-
-    public void setRegisterButton(@NonNull RefFunctionListener l){
-        transferListener = l;
-    }
-
-
 }

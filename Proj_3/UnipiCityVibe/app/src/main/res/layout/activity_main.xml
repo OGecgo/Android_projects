@@ -10,13 +10,13 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/topViewMenuContainer"
-        android:name="com.example.unipicityvibe.UI.Fragments.TopViewMenu"
+        android:name="com.example.unipicityvibe.UI.Fragments.TopMenuFragment"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout="@layout/fragment_top_view_menu"/>
+        tools:layout="@layout/fragment_top_menu"/>
 
     <FrameLayout
         android:id="@+id/fragment_container"

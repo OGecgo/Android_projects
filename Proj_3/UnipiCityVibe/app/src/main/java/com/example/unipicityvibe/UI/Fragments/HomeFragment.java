@@ -10,25 +10,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.unipicityvibe.Data.Local.AppSettings;
+import com.example.unipicityvibe.Enums.LocationTypeEnum;
 import com.example.unipicityvibe.R;
-import com.example.unipicityvibe.Listeners.RefFunctionListener;
+import com.example.unipicityvibe.UI.Activity.UserActivity;
+import com.example.unipicityvibe.Utils.PermissionHelper;
+
 
 public class HomeFragment extends Fragment {
 
-    private RefFunctionListener eventListListener;
-    private RefFunctionListener eventMapListener;
-    private RefFunctionListener myTicketListener;
-
-
     // ----- Buttons -----
     private void eventListButton(View view){
-        if (eventListListener != null) eventListListener.execute();
+        if (PermissionHelper.isGrantedLocationPermission(requireContext()) && AppSettings.getLocationAccuracy(requireContext()) != LocationTypeEnum.OFF_LOCATION)
+            ((UserActivity) requireActivity()).showEventListFragment();
+        else
+            ((UserActivity) requireActivity()).showErrorFragment();
     }
     private void eventMapButton(View view){
-        if (eventMapListener != null) eventMapListener.execute();
-    }
+        if (PermissionHelper.isGrantedLocationPermission(requireContext()) && AppSettings.getLocationAccuracy(requireContext()) != LocationTypeEnum.OFF_LOCATION)
+            ((UserActivity) requireActivity()).showMapsFragment();
+        else
+            ((UserActivity) requireActivity()).showErrorFragment();    }
     private void myTicketButton(View view){
-        if (myTicketListener != null) myTicketListener.execute();
+//        ((UserActivity) requireActivity()).showMyTicketsFragment();
     }
     // ----- End Buttons -----
 
@@ -50,25 +54,6 @@ public class HomeFragment extends Fragment {
         b = view.findViewById(R.id.buttonMyTickets);
         b.setOnClickListener(this::myTicketButton);
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // free listeners
-        eventListListener = null;
-        eventMapListener = null;
-        myTicketListener = null;
-    }
-    
-    public void setEventListButton(@NonNull RefFunctionListener l){
-        eventListListener = l;
-    }
-    public void setEventMapButton(@NonNull RefFunctionListener l){
-        eventMapListener = l;
-    }
-    public void setMyTicketButton(@NonNull RefFunctionListener l){
-        myTicketListener = l;
     }
 
 }

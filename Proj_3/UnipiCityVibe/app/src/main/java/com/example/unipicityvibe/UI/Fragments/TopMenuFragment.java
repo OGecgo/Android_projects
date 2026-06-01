@@ -19,7 +19,7 @@ import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 
 
-public class TopViewMenu extends Fragment {
+public class TopMenuFragment extends Fragment {
 
 
     private PopUpMenuAccount popUpMenuAccount;
@@ -46,7 +46,7 @@ public class TopViewMenu extends Fragment {
     @Override
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_top_view_menu, container, false);
+        return inflater.inflate(R.layout.fragment_top_menu, container, false);
     }
 
     @Override
