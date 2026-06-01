@@ -53,9 +53,6 @@ public class TopMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // initialization for testing.
-        // If user exist. buttonLogo will do transfer to Home page and buttonName will work
-        // If not. buttonLogo will do transfer to LogIn page
         IAuthService authService = AuthService.getInstance();
         UserAuthData user = authService.getUserAuth();
 

@@ -96,12 +96,15 @@
     <string name="location_permission_denied_message">Access to the location has been denied.\n It is impossible to find the event nearby without location permission.</string>
     <string name="permission_denied">Permission Denied</string>
 
-    <!-- event page -->
+    <!-- event ticket page -->
     <string name="description">Description</string>
     <string name="time">Time</string>
     <string name="place">Place</string>
     <string name="price">Price</string>
     <string name="buy">Buy</string>
+    <string name="transaction_completed">Transaction is completed</string>
+    <string name="error_transaction">Error transaction. Transaction was interrupted</string>
     <string name="back">Back</string>
     <string name="question_user_buy_ticket">Are you sure you want to buy a ticket for this event?</string>
+    <string name="payment">Payment</string>
 </resources>

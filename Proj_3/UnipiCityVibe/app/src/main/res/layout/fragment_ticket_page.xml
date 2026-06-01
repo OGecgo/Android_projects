@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/MainPage">
-
-
-
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
@@ -114,6 +109,33 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="" />
+
+            <View
+                android:layout_marginTop="25dp"
+                style="@style/ViewLineColor"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+            
+            <TextView
+                android:layout_marginStart="10dp"
+                android:id="@+id/textViewPayment"
+                style="@style/HeaderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="@string/payment" />
+
+            <TextView
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/textViewPaymentContext"
+                style="@style/LargeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="" />
         </LinearLayout>
 
     </ScrollView>
@@ -130,24 +152,7 @@
             android:id="@+id/buttonBack"
             style="@style/DefaultButton"
             android:text="@string/back"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <View
-            style="@style/ViewLineColorReverse"
-            android:layout_width="1dp"
-            android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/buttonBuy"
-            style="@style/DefaultButton"
-            android:text="@string/buy"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

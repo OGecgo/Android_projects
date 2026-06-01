@@ -1,12 +1,16 @@
 package com.example.unipicityvibe.Service;
 
+import static android.content.ContentValues.TAG;
+
 import android.location.Location;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.unipicityvibe.Data.EventDB;
 import com.example.unipicityvibe.Data.Interface.IEventDB;
 import com.example.unipicityvibe.Data.Models.EventData;
+import com.example.unipicityvibe.Data.Models.TicketData;
 import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Listeners.OnCompleteListener;
 
@@ -59,6 +63,19 @@ public class EventService implements IEventService {
         }
 
         return list.toArray( new EventData[0]);
+    }
+    @Override
+    public EventData[] getEventsFromTickets(TicketData[] tickets){
+        ArrayList<EventData> eventList = new ArrayList<>();
+        for (TicketData ticketData: tickets){
+            if (events.containsKey(ticketData.event_id)){
+                eventList.add(events.get(ticketData.event_id));
+            }
+            else{
+                Log.e(TAG, "[EventService] Event not found with id::" + ticketData.event_id);
+            }
+        }
+        return eventList.toArray(new EventData[0]);
     }
     @Override
     public void StartReceiveEvents(@NonNull OnCompleteListener l){

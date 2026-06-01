@@ -1,10 +1,7 @@
 package com.example.unipicityvibe.UI.Fragments;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,7 @@ import com.example.unipicityvibe.Utils.PermissionHelper;
 
 import com.example.unipicityvibe.UI.CustomView.EventInfoView;
 
-public class EventListFragment extends Fragment {
+public class EventListAroundFragment extends Fragment {
 
     private ILocationService locationService;
     private IEventService eventService;
@@ -94,7 +91,4 @@ public class EventListFragment extends Fragment {
         EventData[] eventsData = eventService.getRadiusEvents(locationService.getLatitude(), locationService.getLongitude());
         showEvents(eventsData);
     }
-
-
-
 }

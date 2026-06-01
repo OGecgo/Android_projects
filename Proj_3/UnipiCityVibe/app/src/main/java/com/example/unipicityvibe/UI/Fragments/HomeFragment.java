@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
     // ----- Buttons -----
     private void eventListButton(View view){
         if (PermissionHelper.isGrantedLocationPermission(requireContext()) && AppSettings.getLocationAccuracy(requireContext()) != LocationTypeEnum.OFF_LOCATION)
-            ((UserActivity) requireActivity()).showEventListFragment();
+            ((UserActivity) requireActivity()).showEventListAroundFragment();
         else
             ((UserActivity) requireActivity()).showErrorFragment();
     }
@@ -30,9 +30,10 @@ public class HomeFragment extends Fragment {
         if (PermissionHelper.isGrantedLocationPermission(requireContext()) && AppSettings.getLocationAccuracy(requireContext()) != LocationTypeEnum.OFF_LOCATION)
             ((UserActivity) requireActivity()).showMapsFragment();
         else
-            ((UserActivity) requireActivity()).showErrorFragment();    }
+            ((UserActivity) requireActivity()).showErrorFragment();
+    }
     private void myTicketButton(View view){
-//        ((UserActivity) requireActivity()).showMyTicketsFragment();
+        ((UserActivity) requireActivity()).showMyTicketsFragment();
     }
     // ----- End Buttons -----
 

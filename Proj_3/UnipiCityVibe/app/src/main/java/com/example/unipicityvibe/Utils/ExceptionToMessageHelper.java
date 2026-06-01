@@ -21,10 +21,10 @@ public final class ExceptionToMessageHelper {
                 break;
 
             // UserAuth & UserDB & TicketDB Validation
-            case UserAuthException.EMPTY_EMAIL: // UserDBException & TicketDBException.
+            case UserAuthException.EMPTY_EMAIL: // UserDBException.
                 textResId = R.string.error_email_empty;
                 break;
-            case UserAuthException.EMPTY_PASSWORD: // UserDBException & TicketDBException
+            case UserAuthException.EMPTY_PASSWORD: // UserDBException
                 textResId = R.string.error_password_empty;
                 break;
             case UserAuthException.EMAIL_VALIDATION_ERROR: // UserDBException & TicketDBException

@@ -18,18 +18,23 @@ import com.example.unipicityvibe.Data.Local.AppSettings;
 import com.example.unipicityvibe.Data.Models.EventData;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
+import com.example.unipicityvibe.Listeners.OnCompleteListener;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.EventService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
+import com.example.unipicityvibe.Service.Interface.ITicketService;
 import com.example.unipicityvibe.Service.LocationService;
+import com.example.unipicityvibe.Service.TicketService;
 import com.example.unipicityvibe.UI.Fragments.EventFragment;
+import com.example.unipicityvibe.UI.Fragments.MyTicketsFragment;
+import com.example.unipicityvibe.UI.Fragments.TicketFragment;
 import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Utils.PermissionHelper;
 import com.example.unipicityvibe.UI.Fragments.ErrorFragment;
-import com.example.unipicityvibe.UI.Fragments.EventListFragment;
+import com.example.unipicityvibe.UI.Fragments.EventListAroundFragment;
 import com.example.unipicityvibe.UI.Fragments.HomeFragment;
 import com.example.unipicityvibe.UI.Fragments.MapsFragment;
 import com.example.unipicityvibe.UI.Fragments.SettingsFragment;
@@ -40,14 +45,17 @@ public class UserActivity extends BaseActivity {
     // Tags for Fragments
     private static final String TAG_HOME = "TAG_HOME";
     private static final String TAG_SETTINGS = "TAG_SETTINGS";
-    private static final String TAG_EVENT_LIST = "TAG_EVENT_LIST";
-    private static final String TAG_ERROR = "TAG_ERROR";
+    private static final String TAG_EVENT_LIST_AROUND = "TAG_EVENT_LIST_AROUND";
     private static final String TAG_MAPS = "TAG_MAPS";
     private static final String TAG_EVENT = "TAG_EVENT";
+    private static final String TAG_MY_TICKETS = "TAG_MY_TICKETS";
+    private static final String TAG_TICKET = "TAG_TICKET";
+    private static final String TAG_ERROR = "TAG_ERROR";
 
-    // Location
+    private IAuthService authService;
     private ILocationService locationService;
     private IEventService eventService;
+    private ITicketService ticketService;
 
     // ----- Call Back -----
     private void onCompleteListenerStartReceive(boolean success, String errorLog){
@@ -84,16 +92,10 @@ public class UserActivity extends BaseActivity {
         replaceFragment(settingsFragment, TAG_SETTINGS, false);
     }
 
-    public void showEventListFragment() {
-        EventListFragment eventListFragment = (EventListFragment) getSupportFragmentManager().findFragmentByTag(TAG_EVENT_LIST);
-        if (eventListFragment == null) eventListFragment = new EventListFragment();
-        replaceFragment(eventListFragment, TAG_EVENT_LIST, true);
-    }
-
-    public void showErrorFragment() {
-        ErrorFragment errorFragment = (ErrorFragment) getSupportFragmentManager().findFragmentByTag(TAG_ERROR);
-        if (errorFragment == null) errorFragment = new ErrorFragment();
-        replaceFragment(errorFragment, TAG_ERROR, false);
+    public void showEventListAroundFragment() {
+        EventListAroundFragment eventListAroundFragment = (EventListAroundFragment) getSupportFragmentManager().findFragmentByTag(TAG_EVENT_LIST_AROUND);
+        if (eventListAroundFragment == null) eventListAroundFragment = new EventListAroundFragment();
+        replaceFragment(eventListAroundFragment, TAG_EVENT_LIST_AROUND, true);
     }
 
     public void showMapsFragment() {
@@ -107,6 +109,25 @@ public class UserActivity extends BaseActivity {
         if (eventFragment == null) eventFragment = new EventFragment();
         eventFragment.setEventData(eventData);
         replaceFragment(eventFragment, TAG_EVENT, true);
+    }
+
+    public void showMyTicketsFragment() {
+        MyTicketsFragment myTicketsFragment = (MyTicketsFragment) getSupportFragmentManager().findFragmentByTag(TAG_MY_TICKETS);
+        if (myTicketsFragment == null) myTicketsFragment = new MyTicketsFragment();
+        replaceFragment(myTicketsFragment, TAG_MY_TICKETS, true);
+    }
+
+    public void showTicketFragment(EventData eventData, String timestampTicket) {
+        TicketFragment ticketFragment = (TicketFragment) getSupportFragmentManager().findFragmentByTag(TAG_TICKET);
+        if (ticketFragment == null) ticketFragment = new TicketFragment();
+        ticketFragment.setData(eventData, timestampTicket);
+        replaceFragment(ticketFragment, TAG_TICKET, true);
+    }
+
+    public void showErrorFragment() {
+        ErrorFragment errorFragment = (ErrorFragment) getSupportFragmentManager().findFragmentByTag(TAG_ERROR);
+        if (errorFragment == null) errorFragment = new ErrorFragment();
+        replaceFragment(errorFragment, TAG_ERROR, false);
     }
     // ----- End Fragments -----
 
@@ -135,10 +156,22 @@ public class UserActivity extends BaseActivity {
             showHomeFragment();
         }
 
+        // test if user is existed
+        authService = AuthService.getInstance();
+        UserAuthData userAuthData = authService.getUserAuth();
+        if (userAuthData.uID.isEmpty()) {
+            goLogInPage();
+            return;
+        }
+
         // start receive data from database
+        // events
         eventService = EventService.getInstance();
         eventService.StartReceiveEvents(this::onCompleteListenerStartReceive);
-
+        // tickets
+        ticketService = TicketService.getInstance();
+        ticketService.setUserID(userAuthData.uID);
+        ticketService.StartReceiveTickets((success, errorLog) -> {});
 
         // require permissions from user if not required
         // location permission
@@ -177,8 +210,8 @@ public class UserActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         // test if user exist. if not. send to Log In page
-        IAuthService service = AuthService.getInstance();
-        UserAuthData userAuthData = service.getUserAuth();
+        authService = AuthService.getInstance();
+        UserAuthData userAuthData = authService.getUserAuth();
         if (userAuthData.uID.isEmpty()) goLogInPage();
     }
 
@@ -227,6 +260,8 @@ public class UserActivity extends BaseActivity {
             locationService.stopLocationUpdate();
         if (eventService != null) 
             eventService.StopReceiveEvents();
+        if (ticketService != null)
+            ticketService.StopReceiveEvents();
     }
 }
 
