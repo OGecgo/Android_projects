@@ -72,7 +72,7 @@
     <!-- Settings -->
     <string name="dark_mode">Темный режим</string>
     <string name="text_small_size">Мелкий текст</string>
-    <string name="text_normal_size">Нормальный текст</string>
+    <string name="text_normal_size">Средний текст</string>
     <string name="text_large_size">Крупный текст</string>
     <string name="notifications">Уведомления</string>
     <string name="location">Местоположение</string>
