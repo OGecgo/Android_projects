@@ -24,18 +24,20 @@ import com.example.unipicityvibe.Utils.PermissionHelper;
 
 public class SettingsPermissionsFragment extends Fragment {
 
-    private TextView errorText;
+    private TextView errorTextLocation, errorTextNotification;
     private LinearLayout layoutLocationDetails;
     
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchLocation, switchGPS, switchWIFICallTower;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private Switch switchNotification;
 
     // activity reload for settings apply
     private void restartActivity() {
         requireActivity().recreate();
     }
 
-    private void syncSwitches() {
+    private void syncSwitchesLocation() {
         LocationTypeEnum accuracy = AppSettings.getLocationAccuracy(requireContext());
 
         if (accuracy == LocationTypeEnum.FINE) {
@@ -65,19 +67,19 @@ public class SettingsPermissionsFragment extends Fragment {
     // ----- Switch -----
     private void locationSwitch(View view){
         boolean isChecked = ((CompoundButton) view).isChecked();
-        errorText.setText("");
+        errorTextLocation.setText("");
 
         if (isChecked){
             if(PermissionHelper.isGrantedLocationPermission(requireContext())){
                 setDefaultAppSettingValue();
                 layoutLocationDetails.setVisibility(VISIBLE);
-                syncSwitches();
+                syncSwitchesLocation();
                 // set new values
                 restartActivity();
             }
             else{
                 switchLocation.setChecked(false);
-                errorText.setText(R.string.permission_denied);
+                errorTextLocation.setText(R.string.permission_denied);
             }
         }
         else{
@@ -87,26 +89,55 @@ public class SettingsPermissionsFragment extends Fragment {
             restartActivity();
         }
     }
-
     private void fineSwitch(View view) {
         boolean isChecked = ((CompoundButton) view).isChecked();
-        errorText.setText("");
+        errorTextLocation.setText("");
 
         if (isChecked) {
             if (PermissionHelper.isGrantedFine(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
-                syncSwitches();
+                syncSwitchesLocation();
                 // set new values
                 restartActivity();
             } else {
-                errorText.setText(R.string.permission_denied);
+                errorTextLocation.setText(R.string.permission_denied);
                 switchGPS.setChecked(false);
             }
         } else {
             // If we turn off fine, we either fall back to WI-FI/Call-tower or turn off location
             if (PermissionHelper.isGrantedCoarse(requireContext())) {
                 AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
-                syncSwitches();
+                syncSwitchesLocation();
+                // set new values
+                restartActivity();
+            } else {
+                switchLocation.setChecked(false);
+                layoutLocationDetails.setVisibility(INVISIBLE);
+                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
+                // set new values
+                restartActivity();
+            }
+        }
+    }
+    private void coarseSwitch(View view) {
+        boolean isChecked = ((CompoundButton) view).isChecked();
+        errorTextLocation.setText("");
+
+        if (isChecked) {
+            if (PermissionHelper.isGrantedCoarse(requireContext())) {
+                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
+                syncSwitchesLocation();
+                // set new values
+                restartActivity();
+            } else {
+                errorTextLocation.setText(R.string.permission_denied);
+                switchWIFICallTower.setChecked(false);
+            }
+        } else {
+            // If we turn off WI-FI/Call-tower, we either fall back to GPS or turn off location
+            if (PermissionHelper.isGrantedFine(requireContext())) {
+                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
+                syncSwitchesLocation();
                 // set new values
                 restartActivity();
             } else {
@@ -119,34 +150,22 @@ public class SettingsPermissionsFragment extends Fragment {
         }
     }
 
-    private void coarseSwitch(View view) {
+    private void notificationSwitch(View view){
         boolean isChecked = ((CompoundButton) view).isChecked();
-        errorText.setText("");
+        errorTextNotification.setText("");
 
-        if (isChecked) {
-            if (PermissionHelper.isGrantedCoarse(requireContext())) {
-                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.COARSE);
-                syncSwitches();
-                // set new values
-                restartActivity();
-            } else {
-                errorText.setText(R.string.permission_denied);
-                switchWIFICallTower.setChecked(false);
-            }
-        } else {
-            // If we turn off WI-FI/Call-tower, we either fall back to GPS or turn off location
-            if (PermissionHelper.isGrantedFine(requireContext())) {
-                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.FINE);
-                syncSwitches();
-                // set new values
-                restartActivity();
-            } else {
-                switchLocation.setChecked(false);
-                layoutLocationDetails.setVisibility(INVISIBLE);
-                AppSettings.setLocationAccuracy(requireContext(), LocationTypeEnum.OFF_LOCATION);
-                // set new values
+        if (isChecked){
+            if (PermissionHelper.isGrantedNotification(requireContext())){
+                AppSettings.setNotificationPermission(requireContext(), true);
                 restartActivity();
             }
+            else {
+                errorTextNotification.setText(R.string.permission_denied);
+                switchNotification.setChecked(false);
+            }
+        }else{
+            AppSettings.setNotificationPermission(requireContext(), false);
+            restartActivity();
         }
     }
     // ----- End Switch
@@ -161,27 +180,36 @@ public class SettingsPermissionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        errorText = view.findViewById(R.id.textViewError);
+        // Locations
+        errorTextLocation = view.findViewById(R.id.textViewErrorLocation);
         layoutLocationDetails = view.findViewById(R.id.layoutLocationDetails);
         switchLocation = view.findViewById(R.id.switchLocation);
         switchGPS = view.findViewById(R.id.switchGPS);
         switchWIFICallTower = view.findViewById(R.id.switchWIFICallTower);
+        //  Notification
+        errorTextNotification = view.findViewById(R.id.textViewErrorNotification);
+        switchNotification = view.findViewById(R.id.switchNotifications);
 
         // Set listeners
         // use onClickListener because in that case the function setChecked should not trigger my listeners
         switchLocation.setOnClickListener(this::locationSwitch);
         switchGPS.setOnClickListener(this::fineSwitch);
         switchWIFICallTower.setOnClickListener(this::coarseSwitch);
+        switchNotification.setOnClickListener(this::notificationSwitch);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // do synchronize switches on resume for situations like change permission from setting and go back to app
+        // location
         if (AppSettings.getLocationAccuracy(requireContext()) != LocationTypeEnum.OFF_LOCATION) {
             switchLocation.setChecked(true);
             layoutLocationDetails.setVisibility(VISIBLE);
         }
-        syncSwitches();
+        syncSwitchesLocation();
+        // permission
+        if (AppSettings.getNotificationPermission(requireContext()))
+            switchNotification.setChecked(true);
     }
 }

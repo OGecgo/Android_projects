@@ -18,7 +18,8 @@ import com.example.unipicityvibe.Data.Local.AppSettings;
 import com.example.unipicityvibe.Data.Models.EventData;
 import com.example.unipicityvibe.Data.Models.UserAuthData;
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
-import com.example.unipicityvibe.Listeners.OnCompleteListener;
+import com.example.unipicityvibe.Managers.EventNotificationManager;
+import com.example.unipicityvibe.Managers.Interfaces.IEventNotificationManager;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.EventService;
@@ -27,6 +28,7 @@ import com.example.unipicityvibe.Service.Interface.IEventService;
 import com.example.unipicityvibe.Service.Interface.ILocationService;
 import com.example.unipicityvibe.Service.Interface.ITicketService;
 import com.example.unipicityvibe.Service.LocationService;
+import com.example.unipicityvibe.Service.NotificationService;
 import com.example.unipicityvibe.Service.TicketService;
 import com.example.unipicityvibe.UI.Fragments.EventFragment;
 import com.example.unipicityvibe.UI.Fragments.MyTicketsFragment;
@@ -56,6 +58,7 @@ public class UserActivity extends BaseActivity {
     private ILocationService locationService;
     private IEventService eventService;
     private ITicketService ticketService;
+    private IEventNotificationManager notificationManager;
 
     // ----- Call Back -----
     private void onCompleteListenerStartReceive(boolean success, String errorLog){
@@ -66,7 +69,6 @@ public class UserActivity extends BaseActivity {
         }
     }
 
-    // TODO another call back for notifications. they will called somewhere every time user go out of radius
     // ----- End Call Back -----
 
 
@@ -173,6 +175,19 @@ public class UserActivity extends BaseActivity {
         ticketService.setUserID(userAuthData.uID);
         ticketService.StartReceiveTickets((success, errorLog) -> {});
 
+        // if user come to UserActivity from notification
+        String eventID = getIntent().getStringExtra(NotificationService.HANDLE_CODE_KEY);
+        if (eventID != null){
+            EventData event = eventService.getEventInfo(eventID);
+            if (!event.event_id.isEmpty()){
+                showEventFragment(event);
+            }
+            else{
+                Toast.makeText(this, getString(R.string.error_no_event), Toast.LENGTH_SHORT).show();
+                Log.w(TAG, "[UserActivity] event not found from notification intent");
+            }
+        }
+
         // require permissions from user if not required
         // location permission
         if (!PermissionHelper.isGrantedLocationPermission(this)) {
@@ -180,29 +195,43 @@ public class UserActivity extends BaseActivity {
             PermissionHelper.requestLocationPermission(this);
         }
         // notification permission
-
+        if (!PermissionHelper.isGrantedNotification(this)){
+            AppSettings.setNotificationPermission(getBaseContext(), false);
+            PermissionHelper.requestNotificationPermission(this);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PermissionHelper.PERMISSION_REQUEST_CODE_GPS){
-            if (PermissionHelper.isGrantedLocationPermission(this)) {
-                if (PermissionHelper.isGrantedFine(this)){
-                    AppSettings.setLocationAccuracy(this, LocationTypeEnum.FINE);
+        switch (requestCode){
+            case PermissionHelper.PERMISSION_REQUEST_CODE_LOCATION:
+                if (PermissionHelper.isGrantedLocationPermission(this)) {
+                    if (PermissionHelper.isGrantedFine(this)){
+                        AppSettings.setLocationAccuracy(this, LocationTypeEnum.FINE);
+                    }
+                    else if (PermissionHelper.isGrantedCoarse(this)){
+                        AppSettings.setLocationAccuracy(this, LocationTypeEnum.COARSE);
+                    }
+                    // recreate for synchronize data
+                    this.recreate();
                 }
-                else if (PermissionHelper.isGrantedCoarse(this)){
-                    AppSettings.setLocationAccuracy(this, LocationTypeEnum.COARSE);
+                else{
+                    AppSettings.setLocationAccuracy(this, LocationTypeEnum.OFF_LOCATION);
+                    if (locationService != null) locationService.stopLocationUpdate();
                 }
-                // recreate for synchronize data
-                this.recreate();
-            }
-            else{
-                AppSettings.setLocationAccuracy(this, LocationTypeEnum.OFF_LOCATION);
-                if (locationService != null) locationService.stopLocationUpdate();
-            }
-
+                break;
+            case PermissionHelper.PERMISSION_REQUEST_CODE_NOTIFICATION:
+                if (PermissionHelper.isGrantedNotification(this)){
+                    AppSettings.setNotificationPermission(this, true);
+                    // synchronization
+                    this.recreate();
+                }
+                else{
+                    AppSettings.setNotificationPermission(this, false);
+                }
+                break;
         }
     }
 
@@ -219,8 +248,10 @@ public class UserActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        // is permissions changed nothing is available.s
+        // is permissions changed
         if (PermissionHelper.isGrantedLocationPermission(this)){
+
+            // LOCATIONS
             locationService = LocationService.getInstance(getApplicationContext());
             // if permission denied. locationService will be null
             if (locationService == null) {
@@ -246,18 +277,40 @@ public class UserActivity extends BaseActivity {
             else {
                 locationService.stopLocationUpdate();
             }
+
+            // NOTIFICATIONS
+            if (PermissionHelper.isGrantedNotification(this)){
+                // set the notification service
+                notificationManager = new EventNotificationManager(this,
+                        locationService,
+                        eventService,
+                        NotificationService.getInstance(this.getApplicationContext())
+                );
+
+                if (AppSettings.getNotificationPermission(this))
+                    notificationManager.startEventNotifications();
+            }
+            else{
+                AppSettings.setNotificationPermission(this, false);
+                if (notificationManager != null) notificationManager.stopEventNotifications();
+            }
         }
         else{
             AppSettings.setLocationAccuracy(getBaseContext(), LocationTypeEnum.OFF_LOCATION);
             if (locationService != null) locationService.stopLocationUpdate();
+            if (notificationManager != null) notificationManager.stopEventNotifications();
         }
     }
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (locationService != null)
             locationService.stopLocationUpdate();
+        if (notificationManager != null)
+            notificationManager.stopEventNotifications();
         if (eventService != null) 
             eventService.StopReceiveEvents();
         if (ticketService != null)

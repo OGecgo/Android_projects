@@ -16,16 +16,14 @@ public class GeocoderService implements IGeocoderService {
     private final Geocoder geocoder;
 
     private GeocoderService(Context context){
+        // give context.getApplicationContext() to prevent memory leaks
+        if (!context.equals(context.getApplicationContext())){
+            throw new RuntimeException("[GeocoderService] CRITICAL ERROR: context should be application context to prevent memory leaks. Use getApplicationContext");
+        }
         geocoder = new Geocoder(context);
     }
 
-    @Nullable
-    public static GeocoderService getInstance(@NonNull Context context){
-        // give context.getApplicationContext() to prevent memory leaks
-        if (!context.equals(context.getApplicationContext())){
-            Log.e(TAG, "[GeocoderService] context should be application context to prevent memory leaks. Use getApplicationContext");
-            return null;
-        }
+    public static GeocoderService getInstance(@NonNull Context context) {
         if (service == null) service = new GeocoderService(context);
         return service;
     }

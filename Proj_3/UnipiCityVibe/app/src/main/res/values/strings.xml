@@ -107,4 +107,8 @@
     <string name="back">Back</string>
     <string name="question_user_buy_ticket">Are you sure you want to buy a ticket for this event?</string>
     <string name="payment">Payment</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_event_name">Event Notifications</string>
+    <string name="notification_channel_event_description">Receive updates about upcoming events</string>
 </resources>

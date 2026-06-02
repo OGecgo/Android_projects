@@ -78,8 +78,6 @@ public class EventFragment extends Fragment {
     }
 
     private void onClickBuy(DialogInterface dialog, int which){
-        // TODO add evet to user ticket
-        //  if complete. move user else show error Toast
         ticketService.addTicket(eventData.event_id, this::onCompleteListenerAddTicket);
     }
     // ----- End Call Back -----
@@ -161,16 +159,11 @@ public class EventFragment extends Fragment {
                 tv.setText(eventData.time);
             }
             // Place
-
             textViewPlace = view.findViewById(R.id.textViewPlaceContext);
-            if (geocoderService != null) {
-                double eventLat = Double.parseDouble(eventData.latitude);
-                double eventLon = Double.parseDouble(eventData.longitude);
-                geocoderService.getAddress(eventLat, eventLon, geocodeListener);
-            }
-            else{
-                setLatLonValue();
-            }
+            double eventLat = Double.parseDouble(eventData.latitude);
+            double eventLon = Double.parseDouble(eventData.longitude);
+            geocoderService.getAddress(eventLat, eventLon, geocodeListener);
+
             // Price
             tv = view.findViewById(R.id.textViewPriceContext);
             String text = eventData.price + " $";

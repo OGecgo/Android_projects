@@ -53,9 +53,14 @@ public class LocationService implements ILocationService {
     };
     // ----- End Call Back -----
 
-    // constractor
+    // constructor
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     private LocationService(Context context){
+        // give context.getApplicationContext() to prevent memory leaks
+        if (!context.equals(context.getApplicationContext())){
+            throw new RuntimeException("[LocationService] CRITICAL ERROR: context should be application context to prevent memory leaks. Use getApplicationContext");
+        }
+
         this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         // take last location
         this.fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
@@ -71,12 +76,6 @@ public class LocationService implements ILocationService {
             Log.w(TAG, "[LocationService] Location permission denied");
             return null;
         }
-        // give context.getApplicationContext() to prevent memory leaks
-        if (!context.equals(context.getApplicationContext())){
-            Log.e(TAG, "[LocationService] context should be application context to prevent memory leaks. Use getApplicationContext");
-            return null;
-        }
-
         if (service == null) service = new LocationService(context);
         return service;
     }
