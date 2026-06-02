@@ -68,7 +68,7 @@ public class NotificationService implements INotificationService {
             manager.notify(notificationData.id, builder.build());
         }
         else{
-            Log.e(TAG, "[NotificationService] Error show notification");
+            Log.e(TAG, "[NotificationService] Error showing notification");
         }
     }
 
@@ -92,7 +92,7 @@ public class NotificationService implements INotificationService {
             manager.createNotificationChannel(channel);
         }
         else {
-            Log.e(TAG, "[NotificationService] Error get notification manager");
+            Log.e(TAG, "[NotificationService] Error getting notification manager");
         }
     }
 

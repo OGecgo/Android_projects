@@ -84,18 +84,18 @@ public class EventNotificationManager implements IEventNotificationManager {
         if (isRunning) return;
         
         if (!AppSettings.getNotificationPermission(context)) {
-            Log.e(TAG, "[EventNotificationManager] Error start. Permissions denied");
+            Log.e(TAG, "[EventNotificationManager] Error starting. Permissions denied");
             return;
         }
         isRunning = true;
         handler.post(checkNearbyEventsTask);
-        Log.d(TAG, "[EventNotificationManger] Start event notification manager");
+        Log.d(TAG, "[EventNotificationManager] Started event notification manager");
     }
 
     public void stopEventNotifications() {
         isRunning = false;
         handler.removeCallbacks(checkNearbyEventsTask);
-        Log.d(TAG, "[EventNotificationManger] Stop event notification manager");
+        Log.d(TAG, "[EventNotificationManager] Stopped event notification manager");
     }
 
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Account Area -->
+    <string name="name">Όνομα</string>
+    <string name="last_name">Επώνυμο</string>
+    <string name="email">Email</string>
+    <string name="password">Κωδικός</string>
+    <string name="repeat_password">Επιβεβαίωση Κωδικού</string>
+    <string name="logIn">Σύνδεση</string>
+    <string name="logOut">Αποσύνδεση</string>
+    <string name="deleteUser">Διαγραφή Χρήστη</string>
+    <string name="register">Εγγραφή</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="user">Χρήστης</string>
+
+    <string name="question_user_delete_account">Είστε σίγουροι ότι θέλετε να διαγράψετε τον λογαριασμό σας;</string>
+
+    <!-- AuthService Errors -->
+    <string name="error_user_already_logged_in">Είστε ήδη συνδεδεμένοι. Παρακαλώ αποσυνδεθείτε πρώτα</string>
+    <string name="error_user_not_logged_in">Δεν είστε συνδεδεμένοι</string>
+
+    <!-- Validation Errors -->
+    <string name="error_email_empty">Το email δεν μπορεί να είναι άδειο</string>
+    <string name="error_password_empty">Ο κωδικός δεν μπορεί να είναι άδειος</string>
+    <string name="error_email_invalid">Η μορφή του email δεν είναι έγκυρη</string>
+    <string name="error_uid_empty">Το ID του χρήστη είναι άδειο</string>
+    <string name="error_name_empty">Το όνομα δεν μπορεί να είναι άδειο</string>
+    <string name="error_lastname_empty">Το επώνυμο δεν μπορεί να είναι άδειο</string>
+
+    <!-- User Authentication Errors -->
+    <string name="error_user_create_failed">Αποτυχία δημιουργίας λογαριασμού. Προσπαθήστε ξανά</string>
+    <string name="error_user_delete_failed">Αποτυχία διαγραφής λογαριασμού</string>
+    <string name="error_user_not_exist">Ο χρήστης δεν υπάρχει</string>
+    <string name="error_signin_failed">Αποτυχία σύνδεσης. Ελέγξτε τα στοιχεία σας</string>
+    <string name="error_auth_failed">Αποτυχία πιστοποίησης. Προσπαθήστε ξανά</string>
+    <string name="error_signout_failed">Αποτυχία αποσύνδεσης</string>
+
+    <!-- User Data Errors -->
+    <string name="error_user_data_not_found">Δεν βρέθηκαν δεδομένα χρήστη</string>
+    <string name="error_get_user_failed">Αποτυχία ανάκτησης δεδομένων χρήστη</string>
+
+    <!-- Ticket Errors -->
+    <string name="error_ticket_add_failed">Αποτυχία προσθήκης εισιτηρίου</string>
+    <string name="error_ticket_not_found">Δεν βρέθηκαν δεδομένα εισιτηρίου</string>
+    <string name="error_get_ticket_failed">Αποτυχία ανάκτησης πληροφοριών εισιτηρίου</string>
+    <string name="error_no_tickets">Δεν βρέθηκαν εισιτήρια για τον λογαριασμό σας</string>
+    <string name="error_get_tickets_failed">Αποτυχία ανάκτησης των εισιτηρίων σας</string>
+
+    <!-- Event Errors -->
+    <string name="error_get_event_failed">Αποτυχία ανάκτησης δεδομένων εκδήλωσης</string>
+    <string name="error_no_event">Δεν βρέθηκε εκδήλωση</string>
+    <string name="error_get_events_failed">Αποτυχία ανάκτησης λίστας εκδηλώσεων</string>
+    <string name="error_no_events">Δεν βρέθηκαν εκδηλώσεις σε αυτό το εύρος</string>
+
+    <!-- General Errors -->
+    <string name="error_unknown">Άγνωστο σφάλμα. Προσπαθήστε ξανά</string>
+    <string name="error_all_fields_required">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
+    <string name="error_passwords_not_match">Τα συνθηματικά δεν είναι όμια</string>
+    <string name="error_password_too_short">Ο κωδικός πρέπει να έχει τουλάχιστον 7 χαρακτήρες</string>
+
+
+    <!-- General Area -->
+    <string name="none">Κανένα</string>
+    <string name="app_name">UnipiCityVibe</string>
+    <string name="event_map">Χάρτης Εκδηλώσεων</string>
+    <string name="submit">Υποβολή</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="event_list">Λίστα Εκδηλώσεων</string>
+    <string name="my_tickets">Τα Εισιτήριά Μου</string>
+    <string name="reload">Ανανέωση</string>
+
+    <!-- Settings -->
+    <string name="dark_mode">Σκοτεινή Λειτουργία</string>
+    <string name="text_small_size">Μικρό Μέγεθος Γραμματοσειράς</string>
+    <string name="text_normal_size">Κανονικό Μέγεθος Γραμματοσειράς</string>
+    <string name="text_large_size">Μεγάλο Μέγεθος Γραμματοσειράς</string>
+    <string name="notifications">Ειδοποιήσεις</string>
+    <string name="location">Τοποθεσία</string>
+    <string name="high_performance_mode">Λειτουργία Υψηλής Ακρίβειας\n(με χρήση GPS)</string>
+    <string name="balance_mode">Ισορροπημένη Λειτουργία\n(χρήση GPS ή Wi-Fi/Cell Tower)</string>
+    <string name="permissions">Άδειες</string>
+    <string name="text_size">Μέγεθος Κειμένου:</string>
+    <string name="general_settings">Γενικές Ρυθμίσεις</string>
+
+    <!-- Permissions -->
+    <string name="location_permission_denied_message">Η πρόσβαση στην τοποθεσία απορρίφθηκε.\nΕίναι αδύνατη η εύρεση κοντινών εκδηλώσεων χωρίς αυτήν την άδεια σας</string>
+    <string name="permission_denied">Η Άδεια Απορρίφθηκε</string>
+
+    <!-- event ticket page -->
+    <string name="description">Περιγραφή</string>
+    <string name="time">Ώρα</string>
+    <string name="place">Τοποθεσία</string>
+    <string name="price">Τιμή</string>
+    <string name="buy">Αγορά</string>
+    <string name="transaction_completed">Η συναλλαγή ολοκληρώθηκε επιτυχώς</string>
+    <string name="error_transaction">Σφάλμα συναλλαγής. Η συναλλαγή διακόπηκε</string>
+    <string name="back">Πίσω</string>
+    <string name="question_user_buy_ticket">Είστε σίγουροι ότι θέλετε να αγοράσετε εισιτήριο;</string>
+    <string name="payment">Πληρωμή</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_event_name">Ειδοποιήσεις Εκδηλώσεων</string>
+    <string name="notification_channel_event_description">Λάβετε ενημερώσεις για επερχόμενες εκδηλώσεις</string>
+</resources>

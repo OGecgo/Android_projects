@@ -63,7 +63,7 @@ public class TicketDB implements ITicketDB {
     @Override
     public void addTicket(String user_id, String event_id, long timestampMilli, @NonNull OnCompleteListener l){
         if (user_id.isEmpty()){
-            Log.e(TAG, "[TicketDB] user is empty");
+            Log.e(TAG, "[TicketDB] User ID is empty");
             return;
         }
         long timestampSec = timestampMilli / 1000;
@@ -84,7 +84,7 @@ public class TicketDB implements ITicketDB {
     @Override
     public void setListenerForTicketMapRef(String user_id, @NonNull HashMap<String, TicketData> ticketsRef, @NonNull OnCompleteListener l){
         if (user_id.isEmpty()){
-            Log.e(TAG, "[TicketDB] user is empty");
+            Log.e(TAG, "[TicketDB] User ID is empty");
         return;
         }
 

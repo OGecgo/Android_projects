@@ -184,7 +184,7 @@ public class UserActivity extends BaseActivity {
             }
             else{
                 Toast.makeText(this, getString(R.string.error_no_event), Toast.LENGTH_SHORT).show();
-                Log.w(TAG, "[UserActivity] event not found from notification intent");
+                Log.w(TAG, "[UserActivity] Event not found from notification intent");
             }
         }
 
@@ -255,7 +255,7 @@ public class UserActivity extends BaseActivity {
             locationService = LocationService.getInstance(getApplicationContext());
             // if permission denied. locationService will be null
             if (locationService == null) {
-                Log.w(TAG, "[UserActivity] locationService is null");
+                Log.w(TAG, "[UserActivity] Location service is null");
                 return;
             }
 

@@ -8,7 +8,7 @@ public final class UserAuthException {
     public static final String ERROR_USER_SIGNIN = "ERROR_USER_SIGNIN";
     public static final String ERROR_USER_DELETE = "ERROR_USER_DELETE";
     public static final String ERROR_USER_AUTHENTICATION = "ERROR_USER_AUTHENTICATION";
-    public static final String SIGNOUT_FAIL = "SIGNOUT_FAIL";
+    public static final String ERROR_USER_SIGNOUT = "ERROR_USER_SIGNOUT";
     public static final String USER_NOT_EXIST = "USER_NOT_EXIST";
 
     private UserAuthException() {}

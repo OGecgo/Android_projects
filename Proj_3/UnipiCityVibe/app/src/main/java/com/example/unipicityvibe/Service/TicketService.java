@@ -46,7 +46,7 @@ public class TicketService implements ITicketService {
     @Override
     public void addTicket(String event_id, @NonNull OnCompleteListener l){
         if (user_id.isEmpty()){
-            Log.w(TAG, "[TicketService] Cannot add ticket. user_id do not exist");
+            Log.w(TAG, "[TicketService] Cannot add ticket. User ID does not exist");
             l.onCompose(false, TicketDBException.EMPTY_UID);
             return;
         }
@@ -62,7 +62,7 @@ public class TicketService implements ITicketService {
     @Override
     public void StartReceiveTickets(@NonNull OnCompleteListener l){
         if (user_id.isEmpty()){
-            Log.w(TAG, "[TicketService] Cannot start receive events. user_id is null");
+            Log.w(TAG, "[TicketService] Cannot start receiving events. User ID is null");
             l.onCompose(false, TicketDBException.EMPTY_UID);
             return;
         }
@@ -72,7 +72,7 @@ public class TicketService implements ITicketService {
     @Override
     public void StopReceiveEvents(){
         if (user_id.isEmpty()){
-            Log.w(TAG, "[TicketService] Cannot stop receive events. user_id is null");
+            Log.w(TAG, "[TicketService] Cannot stop receiving events. User ID is null");
             return;
         }
         tickets.clear();

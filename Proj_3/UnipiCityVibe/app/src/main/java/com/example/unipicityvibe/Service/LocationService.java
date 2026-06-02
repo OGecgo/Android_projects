@@ -83,7 +83,7 @@ public class LocationService implements ILocationService {
     @Override
     public void stopLocationUpdate(){
         fusedLocationClient.removeLocationUpdates(locationCallback);
-        Log.d(TAG, "[LocationService] Stop location tracking");
+        Log.d(TAG, "[LocationService] Stopped location tracking");
     }
 
     @Override
@@ -95,7 +95,7 @@ public class LocationService implements ILocationService {
                     break;
                 }
                 fusedLocationClient.requestLocationUpdates(locationRequestHigh, locationCallback, Looper.getMainLooper());
-                Log.d(TAG, "[LocationService] start location tracking fine");
+                Log.d(TAG, "[LocationService] Started fine location tracking");
                 break;
             case COARSE:
                 if (!PermissionHelper.isGrantedCoarse(context)){
@@ -103,7 +103,7 @@ public class LocationService implements ILocationService {
                     break;
                 }
                 fusedLocationClient.requestLocationUpdates(locationRequestBalance, locationCallback, Looper.getMainLooper());
-                Log.d(TAG, "[LocationService] start location tracking coarse");
+                Log.d(TAG, "[LocationService] Started coarse location tracking");
                 break;
         }
     }

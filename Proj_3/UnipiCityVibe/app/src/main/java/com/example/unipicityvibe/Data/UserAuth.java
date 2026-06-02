@@ -141,14 +141,14 @@ public class UserAuth implements IUserAuth {
             l.onCompose(true, "");
         } catch (Exception e) { // error logout
             Log.e(TAG, "[UserAuth] Failed to sign out user", e);
-            l.onCompose(false, UserAuthException.SIGNOUT_FAIL);
+            l.onCompose(false, UserAuthException.ERROR_USER_SIGNOUT);
         }
     }
     @Override
     public void deleteUser(String password, @NonNull OnCompleteListener l){
         FirebaseUser userAuth = fAuth.getCurrentUser();
         if (userAuth == null){
-            Log.w(TAG, "[UserAuth] User not exist");
+            Log.w(TAG, "[UserAuth] User does not exist");
             l.onCompose(false, UserAuthException.USER_NOT_EXIST);
             return;
         }

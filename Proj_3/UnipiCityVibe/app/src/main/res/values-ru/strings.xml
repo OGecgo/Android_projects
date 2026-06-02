@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Account Area -->
+    <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="logIn">Войти</string>
+    <string name="logOut">Выйти</string>
+    <string name="deleteUser">Удалить пользователя</string>
+    <string name="register">Регистрация</string>
+    <string name="settings">Настройки</string>
+    <string name="user">Пользователь</string>
+
+    <string name="question_user_delete_account">Вы уверены, что хотите удалить свой аккаунт?</string>
+
+    <!-- AuthService Errors -->
+    <string name="error_user_already_logged_in">Вы уже вошли в систему. Пожалуйста, сначала выйдите</string>
+    <string name="error_user_not_logged_in">Вы не вошли в систему</string>
+
+    <!-- Validation Errors -->
+    <string name="error_email_empty">Email не может быть пустым</string>
+    <string name="error_password_empty">Пароль не может быть пустым</string>
+    <string name="error_email_invalid">Неверный формат Email. Пожалуйста, введите корректный адрес</string>
+    <string name="error_uid_empty">ID пользователя пуст</string>
+    <string name="error_name_empty">Имя не может быть пустым</string>
+    <string name="error_lastname_empty">Фамилия не может быть пустой</string>
+
+    <!-- User Authentication Errors -->
+    <string name="error_user_create_failed">Не удалось создать аккаунт. Пожалуйста, попробуйте снова</string>
+    <string name="error_user_delete_failed">Не удалось удалить аккаунт</string>
+    <string name="error_user_not_exist">Пользователь не существует</string>
+    <string name="error_signin_failed">Не удалось войти. Пожалуйста, проверьте ваши данные</string>
+    <string name="error_auth_failed">Ошибка аутентификации. Пожалуйста, попробуйте снова</string>
+    <string name="error_signout_failed">Не удалось выйти из системы</string>
+
+    <!-- User Data Errors -->
+    <string name="error_user_data_not_found">Данные пользователя не найдены</string>
+    <string name="error_get_user_failed">Не удалось получить данные пользователя</string>
+
+    <!-- Ticket Errors -->
+    <string name="error_ticket_add_failed">Не удалось добавить билет</string>
+    <string name="error_ticket_not_found">Данные о билете не найдены</string>
+    <string name="error_get_ticket_failed">Не удалось получить информацию о билете</string>
+    <string name="error_no_tickets">Билеты для вашего аккаунта не найдены</string>
+    <string name="error_get_tickets_failed">Не удалось получить ваши билеты</string>
+
+    <!-- Event Errors -->
+    <string name="error_get_event_failed">Не удалось получить данные о мероприятии</string>
+    <string name="error_no_event">Мероприятие не найдено</string>
+    <string name="error_get_events_failed">Не удалось получить список мероприятий</string>
+    <string name="error_no_events">Мероприятия в этом диапазоне не найдены</string>
+
+    <!-- General Errors -->
+    <string name="error_unknown">Произошла неизвестная ошибка. Пожалуйста, попробуйте снова</string>
+    <string name="error_all_fields_required">Пожалуйста, заполните все поля</string>
+    <string name="error_passwords_not_match">Пароли не совпадают</string>
+    <string name="error_password_too_short">Пароль должен содержать не менее 7 символов</string>
+
+
+    <!-- General Area -->
+    <string name="none">Нет</string>
+    <string name="app_name">UnipiCityVibe</string>
+    <string name="event_map">Карта мероприятий</string>
+    <string name="submit">Отправить</string>
+    <string name="cancel">Отмена</string>
+    <string name="event_list">Список мероприятий</string>
+    <string name="my_tickets">Мои билеты</string>
+    <string name="reload">Обновить</string>
+
+    <!-- Settings -->
+    <string name="dark_mode">Темный режим</string>
+    <string name="text_small_size">Мелкий текст</string>
+    <string name="text_normal_size">Нормальный текст</string>
+    <string name="text_large_size">Крупный текст</string>
+    <string name="notifications">Уведомления</string>
+    <string name="location">Местоположение</string>
+    <string name="high_performance_mode">С высокой точностью\n(использует GPS)</string>
+    <string name="balance_mode">Сбалансированный режим\n(использует GPS или Wi-Fi/Cell Tower)</string>
+    <string name="permissions">Разрешения</string>
+    <string name="text_size">Размер текста:</string>
+    <string name="general_settings">Общие настройки</string>
+
+    <!-- Permissions -->
+    <string name="location_permission_denied_message">Доступ к местоположению запрещен.\nНевозможно найти ближайшие мероприятия без разрешения на геолокацию</string>
+    <string name="permission_denied">Доступ запрещен</string>
+
+    <!-- event ticket page -->
+    <string name="description">Описание</string>
+    <string name="time">Время</string>
+    <string name="place">Место</string>
+    <string name="price">Цена</string>
+    <string name="buy">Купить</string>
+    <string name="transaction_completed">Транзакция успешно завершена</string>
+    <string name="error_transaction">Ошибка транзакции. Транзакция была прервана</string>
+    <string name="back">Назад</string>
+    <string name="question_user_buy_ticket">Вы уверены, что хотите купить билет на это мероприятие?</string>
+    <string name="payment">Оплата</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_event_name">Уведомления о мероприятиях</string>
+    <string name="notification_channel_event_description">Получать обновления о предстоящих мероприятиях</string>
+</resources>

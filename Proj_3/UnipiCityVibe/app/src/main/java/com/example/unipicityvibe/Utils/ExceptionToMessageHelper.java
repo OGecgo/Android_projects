@@ -51,7 +51,7 @@ public final class ExceptionToMessageHelper {
             case UserAuthException.ERROR_USER_SIGNIN:
                 textResId = R.string.error_signin_failed;
                 break;
-            case UserAuthException.SIGNOUT_FAIL:
+            case UserAuthException.ERROR_USER_SIGNOUT:
                 textResId = R.string.error_signout_failed;
                 break;
 

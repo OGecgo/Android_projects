@@ -43,7 +43,7 @@ public class UserDB implements IUserDB {
             return true;
         }
         if (user.uID.isEmpty()){
-            Log.w(TAG, "[UserDB] User not exist");
+            Log.w(TAG, "[UserDB] User does not exist");
             l.onCompose(false, UserDBException.EMPTY_UID);
             return true;
         }
@@ -120,7 +120,7 @@ public class UserDB implements IUserDB {
     @Override
     public void getUserData(@NonNull UserAuthData user, @NonNull UserData userRef, @NonNull OnCompleteListener l){
         if (user.uID.isEmpty()){
-            Log.w(TAG, "[UserDB] User is empty");
+            Log.w(TAG, "[UserDB] User properties are empty");
             l.onCompose(false, UserDBException.EMPTY_USER);
             return;
         }
@@ -157,7 +157,7 @@ public class UserDB implements IUserDB {
     public void deleteUser(@NonNull FirebaseUser userF, String password, @NonNull OnCompleteListener l){
         // test user and password
         if (userF.getUid().isEmpty()){
-            Log.w(TAG, "[UserDB] User is empty");
+            Log.w(TAG, "[UserDB] User properties are empty");
             l.onCompose(false, UserDBException.USER_NOT_EXIST);
             return;
         }
