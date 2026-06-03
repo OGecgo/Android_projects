@@ -26,7 +26,8 @@ public final class AppSettings {
         float scale = getFontScale(context);
         String language = getLanguage(context);
         
-        Configuration configuration = new Configuration(context.getResources().getConfiguration());
+        // Use a new blank Configuration to only override specific fields
+        Configuration configuration = new Configuration();
 
         // scale
         configuration.fontScale = scale;
