@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Listeners.RefFunctionListener;
+import com.example.unipicityvibe.UI.DialogFragment.LanguageDialogFragment;
 import com.example.unipicityvibe.UI.PopupMenu.PopUpMenuAccount;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.R;
@@ -33,6 +34,10 @@ public class TopMenuFragment extends Fragment {
     private void nameButton(View view){
         popUpMenuAccount.showAsDropDown(buttonName);
     }
+    private void showLanguageDialog() {
+        LanguageDialogFragment dialog = new LanguageDialogFragment();
+        dialog.show(getParentFragmentManager(), "LANGUAGE_DIALOG");
+    }
     // ------ End Buttons ------
 
 
@@ -41,6 +46,8 @@ public class TopMenuFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // initialize popupmenu for button buttonName
         popUpMenuAccount = new PopUpMenuAccount(getContext());
+        // set language listener
+        popUpMenuAccount.setLanguageListener(this::showLanguageDialog);
     }
 
     @Override
@@ -71,6 +78,7 @@ public class TopMenuFragment extends Fragment {
         homeListener = l;
     }
 
+    // set setting listener
     public void setSettingsButton(@NonNull RefFunctionListener l) {
         popUpMenuAccount.setSettingsListener(l);
     }

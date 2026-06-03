@@ -20,6 +20,7 @@ public class PopUpMenuAccount extends PopupWindow {
     private final IAuthService authService;
     private final Context context;
     private RefFunctionListener settingsListener;
+    private RefFunctionListener languageListener;
 
     // ------ Call Back ------
     private void onCompleteListenerLogOut(boolean success, String errorText){
@@ -35,6 +36,12 @@ public class PopUpMenuAccount extends PopupWindow {
     // ------ Buttons ------
     private void logOutButton(View view){
         authService.userLogOut(this::onCompleteListenerLogOut);
+    }
+        private void languageButton(View view){
+        dismiss();
+        if (languageListener != null) {
+            languageListener.execute();
+        }
     }
     private void settingsButton(View view){
         dismiss();
@@ -60,11 +67,17 @@ public class PopUpMenuAccount extends PopupWindow {
         Button b;
         b = view.findViewById(R.id.buttonLogOut);
         b.setOnClickListener(this::logOutButton);
+        b = view.findViewById(R.id.buttonLanguage);
+        b.setOnClickListener(this::languageButton);
         b = view.findViewById(R.id.buttonSettings);
         b.setOnClickListener(this::settingsButton);
+
     }
 
     public void setSettingsListener(@NonNull RefFunctionListener l) {
         this.settingsListener = l;
+    }
+    public void setLanguageListener(@NonNull RefFunctionListener l) {
+        this.languageListener = l;
     }
 }

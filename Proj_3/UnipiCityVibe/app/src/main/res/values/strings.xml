@@ -12,6 +12,10 @@
     <string name="register">Register</string>
     <string name="settings">Settings</string>
     <string name="user">User</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="greek">Greek</string>
+    <string name="russian">Russian</string>
 
     <string name="question_user_delete_account">Are you sure you want to delete your account?</string>
 
@@ -97,6 +101,7 @@
     <string name="back">Back</string>
     <string name="question_user_buy_ticket">Are you sure you want to buy a ticket for this event?</string>
     <string name="payment">Payment</string>
+
 
     <!-- Notifications -->
     <string name="notification_channel_event_name">Event Notifications</string>

@@ -12,6 +12,10 @@
     <string name="register">Εγγραφή</string>
     <string name="settings">Ρυθμίσεις</string>
     <string name="user">Χρήστης</string>
+    <string name="language">Γλώσσες</string>
+    <string name="english">Αγγλικά</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="russian">Ρωσικά</string>
 
     <string name="question_user_delete_account">Είστε σίγουροι ότι θέλετε να διαγράψετε τον λογαριασμό σας;</string>
 

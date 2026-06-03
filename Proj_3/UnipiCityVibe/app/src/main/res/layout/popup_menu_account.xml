@@ -17,6 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/buttonLanguage"
+        style="@style/DefaultButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/language"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
+
+    <Button
         android:id="@+id/buttonLogOut"
         style="@style/DefaultButton"
         android:layout_width="wrap_content"
@@ -24,6 +34,6 @@
         android:text="@string/logOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLanguage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

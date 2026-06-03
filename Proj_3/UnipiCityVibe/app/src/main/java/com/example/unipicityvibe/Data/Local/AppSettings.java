@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.unipicityvibe.Enums.LocationTypeEnum;
 
+import java.util.Locale;
+
 public final class AppSettings {
     private static final String PREFS_NAME_APP_SETTINGS = "PREFS_NAME_APP_SETTINGS";
 
@@ -16,14 +18,25 @@ public final class AppSettings {
     private static final String KEY_DARK_MODE = "KEY_DARK_MODE";
     private static final String KEY_LOCATION = "KEY_LOCATION";
     private static final String KEY_NOTIFICATION = "KEY_NOTIFICATION";
+    private static final String KEY_LANGUAGE = "KEY_LANGUAGE";
 
 
-    // used only for font scale
+    // used only for font scale and language
     public static Context wrapContext(Context context) {
         float scale = getFontScale(context);
-        Configuration config = new Configuration(context.getResources().getConfiguration());
-        config.fontScale = scale;
-        return context.createConfigurationContext(config);
+        String language = getLanguage(context);
+        
+        Configuration configuration = new Configuration(context.getResources().getConfiguration());
+
+        // scale
+        configuration.fontScale = scale;
+        // locale
+        Locale locale = Locale.forLanguageTag(language);
+        Locale.setDefault(locale);
+        configuration.setLocale(locale);
+        configuration.setLayoutDirection(locale);
+
+        return context.createConfigurationContext(configuration);
     }
 
 
@@ -79,5 +92,16 @@ public final class AppSettings {
         return prefs.getBoolean(KEY_NOTIFICATION, false);
     }
     // ----- End Notification -----
+
+    // ----- Language -----
+    public static void setLanguage(@NonNull Context context, String language) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME_APP_SETTINGS, Context.MODE_PRIVATE);
+        prefs.edit().putString(KEY_LANGUAGE, language).apply();
+    }
+    public static String getLanguage(@NonNull Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME_APP_SETTINGS, Context.MODE_PRIVATE);
+        return prefs.getString(KEY_LANGUAGE, "en"); // default English
+    }
+    // ----- End Language -----
 
 }

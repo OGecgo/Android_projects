@@ -15,7 +15,7 @@ import com.example.unipicityvibe.Data.Models.UserData;
 import com.example.unipicityvibe.R;
 import com.example.unipicityvibe.Service.AuthService;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
-import com.example.unipicityvibe.UI.DialogFragment.DialogDeleteUser;
+import com.example.unipicityvibe.UI.DialogFragment.DeleteUserDialogFragment;
 import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 
 public class SettingsUserFragment extends Fragment {
@@ -41,8 +41,8 @@ public class SettingsUserFragment extends Fragment {
 
     // ----- Button -----
     private void deleteButton(View view){
-        DialogDeleteUser ddu = new DialogDeleteUser();
-        ddu.show(getParentFragmentManager(), "DIALOG_DELETE_USER");
+        DeleteUserDialogFragment dudf = new DeleteUserDialogFragment();
+        dudf.show(getParentFragmentManager(), "DIALOG_DELETE_USER");
     }
     // ----- End Button -----
 

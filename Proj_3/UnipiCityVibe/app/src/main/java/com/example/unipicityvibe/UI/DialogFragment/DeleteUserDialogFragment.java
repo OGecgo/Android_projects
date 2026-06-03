@@ -19,7 +19,7 @@ import com.example.unipicityvibe.Utils.ExceptionToMessageHelper;
 import com.example.unipicityvibe.Service.Interface.IAuthService;
 import com.example.unipicityvibe.R;
 
-public class DialogDeleteUser extends DialogFragment {
+public class DeleteUserDialogFragment extends DialogFragment {
 
     private EditTextView editTextViewPassword;
     private TextView errorText;

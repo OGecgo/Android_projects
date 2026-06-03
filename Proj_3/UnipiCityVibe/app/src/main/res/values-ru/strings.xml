@@ -12,6 +12,10 @@
     <string name="register">Регистрация</string>
     <string name="settings">Настройки</string>
     <string name="user">Пользователь</string>
+    <string name="language">Языки</string>
+    <string name="english">Английский</string>
+    <string name="greek">Греческий</string>
+    <string name="russian">Русский</string>
 
     <string name="question_user_delete_account">Вы уверены, что хотите удалить свой аккаунт?</string>
 
