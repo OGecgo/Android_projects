@@ -8,4 +8,14 @@ public class EventData {
     public String price;
     public String latitude;
     public String longitude;
+
+    public EventData(){
+        this.event_id = "";
+        this.title = "";
+        this.description = "";
+        this.time = "";
+        this.price = "";
+        this.latitude = "";
+        this.longitude = "";
+    }
 }

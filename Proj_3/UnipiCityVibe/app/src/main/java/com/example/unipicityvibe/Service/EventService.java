@@ -6,6 +6,7 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.unipicityvibe.Data.EventDB;
 import com.example.unipicityvibe.Data.Interface.IEventDB;
@@ -38,12 +39,22 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public EventData getEventInfo(String eventId){
+    public void getEventInfo(String eventId, @NonNull EventData eventRef,@NonNull OnCompleteListener l){
+        // first search into received events
         if (events.containsKey(eventId)) {
-            return events.get(eventId);
+            EventData eventData = events.get(eventId);
+            eventRef.event_id = eventData.event_id;
+            eventRef.title = eventData.title;
+            eventRef.description = eventData.description;
+            eventRef.latitude = eventData.latitude;
+            eventRef.longitude = eventData.longitude;
+            eventRef.time = eventData.time;
+            eventRef.price = eventData.price;
+            l.onCompose(true, "");
         }
+        // after only search into database
         else {
-            return new EventData();
+            eventDB.getEventData(eventRef, eventId, l);
         }
     }
     @Override

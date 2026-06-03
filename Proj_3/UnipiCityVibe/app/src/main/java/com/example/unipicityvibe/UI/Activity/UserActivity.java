@@ -68,7 +68,15 @@ public class UserActivity extends BaseActivity {
             Toast.makeText(this, getString(messageResId), Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void onCompleteListenerReceiveEvent(boolean success, String errorLog, EventData event){
+        if (success){
+            showEventFragment(event);
+        }
+        else{
+            int messageResId = ExceptionToMessageHelper.AuthExceptionToTextId(errorLog);
+            Toast.makeText(this, getString(messageResId), Toast.LENGTH_SHORT).show();
+        }
+    }
     // ----- End Call Back -----
 
 
@@ -177,17 +185,10 @@ public class UserActivity extends BaseActivity {
 
         // if user come to UserActivity from notification
         String eventID = getIntent().getStringExtra(NotificationService.HANDLE_CODE_KEY);
-        if (eventID != null){
-            EventData event = eventService.getEventInfo(eventID);
-            if (!event.event_id.isEmpty()){
-                showEventFragment(event);
-            }
-            else{
-                Toast.makeText(this, getString(R.string.error_no_event), Toast.LENGTH_SHORT).show();
-                Log.w(TAG, "[UserActivity] Event not found from notification intent");
-            }
+        if (eventID != null) {
+            EventData eventData = new EventData();
+            eventService.getEventInfo(eventID, eventData, (success, errorLog) -> this.onCompleteListenerReceiveEvent(success, errorLog, eventData));
         }
-
         // require permissions from user if not required
         // location permission
         if (!PermissionHelper.isGrantedLocationPermission(this)) {

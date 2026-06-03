@@ -9,7 +9,7 @@ import com.example.unipicityvibe.Listeners.OnCompleteListener;
 
 public interface IEventService {
 
-    EventData getEventInfo(String eventId);
+    void getEventInfo(String eventId, @NonNull EventData eventRef,@NonNull OnCompleteListener l);
     EventData[] getRadiusEvents(double userLatitude, double userLongitude);
     EventData[] getEventsFromTickets(TicketData[] tickets);
 
