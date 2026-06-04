@@ -63,6 +63,6 @@ dependencies {
 
     // debug
     // find memory leaks
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+    // debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 
 }

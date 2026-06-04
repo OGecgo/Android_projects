@@ -1,0 +1,103 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    
+    // table events
+		"events":{
+    	".read": true,
+    	".write": false,
+      ".indexOn": ["time"],
+          
+      // events added only from firebase control
+      // readed from everyone
+    	"$event_id": {
+        ".read": true,
+    		".write": false,
+    
+        "title":{
+          ".read": true,
+          ".write": false
+        },
+        "description": {
+          ".read": true,
+          ".write": false
+        },
+        "time": {
+          ".read": true,
+          ".write": false
+        },
+        "price": {
+          ".read": true,
+          ".write": false  
+        },
+        "latitude": {
+          ".read": true,
+          ".write": false
+        },
+        "longitude": {
+          ".read": true,
+          ".write": false
+        }
+      }
+			        
+    },
+      
+    // table tickets
+    "tickets": {
+      ".read": false,
+      ".write": false,
+      
+      // User will add itself a tickets (for test)
+      "$uid": {
+      	".read": "auth != null && auth.uid === $uid",
+    		".write": "auth != null && auth.uid === $uid",
+            
+        "$ticket_id": {
+        	".read": false,
+    			".write": false,
+            
+          "event_id": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "root.child('events').child(newData.val()).exists()"
+          },  
+          "timestamp": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isNumber()"
+            
+          }
+        }
+      }
+    },
+      
+    // table users
+    // only user add itself to database or delete
+    "users": {
+      ".read": false,
+      ".write": false,
+    
+    	"$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+				".write": "auth != null && auth.uid === $uid",
+          
+        "name": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString()"
+        },
+        "last_name": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString() && auth.token.email === newData.val()"
+        }
+      }
+    }
+  }
+}

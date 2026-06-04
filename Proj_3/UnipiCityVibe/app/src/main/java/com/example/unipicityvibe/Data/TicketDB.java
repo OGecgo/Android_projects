@@ -38,6 +38,7 @@ public class TicketDB implements ITicketDB {
         ticketData.ticket_id = snapshotTicket.getKey();
         ticketData.event_id = snapshotTicket.child("event_id")  .getValue() != null ? String.valueOf(snapshotTicket.child("event_id") .getValue()) : "";
         ticketData.time_stamp= snapshotTicket.child("timestamp").getValue() != null ? String.valueOf(snapshotTicket.child("timestamp").getValue()) : "";
+        ticketData.time_stamp += "000";
     }
 
     // ------ Call Back ------
