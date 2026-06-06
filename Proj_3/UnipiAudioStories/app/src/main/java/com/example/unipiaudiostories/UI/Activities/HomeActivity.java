@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.unipiaudiostories.R;
+import com.example.unipiaudiostories.UI.Dialogs.LanguageDialogFragment;
 import com.example.unipiaudiostories.Utils.PageMovementHelper;
 
 public class HomeActivity extends BaseActivity {
@@ -20,6 +21,10 @@ public class HomeActivity extends BaseActivity {
     }
     private void onClickListenerStatistics(View view){
         PageMovementHelper.moveToStatisticsActivity(this);
+    }
+    private void onClickListenerLanguage(View view){
+        LanguageDialogFragment dialog = new LanguageDialogFragment();
+        dialog.show(getSupportFragmentManager(), "LANGUAGE_DIALOG");
     }
 
     @Override
@@ -38,5 +43,7 @@ public class HomeActivity extends BaseActivity {
         b.setOnClickListener(this::onClickListenerStories);
         b = findViewById(R.id.buttonStatistics);
         b.setOnClickListener(this::onClickListenerStatistics);
+        b = findViewById(R.id.buttonLanguage);
+        b.setOnClickListener(this::onClickListenerLanguage);
     }
 }

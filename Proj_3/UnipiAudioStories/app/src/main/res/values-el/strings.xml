@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UnipiAudioStories</string>
+    <string name="none">None</string>
+    <string name="stories">Ιστορίες</string>
+    <string name="statistics">Στατιστικά</string>
+    <string name="language">Γλώσσα</string>
+    <string name="total_stories_listens">Συνολικές ακροάσεις ιστοριών:</string>
+    <string name="top_3_favorites_stories">Top 3 αγαπημένες ιστορίες:</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="russian">Ρωσικά</string>
+    <string name="english">Αγγλικά</string>
+</resources>

@@ -20,24 +20,24 @@
         tools:layout="@layout/fragment_top_menu"/>
 
     <Button
-        style="@style/Button"
         android:id="@+id/buttonStories"
+        style="@style/Button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
         android:text="@string/stories"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topMenuContainer" />
 
     <Button
-        style="@style/Button"
         android:id="@+id/buttonStatistics"
+        style="@style/Button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
         android:text="@string/statistics"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonStories" />
 
@@ -47,10 +47,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/language"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStatistics" />
+        app:layout_constraintTop_toBottomOf="@+id/topMenuContainer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

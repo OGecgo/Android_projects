@@ -3,4 +3,10 @@
     <string name="none">None</string>
     <string name="stories">Stories</string>
     <string name="statistics">Statistics</string>
+    <string name="language">Language</string>
+    <string name="total_stories_listens">Total stories listens:</string>
+    <string name="top_3_favorites_stories">Top 3 favorites stories:</string>
+    <string name="greek">Greek</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
 </resources>

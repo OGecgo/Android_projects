@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.unipiaudiostories.Data.Local.StatisticsStorage;
 import com.example.unipiaudiostories.Data.Model.StoryData;
 import com.example.unipiaudiostories.Manager.ITTSManager;
 import com.example.unipiaudiostories.Manager.TTSManager;
@@ -69,7 +70,7 @@ public class StoryPageFragment extends Fragment {
         listenListener = new ITTSManager.ListenListener() {
             @Override
             public void onComplete() {
-                // DO ADD FOR STATISTICS
+                StatisticsStorage.addProgress(requireContext(), storyData.title, 1);
             }
 
             @Override
