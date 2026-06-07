@@ -1,0 +1,105 @@
+{
+  "rules": {
+  	// user data
+    "users": {
+      "$uid": {        
+        
+        ".read": "auth != null && auth.uid === $uid",
+          
+          
+				// find uid from email and username
+        "username": {
+          ".read": true,
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".read":true,
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString()"
+        },
+
+        // in what chats exist user
+        "chatsId": {
+          "$chatId": {
+            
+          	".write": "auth != null && auth.uid === $uid",
+          	// only if user exist in chat
+          	// chat name - username member 
+          	".validate": "!newData.exists() || (newData.isString()  && root.child('chats').child($chatId).child('members').child($uid).val() === true)",            
+          }
+        	
+        },
+          
+        // invites from other users 
+        "inviteChat": {
+          "$chatId":{
+            // if no uid only can send invite
+          	// if uid only can delete invite
+          	// newData != uid but newData == id "from user"
+            // if user already in chat then canceled invite
+          	".write": "auth != null && newData.val() !== $uid && ( (auth.uid === newData.val() && !data.exists() && newData.exists()) || (auth.uid === $uid && data.exists() && !newData.exists()) )",
+          	".validate": "(newData.isString() && !root.child('users').child($uid).child('chatsId').child($chatId).exists()) || !newData.exists()"
+          }
+
+        }
+        
+      }
+    },
+       
+        
+        
+        
+    // find uid with username - email
+    // create only by authenticated user
+  	"usernames": {
+    	"$username": {
+      	".read": true,
+        ".write": "auth != null && !data.exists()",
+      	".validate": "newData.isString() && newData.val() === auth.uid"
+      }
+    },
+    "emails": {
+      "$email": {
+        ".read": true,
+        ".write": "auth != null && !data.exists()",
+        ".validate": "newData.isString() && newData.val() === auth.uid"
+      }
+    },
+
+        
+    // chats
+    "chats": {
+      
+      "$chatId": {
+        // read chat only for members
+        ".read": "auth != null && data.child('members').child(auth.uid).val() === true",
+
+        // user (invited or created) should create memberUid and set true or false
+        // true => accepted /  => denny invited to chat
+        "members": {
+          "$memberUid": {
+            // creator dont need invite to create memberUid
+						".write": "auth != null && auth.uid === $memberUid && (!data.parent().parent().exists() || root.child('users').child($memberUid).child('inviteChat').child($chatId).exists())",
+            ".validate": "!newData.exists() || (newData.isBoolean() && $memberUid === auth.uid)"
+          } 
+        },
+        // messages 
+        "messages": {
+        	// read messages only for members
+          ".read": "auth != null && root.child('chats').child($chatId).child('members').child(auth.uid).val() === true",
+          "$usernameId": {
+            // data added once
+            ".write": "auth != null && root.child('chats').child($chatId).child('members').child(auth.uid).val() === true && !data.exists()",
+            // format [text time] and not deleted messages
+            ".validate": "newData.hasChildren(['username','text','time']) && newData.child('username').isString() && newData.child('text').isString() && newData.child('time').isNumber() "
+          }
+        }
+        
+      }
+      
+    }
+    
+    
+  }
+}
