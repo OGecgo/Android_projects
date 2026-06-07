@@ -1,0 +1,37 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+      
+  	"stories": {
+      ".read": true,
+      ".write": false,
+        
+      "$story_id": {
+        ".read": true,
+        ".write": false,
+        
+        "title": {
+          ".read": true,
+          ".write": false,
+        },
+        "image_url": {
+          ".read": true,
+          ".write": false,
+        },
+        "story": {
+          ".read": true,
+          ".write": false,
+        },
+        "writer": {
+          ".read": true,
+          ".write": false,
+        },
+        "year": {
+          ".read": true,
+          ".write": false,
+        }
+      }
+    }
+  }
+}
