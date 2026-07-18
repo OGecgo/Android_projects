@@ -4,7 +4,7 @@ UnipiFireChat is a simple Android messenger built with Firebase Authentication a
 
 The app supports:
 
-- user registration and sign-in with Firebase Authentication
+- user registration and sign-in with Firebase Authentication 
 - a home screen that lists existing chats
 - sending chat invites to other users by username
 - opening a conversation and sending messages in real time
@@ -22,7 +22,7 @@ The app supports:
 
 To run the app on your own machine, create your own Firebase project and enable:
 
-- Firebase Authentication
+- Firebase Authentication (Email - Password)
 - Firebase Realtime Database
 
 The database rules used for this project are in [doc/rules_firebase.json](doc/rules_firebase.json)

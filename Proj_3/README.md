@@ -21,7 +21,7 @@ UnipiCityVibe is an Android app for discovering cultural events near the user, r
 
 ### Main Features
 
-- Firebase Authentication for user sign-in, sign-up, and logout
+- Firebase Authentication (Email - Password) for user sign-in, sign-up, and logout
 - Firebase Realtime Database for events, users, and tickets
 - Nearby events shown as a list and on Google Maps
 - Notifications for nearby events while the user is connected
@@ -36,7 +36,7 @@ UnipiCityVibe is an Android app for discovering cultural events near the user, r
 - A Google Maps API key is required and must be added to `local.properties` under `MAPS_API_KEY`
 - A Firebase project is required for Authentication and Realtime Database
 - The Firebase rules used for this app are in [UnipiCityVibe/doc/rules_firebase.json](UnipiCityVibe/doc/rules_firebase.json)
-- When testing location features, use an emulator location near one of the stored events
+- When testing location features, use an emulator location near one of the stored events. Dummy events [UnipiCityVibe/doc/unipicityvibe-36204-default-rtdb-export.json](UnipiCityVibe/doc/unipicityvibe-36204-default-rtdb-export.json)
 
 ### Documentation
 
@@ -63,7 +63,7 @@ UnipiAudioStories is an Android app for browsing children's stories, listening t
 
 ### Setup Notes
 
-- A Firebase project is required for the story database
+- A Firebase project is required for the story database. Dummy Stories [UnipiAudioStories/doc/unipiaudiostories-dc02f-default-rtdb-export.json](UnipiAudioStories/doc/unipiaudiostories-dc02f-default-rtdb-export.json)
 - The Firebase rules used for this app are in [UnipiAudioStories/doc/rules_firebase.json](UnipiAudioStories/doc/rules_firebase.json)
 
 ### Documentation
