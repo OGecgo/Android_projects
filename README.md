@@ -1,4 +1,4 @@
-# mini_android_projects
+# Android_projects
 
 This repository contains three university Android project stages. Each new project is larger and more complex than the previous one
 
